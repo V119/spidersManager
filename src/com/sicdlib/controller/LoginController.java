@@ -62,7 +62,7 @@ public class LoginController {
                 List<TbEventArticleEntity> eventArticles = eventArticleService.getEventArticleByEventID(eventID);
             }
             model.addAttribute("events", events);
-            return "eventsList";
+            return "eventList_new";
         }
         return "redirect:failure.jsp";
     }
