@@ -35,6 +35,35 @@
     <link type="text/css" rel="stylesheet" href="merge/styles/pace.css">
     <link type="text/css" rel="stylesheet" href="merge/styles/jquery.news-ticker.css">
 </head>
+<script>
+    function show(id){
+
+        if(id==allInfo){
+            document.getElementById("allInfo").style.display="";
+            document.getElementById("souhu").style.display="none";
+            document.getElementById("renmin").style.display="none";
+            document.getElementById("douban").style.display="none";
+        }
+        if(id==souhu){
+            document.getElementById("allInfo").style.display="none";
+            document.getElementById("souhu").style.display="";
+            document.getElementById("renmin").style.display="none";
+            document.getElementById("douban").style.display="none";
+        }
+        if(id==renmin){
+            document.getElementById("allInfo").style.display="none";
+            document.getElementById("souhu").style.display="none";
+            document.getElementById("renmin").style.display="";
+            document.getElementById("douban").style.display="none";
+        }
+        if(id==douban){
+            document.getElementById("allInfo").style.display="none";
+            document.getElementById("souhu").style.display="none";
+            document.getElementById("renmin").style.display="none";
+            document.getElementById("douban").style.display="";
+        }
+    }
+</script>
 <body>
 <div>
     <!--BEGIN BACK TO TOP-->
@@ -44,10 +73,8 @@
     <div id="wrapper">
         <jsp:include page="static/leftNav.jsp"></jsp:include>
 
-
         <!--BEGIN PAGE WRAPPER-->
         <div id="page-wrapper">
-
             <!--BEGIN TITLE & BREADCRUMB PAGE-->
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
@@ -66,145 +93,83 @@
 
             <!--BEGIN-->
             <div class="page-content">
-                <%--<div id="tab-general">
-                <div class="row mbl">
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a onclick="show(allInfo)">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a onclick="show(douban)">豆瓣社区</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a onclick="show(renmin)">人民网社区</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a onclick="show(souhu)">搜狐社区</a>
+                </div>
+                <hr>
+                <div id="allInfo">
                     <c:forEach items="${tbNetizenParticiTop10}" var="h" varStatus="isindex">
-                        <c:if test="${h.doubanGroupPost != null}">
-                            <div class="col-lg-4">
-                                <div class="panel" >
-                                    <div class="panel-body">
-                                        <div class="profile">
-                                            <div style="margin-bottom: 15px" class="row">
-                                                <div class="col-xs-12 col-sm-8">
-                                                    <h3>${h.doubanGroupPost.authorName}</h3>
-                                                    <p>
-                                                        <strong>时间:</strong> ${h.doubanGroupPost.dateTime}</p>
-                                                    <div style="width: 250px;height: 150px">
-                                                        <strong>内容:</strong> ${h.doubanGroupPost.content}</div>
-                                                    <p>
-                                                        <strong class="mrs"><font color="red">热度:${h.hotValue} 评论：${h.doubanGroupPost.commentNum}</font></strong><span class="label label-green mrs" href="${h.doubanGroupPost.url}">原文链接</span></p>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 text-center">
-                                                    <figure><img src="images/67be458fjw8exz23yekkwj2050050t8q.jpg" alt="" style="display: inline-block" class="img-responsive img-circle" width="60px"/>
-                                                            &lt;%&ndash;<img src="images/${index+1}.jpg" alt="" style="display: inline-block" class="img-responsive img-circle"/>&ndash;%&gt;
-                                                        <figcaption class="ratings"><p>${h.websiteName}</p></figcaption>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-md-12">
+                            <div class="portlet-pink">
+                                <!--kaishi-->
+                                <c:if test="${h.doubanGroupPost != null}">
+                                        <div class="tx"><img src="images/images3/1.jpg" height="60px" width="60px">&nbsp;&nbsp;&nbsp; <a href="${h.doubanGroupPost.authorHref}" target="_blank" class="a1" style="font-size: 14px;color: black;font-family: 微软雅黑">${h.bbsPeoplePost.authorName}</a> &nbsp;&nbsp;&nbsp;&nbsp;$${h.doubanGroupPost.dateTime}&nbsp;&nbsp;&nbsp;&nbsp;参与度：${h.engagement}  &nbsp;&nbsp;&nbsp;&nbsp;评论&nbsp;${h.doubanGroupPost.commentNum}&nbsp;&nbsp;&nbsp;&nbsp; 点击：&nbsp;${h.doubanGroupPost.recommendNum+1} <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp; 来源：</font>${h.websiteName}<label style="float:right;"><span class="label label-sm label-warning" ><a href="${h.doubanGroupPost.url}" style="color: white">原文链接</a></span></label></div>
+                                    <hr>
+                                </c:if>
+                                <c:if test="${h.bbsPeoplePost !=null}">
+                                    <div class="tx"><img src="images/images3/01.jpg" height="60px" width="60px">&nbsp;&nbsp;&nbsp; <a href="${h.bbsPeoplePost.authorHref}" target="_blank" class="a1" style="font-size: 14px;color: black;font-family: 微软雅黑">${h.bbsPeoplePost.authorName}</a> &nbsp;&nbsp;&nbsp;&nbsp;${h.bbsPeoplePost.dateTime}&nbsp;&nbsp;&nbsp;&nbsp;参与度：${h.engagement}  &nbsp;&nbsp;&nbsp;&nbsp;评论&nbsp;${h.bbsPeoplePost.commentNum}&nbsp;&nbsp;&nbsp;&nbsp; 点击：&nbsp;${h.bbsPeoplePost.priseNum+1} <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp; 来源：</font>${h.websiteName}<label style="float:right;"><span class="label label-sm label-warning" ><a href="${h.bbsPeoplePost.url}" style="color: white">原文链接</a></span></label></div>
+                                    <hr>
+                                </c:if>
+                                <c:if test="${h.bbsSohuPost !=null}">
+                                        <div class="tx"><img src="images/images3/001.jpg" height="60px" width="60px">&nbsp;&nbsp;&nbsp; <a href="${h.bbsSohuPost.authorHref}" target="_blank" class="a1" style="font-size: 14px;color: black;font-family: 微软雅黑">${h.bbsSohuPost.authorName}</a> &nbsp;&nbsp;&nbsp;&nbsp;${h.bbsSohuPost.dateTime}&nbsp;&nbsp;&nbsp;&nbsp;参与度：${h.engagement}  &nbsp;&nbsp;&nbsp;&nbsp;评论&nbsp;${h.bbsSohuPost.commentNum}&nbsp;&nbsp;&nbsp;&nbsp; 点击：&nbsp;${h.bbsSohuPost.readNum+1} <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp; 来源：</font>${h.websiteName}<label style="float:right;"><span class="label label-sm label-warning" ><a href="${h.bbsSohuPost.url}" style="color: white">原文链接</a></span></label></div>
+                                    <hr>
+                                </c:if>
+
+                                <!--jieshu-->
                             </div>
-                        </c:if>
-                        <c:if test="${h.bbsPeoplePost !=null}">
-                            <div class="col-lg-4">
-                                <div class="panel" >
-                                    <div class="panel-body">
-                                        <div class="profile">
-                                            <div style="margin-bottom: 15px" class="row">
-                                                <div class="col-xs-12 col-sm-8">
-                                                    <h3>${h.doubanGroupPost.authorName}</h3>
-                                                    <p>
-                                                        <strong>时间:</strong> ${h.bbsPeoplePost.dateTime}</p>
-                                                    <div style="width: 250px;height: 150px">
-                                                        <strong>内容:</strong> ${h.doubanGroupPost.content}</div>
-                                                    <p>
-                                                        <strong class="mrs"><font color="red">热度:${h.hotValue} 评论${h.bbsPeoplePost.commentNum}</font></strong><span class="label label-green mrs" href="${h.doubanGroupPost.url}">原文链接</span></p>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 text-center">
-                                                    <figure><img src="images/67be458fjw8exz23yekkwj2050050t8q.jpg" alt="" style="display: inline-block" class="img-responsive img-circle" width="60px"/>
-                                                            &lt;%&ndash;<img src="images/${index+1}.jpg" alt="" style="display: inline-block" class="img-responsive img-circle"/>&ndash;%&gt;
-                                                        <figcaption class="ratings"><p>${h.websiteName}</p></figcaption>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                        <c:if test="${h.doubanGroupPost != null}">
-                            <div class="col-lg-4">
-                                <div class="panel" >
-                                    <div class="panel-body">
-                                        <div class="profile">
-                                            <div style="margin-bottom: 15px" class="row">
-                                                <div class="col-xs-12 col-sm-8">
-                                                    <h3>${h.doubanGroupPost.authorName}</h3>
-                                                    <p>
-                                                        <strong>时间:</strong> ${h.doubanGroupPost.dateTime}</p>
-                                                    <div style="width: 250px;height: 150px">
-                                                        <strong>内容:</strong> ${h.doubanGroupPost.content}</div>
-                                                    <p>
-                                                        <strong class="mrs"><font color="red">参与度：${h.engagement}</font></strong><span class="label label-green mrs" href="${h.doubanGroupPost.url}">原文链接</span></p>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-4 text-center">
-                                                    <figure><img src="images/67be458fjw8exz23yekkwj2050050t8q.jpg" alt="" style="display: inline-block" class="img-responsive img-circle" width="60px"/>
-                                                            &lt;%&ndash;<img src="images/${index+1}.jpg" alt="" style="display: inline-block" class="img-responsive img-circle"/>&ndash;%&gt;
-                                                        <figcaption class="ratings"><p>${h.websiteName}</p></figcaption>
-                                                    </figure>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
+                        </div>
                     </c:forEach>
                 </div>
-                </div>--%>
-                <c:forEach items="${tbNetizenParticiTop10}" var="h" varStatus="isindex">
-                    <div class="col-md-12">
-                        <div class="portlet-pink">
-                            <!--kaishi-->
-                            <c:if test="${h.doubanGroupPost != null}">
-                                    <div class="tx"><img src="images/images3/1.jpg" height="60px" width="60px"></div>
-                                    <p class="mscrame"><a href="${h.doubanGroupPost.authorHref}" target="_blank" class="a1">${h.doubanGroupPost.authorName}</a>参与度：${h.engagement}  ${h.doubanGroupPost.dateTime} <a href="${h.doubanGroupPost.url}" target="_blank" class="wblink"><i></i>原文链接</a> 评论<&nbsp;${h.doubanGroupPost.commentNum} 点击：${h.doubanGroupPost.recommendNum+1} 来源：${h.websiteName}<a href="javascript:void(0)"><i class="W_icon"></i></a>
-                                        <%--<label style="float:right;color:orangered">参与度：${h.engagement}</label>--%>
-                                    </p>
-                                    <%--<p style="margin-top: 5px;"><span class="time">${h.doubanGroupPost.dateTime}</span><a href="${h.doubanGroupPost.url}" target="_blank" class="wblink"><i></i>原文链接</a></p>
-                                    <p class="msfs"><span class="float_l"><span><font class="f_c1">评论</font>&nbsp;${h.doubanGroupPost.commentNum}</span><span><font class="f_c1">点击</font>&nbsp;${h.doubanGroupPost.recommendNum+1}</span>&nbsp;&nbsp;<span><font class="f_c1">来源：</font>${h.websiteName}</span></span></p>--%>
-                                    <div class="clearfix"></div>
-
-                            </c:if>
-                            <c:if test="${h.bbsPeoplePost !=null}">
-
-                                <div class="tx"><img src="images/images3/01.jpg" height="60px" width="60px">&nbsp;&nbsp;&nbsp; <a href="${h.bbsPeoplePost.authorHref}" target="_blank" class="a1" style="font-size: 14px;color: black;font-family: 微软雅黑">${h.bbsPeoplePost.authorName}</a> &nbsp;&nbsp;&nbsp;&nbsp;${h.bbsPeoplePost.dateTime}&nbsp;&nbsp;&nbsp;&nbsp;参与度：${h.engagement}  &nbsp;&nbsp;&nbsp;&nbsp;评论&nbsp;${h.bbsPeoplePost.commentNum}&nbsp;&nbsp;&nbsp;&nbsp; 点击：&nbsp;${h.bbsPeoplePost.priseNum+1} <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp; 来源：</font>${h.websiteName}<label style="float:right;"><span class="label label-sm label-warning" ><a href="${h.bbsPeoplePost.url}" style="color: white">原文链接</a></span></label></div>
-                                    <p class="mscrame"><%--<a href="${h.bbsPeoplePost.authorHref}" target="_blank" class="a1">${h.bbsPeoplePost.authorName}</a>参与度：${h.engagement} ${h.bbsPeoplePost.dateTime} <a href="${h.bbsPeoplePost.url}" target="_blank" class="wblink"><i></i>原文链接</a> 评论&nbsp;${h.bbsPeoplePost.commentNum} 点击：&nbsp;${h.bbsPeoplePost.priseNum+1}来源：${h.websiteName}<a href="javascript:void(0)"><i class="W_icon"></i></a>--%>
-                                        <%--<label style="float:right;color:orangered">参与度：${h.engagement}</label>--%>
-                                    </p>
-                                    <%--<p style="margin-top: 5px;"><span class="time">${h.bbsPeoplePost.dateTime}</span><a href="${h.bbsPeoplePost.url}" target="_blank" class="wblink"><i></i>原文链接</a></p>
-                                    <p class="msfs"><span class="float_l"><span><font class="f_c1">评论</font>&nbsp;${h.bbsPeoplePost.commentNum}</span><span><font class="f_c1">点击</font>&nbsp;${h.bbsPeoplePost.priseNum+1}</span>&nbsp;&nbsp;<span><font class="f_c1">来源：</font>${h.websiteName}</span></span></p>
-                                    <div class="clearfix"></div>--%>
-
-                            </c:if>
-                            <c:if test="${h.bbsSohuPost !=null}">
-
-                                    <div class="tx"><img src="images/images3/001.jpg" height="60px" width="60px"></div>
-                                    <p class="mscrame"><a href="${h.bbsSohuPost.authorHref}" target="_blank" class="a1">${h.bbsSohuPost.authorName}</a>参与度：${h.engagement} ${h.bbsSohuPost.dateTime} <a href="${h.bbsSohuPost.url}" target="_blank" class="wblink"><i></i>原文链接</a> 评论&nbsp;${h.bbsSohuPost.commentNum} 点击：${h.bbsSohuPost.readNum+1} 来源：${h.websiteName}<a href="javascript:void(0)"><i class="W_icon"></i></a>
-                                        <%--<label style="float:right;color:orangered">参与度：${h.engagement}</label>--%>
-                                    </p>
-                                    <%--<p style="margin-top: 5px;"><span class="time">${h.bbsSohuPost.dateTime}</span><a href="${h.bbsSohuPost.url}" target="_blank" class="wblink"><i></i>原文链接</a></p>
-                                    <p class="msfs"><span class="float_l"><span><font class="f_c1">评论</font>&nbsp;${h.bbsSohuPost.commentNum}</span><span><font class="f_c1">点击</font>&nbsp;${h.bbsSohuPost.readNum+1}</span>&nbsp;&nbsp;<span><font class="f_c1">来源：</font>${h.websiteName}</span></span></p>
-                                    <div class="clearfix"></div>--%>
-
-                            </c:if>
-
-                            <!--jieshu-->
+                <div id="douban" style="display: none">
+                    <c:forEach items="${tbNetizenParticiTop10}" var="h" varStatus="isindex">
+                        <div class="col-md-12">
+                            <div class="portlet-pink">
+                                <!--kaishi-->
+                                <c:if test="${h.doubanGroupPost != null}">
+                                    <div class="tx"><img src="images/images3/1.jpg" height="60px" width="60px">&nbsp;&nbsp;&nbsp; <a href="${h.doubanGroupPost.authorHref}" target="_blank" class="a1" style="font-size: 14px;color: black;font-family: 微软雅黑">${h.bbsPeoplePost.authorName}</a> &nbsp;&nbsp;&nbsp;&nbsp;$${h.doubanGroupPost.dateTime}&nbsp;&nbsp;&nbsp;&nbsp;参与度：${h.engagement}  &nbsp;&nbsp;&nbsp;&nbsp;评论&nbsp;${h.doubanGroupPost.commentNum}&nbsp;&nbsp;&nbsp;&nbsp; 点击：&nbsp;${h.doubanGroupPost.recommendNum+1} <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp; 来源：</font>${h.websiteName}<label style="float:right;"><span class="label label-sm label-warning" ><a href="${h.doubanGroupPost.url}" style="color: white">原文链接</a></span></label></div>
+                                    <hr>
+                                </c:if>
+                                <!--jieshu-->
+                            </div>
                         </div>
+                    </c:forEach>
+                </div>
+                <div id="renmin" style="display: none">
+                    <c:forEach items="${tbNetizenParticiTop10}" var="h" varStatus="isindex">
+                        <div class="col-md-12">
+                            <div class="portlet-pink">
+                                <!--kaishi-->
 
-                    </div>
+                                <c:if test="${h.bbsPeoplePost !=null}">
+                                    <div class="tx"><img src="images/images3/01.jpg" height="60px" width="60px">&nbsp;&nbsp;&nbsp; <a href="${h.bbsPeoplePost.authorHref}" target="_blank" class="a1" style="font-size: 14px;color: black;font-family: 微软雅黑">${h.bbsPeoplePost.authorName}</a> &nbsp;&nbsp;&nbsp;&nbsp;${h.bbsPeoplePost.dateTime}&nbsp;&nbsp;&nbsp;&nbsp;参与度：${h.engagement}  &nbsp;&nbsp;&nbsp;&nbsp;评论&nbsp;${h.bbsPeoplePost.commentNum}&nbsp;&nbsp;&nbsp;&nbsp; 点击：&nbsp;${h.bbsPeoplePost.priseNum+1} <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp; 来源：</font>${h.websiteName}<label style="float:right;"><span class="label label-sm label-warning" ><a href="${h.bbsPeoplePost.url}" style="color: white">原文链接</a></span></label></div>
+                                    <hr>
+                                </c:if>
 
-                </c:forEach>
+                                <!--jieshu-->
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <div id="souhu" style="display: none">
+                    <c:forEach items="${tbNetizenParticiTop10}" var="h" varStatus="isindex">
+                        <div class="col-md-12">
+                            <div class="portlet-pink">
+                                <!--kaishi-->
+                                <c:if test="${h.bbsSohuPost !=null}">
+                                    <div class="tx"><img src="images/images3/001.jpg" height="60px" width="60px">&nbsp;&nbsp;&nbsp; <a href="${h.bbsSohuPost.authorHref}" target="_blank" class="a1" style="font-size: 14px;color: black;font-family: 微软雅黑">${h.bbsSohuPost.authorName}</a> &nbsp;&nbsp;&nbsp;&nbsp;${h.bbsSohuPost.dateTime}&nbsp;&nbsp;&nbsp;&nbsp;参与度：${h.engagement}  &nbsp;&nbsp;&nbsp;&nbsp;评论&nbsp;${h.bbsSohuPost.commentNum}&nbsp;&nbsp;&nbsp;&nbsp; 点击：&nbsp;${h.bbsSohuPost.readNum+1} <font color="blue">&nbsp;&nbsp;&nbsp;&nbsp; 来源：</font>${h.websiteName}<label style="float:right;"><span class="label label-sm label-warning" ><a href="${h.bbsSohuPost.url}" style="color: white">原文链接</a></span></label></div>
+                                    <hr>
+                                </c:if>
 
+                                <!--jieshu-->
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
             <!--END-->
-
-
-
-            <!--BEGIN CONTENT-->
-
-            <!--END CONTENT-->
 
             <!--BEGIN FOOTER-->
             <jsp:include page="static/footer.jsp"/>
