@@ -7,4 +7,5 @@ import com.sicdlib.dto.entity.Xinwen110NewsEntity;
  */
 public interface IXINWEN110NewsDAO {
     Boolean saveXINWEN110News(Xinwen110NewsEntity xinwen110News);
+    Xinwen110NewsEntity getXinwen110News(String id);
 }

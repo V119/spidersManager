@@ -1,4 +1,4 @@
-package com.sicdlib.dao;
+package com.sicdlib.dao.pyhtonDAO;
 
 import com.sicdlib.dto.entity.BlogchinaBlogEntity;
 
@@ -7,4 +7,5 @@ import com.sicdlib.dto.entity.BlogchinaBlogEntity;
  */
 public interface IBLOGChinaBlogDAO {
     Boolean saveBLOGChinaBlog(BlogchinaBlogEntity blogchinaBlog);
+    BlogchinaBlogEntity getBlogchinaBlog(String id);
 }

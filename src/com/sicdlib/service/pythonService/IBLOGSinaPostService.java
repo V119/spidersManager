@@ -7,4 +7,5 @@ import com.sicdlib.dto.entity.BlogSinaPostEntity;
  */
 public interface IBLOGSinaPostService {
     public boolean saveBLOGSinaPost(BlogSinaPostEntity blogSinaPost);
+    BlogSinaPostEntity getBlogSinaPost(String id);
 }

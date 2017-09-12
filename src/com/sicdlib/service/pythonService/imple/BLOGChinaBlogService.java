@@ -1,8 +1,8 @@
-package com.sicdlib.service.imple;
+package com.sicdlib.service.pythonService.imple;
 
-import com.sicdlib.dao.IBLOGChinaBlogDAO;
+import com.sicdlib.dao.pyhtonDAO.IBLOGChinaBlogDAO;
 import com.sicdlib.dto.entity.BlogchinaBlogEntity;
-import com.sicdlib.service.IBLOGChinaBlogService;
+import com.sicdlib.service.pythonService.IBLOGChinaBlogService;
 import com.sicdlib.util.UUIDUtil.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,5 +23,10 @@ public class BLOGChinaBlogService  implements IBLOGChinaBlogService{
             blogchinaBlog.setId(uuid);
         }
         return blogChinaBlogDAO.saveBLOGChinaBlog(blogchinaBlog);
+    }
+
+    @Override
+    public BlogchinaBlogEntity getBlogchinaBlog(String id) {
+        return blogChinaBlogDAO.getBlogchinaBlog(id);
     }
 }

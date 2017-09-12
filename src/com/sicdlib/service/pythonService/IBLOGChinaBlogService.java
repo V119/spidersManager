@@ -1,4 +1,4 @@
-package com.sicdlib.service;
+package com.sicdlib.service.pythonService;
 
 import com.sicdlib.dto.entity.BlogchinaBlogEntity;
 
@@ -7,4 +7,5 @@ import com.sicdlib.dto.entity.BlogchinaBlogEntity;
  */
 public interface IBLOGChinaBlogService {
     public boolean saveBLOGChinaBlog(BlogchinaBlogEntity blogchinaBlog);
+    BlogchinaBlogEntity getBlogchinaBlog(String id);
 }

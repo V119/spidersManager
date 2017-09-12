@@ -54,4 +54,10 @@ public class BBSMopPostDAO implements IBBSMopPostDAO {
         session.close();
     }
 
+    @Override
+    public BbsMopPostEntity getBbsMopPost(String id) {
+        String hql = "from BbsMopPostEntity mp where mp.id = ' "+ id +" '";
+        return (BbsMopPostEntity) baseDAO.get(hql);
+    }
+
 }

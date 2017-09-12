@@ -26,4 +26,9 @@ public class BBSChinaPostService implements IBBSChinaPostService{
         }
         return bbsChinaPostDAO.saveBBSChinaPost(bbsChinaPost);
     }
+
+    @Override
+    public BbsChinaPostEntity getBbsChinaPost(String id) {
+        return bbsChinaPostDAO.getBbsChinaPost(id);
+    }
 }

@@ -190,7 +190,7 @@ public class BBSChinaUtil {
      * 中华网社区的文章信息转换到mysql中
      */
     @Test
-    public static void test_bbsChinaPost_HTableMysql() throws  Exception{
+    public  void test_bbsChinaPost_HTableMysql() throws  Exception{
         IBBSChinaPostService bbsChinaPostService = (IBBSChinaPostService) apx.getBean("bbsChinaPostService");
         Long beginTime = new Date().getTime();
         /**
@@ -268,7 +268,7 @@ public class BBSChinaUtil {
                         bbsChinaPost.setParticipantNum(Integer.parseInt(value));
                         break;
                     case   "reply_num":
-                        bbsChinaPost.setCommentNum(Integer.parseInt(value));
+                        bbsChinaPost.setReplyNum(Integer.parseInt(value));
                         break;
                     case  "url":
                         bbsChinaPost.setUrl(value);

@@ -23,4 +23,10 @@ public class XINWEN110NewsDAO  implements IXINWEN110NewsDAO{
             return false;
         }
     }
+
+    @Override
+    public Xinwen110NewsEntity getXinwen110News(String id) {
+        String hql = "from Xinwen110NewsEntity xw where xw.id = '"+ id +"'";
+        return (Xinwen110NewsEntity) baseDAO.get(hql);
+    }
 }

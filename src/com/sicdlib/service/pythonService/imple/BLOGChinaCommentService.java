@@ -1,8 +1,8 @@
-package com.sicdlib.service.imple;
+package com.sicdlib.service.pythonService.imple;
 
-import com.sicdlib.dao.IBLOGChinaCommentDAO;
+import com.sicdlib.dao.pyhtonDAO.IBLOGChinaCommentDAO;
 import com.sicdlib.dto.entity.BlogchinaCommentEntity;
-import com.sicdlib.service.IBLOGChinaCommentService;
+import com.sicdlib.service.pythonService.IBLOGChinaCommentService;
 import com.sicdlib.util.UUIDUtil.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var arr_bbschina_name = [];
     //网易博客
     var arr_blog163_num = [];
-    var arr_blog63_name = [];
+    var arr_blog163_name = [];
     //博客
     var arr_blogsina_num = [];
     var arr_blogsina_name = [];
@@ -95,11 +95,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             arr_bbspeople_num[people_i] = data[o].num;
             arr_bbspeople_name[people_i] = data[o].tableName;
             people_i ++;
-        }/*else if(data[o].tableName =='kdnet_post'){
+        }else if(data[o].tableName =='kdnet_post'){
             arr_kdnet_num[kdnet_i] = data[o].num;
             arr_kdnet_name[kdnet_i] = data[o].tableName;
             kdnet_i ++;
-        }*/else if(data[o].tableName == 'bbs_sohu_post'){
+        }else if(data[o].tableName == 'bbs_sohu_post'){
             arr_bbssohu_num[sohu_i] = data[o].num;
             arr_bbssohu_name[sohu_i] = data[o].tableName;
             sohu_i ++;
@@ -113,9 +113,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             xici_i ++;
         }
     }
-    //alert(arr_bbstianya_num[0]);
     for (var i = 0;i < douban_i; i++){
-        data[i] = arr_douban_num[i] + arr_bbspeople_num[i]  + arr_bbssohu_num[i] + arr_bbstianya_num[i] + arr_bbsxici_num[i]; //+ arr_kdnet_num[i]
+        data[i] = arr_douban_num[i] + arr_bbspeople_num[i]  + arr_bbssohu_num[i] + arr_bbstianya_num[i] + arr_bbsxici_num[i] + arr_kdnet_num[i] + arr_bbsmop_num[i] + arr_bbschina_num[i] + arr_blog163_num[i] + arr_blogsina_num[i] + arr_blogchina_num[i] + arr_xinwen_num[i];
     }
   //基于准备好的dom,初始化echarts实例
   var myChart = echarts.init(document.getElementById('main'));
@@ -130,7 +129,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   legend: {
    orient: 'horizontal',
    x:'center',
-  data:['总评论量','豆瓣小组','人民网社区','凯迪社区','搜狐社区','天涯社区','西祠社区','猫扑社区','中华网社区','网易博客','博客','博客中国','三秦网']
+  data:['总评论量','豆瓣小组','人民网社区','凯迪社区','搜狐社区','天涯社区','西祠社区','猫扑社区','中华网论坛','网易博客','新浪博客','博客中国','中国社会新闻网']
   },
   grid: {
   left: '3%',
@@ -165,7 +164,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   }
   },
   data : [
-  [{type:'min'}, {type:'max'}]
   ]
   }
   },
@@ -209,37 +207,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   name:'猫扑社区',
   type:'bar',
   stack: '评论量',
-  data:[]
+  data:arr_bbsmop_num
   },
   {
   name:'中华网社区',
   type:'bar',
   stack: '评论量',
-  data:[]
+  data:arr_bbschina_num
   },
   {
   name:'网易博客',
   type:'bar',
   stack: '评论量',
-  data:[]
+  data:arr_blog163_num
   },
   {
-  name:'博客',
+  name:'新浪博客',
   type:'bar',
   stack: '评论量',
-  data:[]
+  data:arr_blogsina_num
    },
   {
   name:'博客中国',
   type:'bar',
   stack: '评论量',
-  data:[]
+  data:arr_blogchina_num
   },
  {
-  name:'三秦网',
+  name:'中国社会新闻网',
   type:'bar',
   stack: '评论量',
-  data:[]
+  data:arr_xinwen_num
  }
   ]
   };

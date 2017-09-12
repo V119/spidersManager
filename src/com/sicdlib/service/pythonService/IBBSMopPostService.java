@@ -8,4 +8,5 @@ import com.sicdlib.dto.entity.BbsMopPostEntity;
 public interface IBBSMopPostService {
     //新增orgengxin猫扑社区文章
     public boolean saveBBSMopPost(BbsMopPostEntity bbsMopPost);
+    BbsMopPostEntity getBbsMopPost(String id);
 }

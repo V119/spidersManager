@@ -1,6 +1,7 @@
 package com.sicdlib.dto;
 
 import com.sicdlib.dto.entity.BbsPeoplePostEntity;
+import com.sicdlib.dto.entity.BbsSohuPostEntity;
 import com.sicdlib.dto.entity.DoubanGroupPostEntity;
 import com.sicdlib.dto.entity.XinhuaNewsEntity;
 
@@ -22,6 +23,16 @@ public class TableHotValue {
     private BbsPeoplePostEntity bbsPeoplePost;
     //例：新华网
     private XinhuaNewsEntity xinhuaNews;
+    //例：搜狐
+    private BbsSohuPostEntity bbssohuPost;
+
+    public BbsSohuPostEntity getBbssohuPost() {
+        return bbssohuPost;
+    }
+
+    public void setBbssohuPost(BbsSohuPostEntity bbssohuPost) {
+        this.bbssohuPost = bbssohuPost;
+    }
 
     public XinhuaNewsEntity getXinhuaNews() {
         return xinhuaNews;
@@ -70,4 +81,5 @@ public class TableHotValue {
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
+
 }

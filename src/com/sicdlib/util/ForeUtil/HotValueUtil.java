@@ -50,13 +50,13 @@ public class HotValueUtil {
             }
         }
 
-       //对表(网站文章)的热度值进行排序
+       /*//对表(网站文章)的热度值进行排序
         Collections.sort(tableHotValues, new Comparator<TableHotValue>(){
             @Override
             public int compare(TableHotValue o1, TableHotValue o2) {
                 return o2.getHotValue().compareTo(o1.getHotValue());
             }
-        });
+        });*/
         return tableHotValues;
     }
 

@@ -1,6 +1,6 @@
-package com.sicdlib.dao.imple;
+package com.sicdlib.dao.pyhtonDAO.imple;
 
-import com.sicdlib.dao.IBLOGChinaBlogDAO;
+import com.sicdlib.dao.pyhtonDAO.IBLOGChinaBlogDAO;
 import com.sicdlib.dao.IBaseDAO;
 import com.sicdlib.dto.entity.BlogchinaBlogEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +22,11 @@ public class BLOGChinaBlogDAO  implements IBLOGChinaBlogDAO{
            e.printStackTrace();
            return false;
        }
+    }
+
+    @Override
+    public BlogchinaBlogEntity getBlogchinaBlog(String id) {
+        String hql = "from BlogchinaBlogEntity bc where bc.id = '"+ id +"' ";
+        return (BlogchinaBlogEntity) baseDAO.get(hql);
     }
 }

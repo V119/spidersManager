@@ -24,4 +24,10 @@ public class BLOG163PostDAO implements IBLOG163PostDAO {
             return false;
         }
     }
+
+    @Override
+    public Blog163PostEntity getBlog163Post(String id) {
+        String hql = "from Blog163PostEntity bp where bp.id = '"+ id +"' ";
+        return (Blog163PostEntity) baseDAO.get(hql);
+    }
 }

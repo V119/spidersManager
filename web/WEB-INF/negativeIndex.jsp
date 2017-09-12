@@ -25,6 +25,7 @@
     <link href="css/css3/bootstrap.css" rel="stylesheet">
 </head>
 <body>
+<<<<<<< HEAD
 <jsp:include page="static/fore_header.jsp"/>
 <!--sidebar-menu-->
 <jsp:include page="static/fore_lefter.jsp">

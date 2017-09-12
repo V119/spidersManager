@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <c:forEach items="${tableHotValuestop10}" var="h">
                   <c:if test="${h.doubanGroupPost != null}">
                     <li class="hotIn">
-                      <div class="tx"><img src="images/67be458fjw8exz23yekkwj2050050t8q.jpg">${h.websiteName}</div>
+                      <div class="tx"><img src="images/${index+1}.jpg">${h.websiteName}</div>
                       <p class="mscrame">
                         <a target="_blank" href="${h.doubanGroupPost.authorHref}" class="a1">${h.doubanGroupPost.authorName}</a>
                         <label style="float:right;color:orangered">热度:${h.hotValue}</label>

@@ -51,8 +51,8 @@
         </li>
         <li class="submenu" style="width:8%"><i class="icon icon-file"></i> <span>数据清洗</span> <span class="label">4</span>
             <ul>
-                <li><a href="source_datas">源数据库展示source_datas</a></li>
-                <li><a href="source_data">数据清理展示source_data</a></li>
+                <li><a href="source_datas">源数据库展示</a></li>
+                <li><a href="source_data">数据清理展示                                  </a></li>
                 <li><a href="source_datas_display">源数据展示</a></li>
                 <li><a href="calendar.jsp">新增清洗过程</a></li>
                 <li><a href="chat.jsp">清洗过程配置</a></li>
@@ -60,7 +60,13 @@
                 <li><a href="test">test</a></li>
             </ul>
         </li>
-
+        <li class="submenu" style="width:8%"><i class="icon icon-th-list"></i><span>舆情分析指标</span><span class="label">3</span>
+            <ul>
+                <li><a href="login">网络舆情事件主页</a></li>
+                <li><a href="event?eventID=${eventID}">舆情分析指标的主界面</a></li>
+                <li><a href="test">test</a></li>
+            </ul>
+        </li>
     </ul>
 </div>
 

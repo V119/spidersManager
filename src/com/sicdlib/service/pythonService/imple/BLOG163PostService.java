@@ -24,4 +24,9 @@ public class BLOG163PostService  implements IBLOG163PostService{
         }
         return blog163PostDAO.saveBLOG163Post(blog163Post);
     }
+
+    @Override
+    public Blog163PostEntity getBlog163Post(String id) {
+        return blog163PostDAO.getBlog163Post(id);
+    }
 }

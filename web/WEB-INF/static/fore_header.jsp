@@ -10,11 +10,11 @@
     <title>舆情分析大平台</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" href="css/matrix-style.css" />
     <link rel="stylesheet" href="css/matrix-media.css" />
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="css/css1/common.css" />
     <link rel="stylesheet" href="css/css1/eventAnalysis.css" />
     <link rel="stylesheet" href="css/css1/other.css" />

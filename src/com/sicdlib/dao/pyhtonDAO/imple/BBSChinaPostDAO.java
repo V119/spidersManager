@@ -25,4 +25,10 @@ public class BBSChinaPostDAO implements IBBSChinaPostDAO {
             return false;
         }
     }
+
+    @Override
+    public BbsChinaPostEntity getBbsChinaPost(String id) {
+        String hql = "from BbsChinaPostEntity cp where cp.id ='" + id + "'";
+        return (BbsChinaPostEntity) baseDAO.get(hql);
+    }
 }

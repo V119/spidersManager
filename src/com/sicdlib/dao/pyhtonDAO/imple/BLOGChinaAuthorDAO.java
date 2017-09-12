@@ -1,6 +1,6 @@
-package com.sicdlib.dao.imple;
+package com.sicdlib.dao.pyhtonDAO.imple;
 
-import com.sicdlib.dao.IBLOGChinaAuthorDAO;
+import com.sicdlib.dao.pyhtonDAO.IBLOGChinaAuthorDAO;
 import com.sicdlib.dao.IBaseDAO;
 import com.sicdlib.dto.entity.BlogchinaAuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;

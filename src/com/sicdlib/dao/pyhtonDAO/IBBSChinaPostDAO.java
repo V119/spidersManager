@@ -7,4 +7,5 @@ import com.sicdlib.dto.entity.BbsChinaPostEntity;
  */
 public interface IBBSChinaPostDAO {
     Boolean saveBBSChinaPost(BbsChinaPostEntity bbsChinaPost);
+    BbsChinaPostEntity getBbsChinaPost(String id);
 }

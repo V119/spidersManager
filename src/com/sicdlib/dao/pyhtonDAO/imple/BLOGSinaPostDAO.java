@@ -23,4 +23,10 @@ public class BLOGSinaPostDAO  implements IBLOGSinaPostDAO{
           return false;
       }
     }
+
+    @Override
+    public BlogSinaPostEntity getBlogSinaPost(String id) {
+        String hql = "from BlogSinaPostEntity bs where bs.id = '"+ id +"'";
+        return (BlogSinaPostEntity) baseDAO.get(hql);
+    }
 }

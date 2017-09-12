@@ -24,4 +24,9 @@ public class XINWEN110NewsService implements IXINWEN110NewsService{
         }
      return xinwen110NewsDAO.saveXINWEN110News(xinwen110News);
     }
+
+    @Override
+    public Xinwen110NewsEntity getXinwen110News(String id) {
+        return xinwen110NewsDAO.getXinwen110News(id);
+    }
 }

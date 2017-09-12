@@ -25,4 +25,9 @@ public class BBSMopPostService implements IBBSMopPostService {
         return bbsMopPostDAO.saveBBSMopPost(bbsMopPost);
     }
 
+    @Override
+    public BbsMopPostEntity getBbsMopPost(String id) {
+        return  bbsMopPostDAO.getBbsMopPost(id);
+    }
+
 }

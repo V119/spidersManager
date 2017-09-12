@@ -4,23 +4,33 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by init on 2017/5/24.
+ * Created by init on 2017/6/27.
  */
 @Entity
 @Table(name = "blogchina_comment", schema = "socialmind", catalog = "")
 public class BlogchinaCommentEntity {
+    private String id;
     private String commentId;
-    private String commentUserId;
-    private String commentBlogId;
-    private String commentTime;
-    private String commentContent;
+    private String authorId;
+    private String blogId;
+    private String dateTime;
+    private String content;
     private Integer praiseNum;
     private String praiseIds;
     private String replayId;
     private String ip;
     private String lastIp;
     private Timestamp timeStamp;
-    private String id;
+
+    @Id
+    @Column(name = "id")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Basic
     @Column(name = "comment_id")
@@ -33,43 +43,43 @@ public class BlogchinaCommentEntity {
     }
 
     @Basic
-    @Column(name = "comment_user_id")
-    public String getCommentUserId() {
-        return commentUserId;
+    @Column(name = "author_id")
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setCommentUserId(String commentUserId) {
-        this.commentUserId = commentUserId;
-    }
-
-    @Basic
-    @Column(name = "comment_blog_id")
-    public String getCommentBlogId() {
-        return commentBlogId;
-    }
-
-    public void setCommentBlogId(String commentBlogId) {
-        this.commentBlogId = commentBlogId;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     @Basic
-    @Column(name = "comment_time")
-    public String getCommentTime() {
-        return commentTime;
+    @Column(name = "blog_id")
+    public String getBlogId() {
+        return blogId;
     }
 
-    public void setCommentTime(String commentTime) {
-        this.commentTime = commentTime;
+    public void setBlogId(String blogId) {
+        this.blogId = blogId;
     }
 
     @Basic
-    @Column(name = "comment_content")
-    public String getCommentContent() {
-        return commentContent;
+    @Column(name = "time")
+    public String getDateTime() {
+        return dateTime;
     }
 
-    public void setCommentContent(String commentContent) {
-        this.commentContent = commentContent;
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    @Basic
+    @Column(name = "content")
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Basic
@@ -139,14 +149,12 @@ public class BlogchinaCommentEntity {
 
         BlogchinaCommentEntity that = (BlogchinaCommentEntity) o;
 
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (commentId != null ? !commentId.equals(that.commentId) : that.commentId != null) return false;
-        if (commentUserId != null ? !commentUserId.equals(that.commentUserId) : that.commentUserId != null)
-            return false;
-        if (commentBlogId != null ? !commentBlogId.equals(that.commentBlogId) : that.commentBlogId != null)
-            return false;
-        if (commentTime != null ? !commentTime.equals(that.commentTime) : that.commentTime != null) return false;
-        if (commentContent != null ? !commentContent.equals(that.commentContent) : that.commentContent != null)
-            return false;
+        if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
+        if (blogId != null ? !blogId.equals(that.blogId) : that.blogId != null) return false;
+        if (dateTime != null ? !dateTime.equals(that.dateTime) : that.dateTime != null) return false;
+        if (content != null ? !content.equals(that.content) : that.content != null) return false;
         if (praiseNum != null ? !praiseNum.equals(that.praiseNum) : that.praiseNum != null) return false;
         if (praiseIds != null ? !praiseIds.equals(that.praiseIds) : that.praiseIds != null) return false;
         if (replayId != null ? !replayId.equals(that.replayId) : that.replayId != null) return false;
@@ -159,11 +167,12 @@ public class BlogchinaCommentEntity {
 
     @Override
     public int hashCode() {
-        int result = commentId != null ? commentId.hashCode() : 0;
-        result = 31 * result + (commentUserId != null ? commentUserId.hashCode() : 0);
-        result = 31 * result + (commentBlogId != null ? commentBlogId.hashCode() : 0);
-        result = 31 * result + (commentTime != null ? commentTime.hashCode() : 0);
-        result = 31 * result + (commentContent != null ? commentContent.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (commentId != null ? commentId.hashCode() : 0);
+        result = 31 * result + (authorId != null ? authorId.hashCode() : 0);
+        result = 31 * result + (blogId != null ? blogId.hashCode() : 0);
+        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (praiseNum != null ? praiseNum.hashCode() : 0);
         result = 31 * result + (praiseIds != null ? praiseIds.hashCode() : 0);
         result = 31 * result + (replayId != null ? replayId.hashCode() : 0);
@@ -171,15 +180,5 @@ public class BlogchinaCommentEntity {
         result = 31 * result + (lastIp != null ? lastIp.hashCode() : 0);
         result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
         return result;
-    }
-
-    @Id
-    @Column(name = "id")
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

@@ -25,4 +25,9 @@ public class BLOGSinaPostService  implements IBLOGSinaPostService{
         }
         return blogSinaPostDAO.saveBLOGSinaPost(blogSinaPost);
     }
+
+    @Override
+    public BlogSinaPostEntity getBlogSinaPost(String id) {
+        return blogSinaPostDAO.getBlogSinaPost(id);
+    }
 }
