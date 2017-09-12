@@ -43,7 +43,7 @@ public class LoginController {
     /**
      * 用户的登陆
      * @param req
-     * @param resp
+     * @param model
      * @return
      * @throws IOException
      */

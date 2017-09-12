@@ -2,6 +2,7 @@ package com.sicdlib.util.HTableToMysqlUtil;
 
 import com.sicdlib.dto.entity.BbsTianyaPostEntity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,14 +18,21 @@ public class NormalizeBbsTianyaPost implements INormalizeProcess {
         BbsTianyaPostEntity tianyaPost = (BbsTianyaPostEntity) object;
 
         //日期时间
-        String dateTime = tianyaPost.getDateTime();
+        String dateTime = tianyaPost.getDateTime().trim();
         if (dateTime.length() > 19) {
             tianyaPost.setDateTime(dateTime.substring(0, dateTime.length() - 4));
         }
 
+        if (dateTime.length() == 16) {
+            String fmt = "yy-MM-dd hh:mm";
+            try {
+                tianyaPost.setDateTime(FormatDate.format(dateTime, fmt));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         tianyaPost.setContent(tianyaPost.getContent().replaceAll("[\\uE5F1]", "").trim());
-
-
 
         String s = tianyaPost.getCreateTime();
         Pattern pattern = Pattern.compile("[0-9]*");

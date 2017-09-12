@@ -1,10 +1,7 @@
 package com.sicdlib.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.sicdlib.service.IAuthorService;
-import com.sicdlib.service.IIndexService;
-import com.sicdlib.service.ITableService;
-import com.sicdlib.service.IWebsiteService;
+import com.sicdlib.service.*;
 import com.sicdlib.service.pythonService.IBBSMopAuthorService;
 import com.sicdlib.util.HTableToMysqlUtil.BBSChinaUtil;
 import com.sicdlib.util.HTableToMysqlUtil.NormalizeDate;
@@ -22,18 +19,18 @@ import java.util.*;
 @Controller
 public class IndexController {
     @Autowired
-    @Qualifier("tableService")
-    private ITableService tableService;
+    @Qualifier("articleSimiService")
+    private IArticleSimiService articleSimiService;
 
     @Autowired
     @Qualifier("authorService")
     private IAuthorService authorService;
 
-    @RequestMapping("setAuthor")
+    @RequestMapping("setSimi")
     public void setAuthor(HttpServletRequest req) throws Exception {
         String eventID = req.getParameter("eventID");
 
-        tableService.setAuthorAttributes(eventID);
+        articleSimiService.setEventArticleSimi(eventID);
     }
 
     @RequestMapping("authorIndex")

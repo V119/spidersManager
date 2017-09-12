@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by YH on 2017/6/6.
@@ -36,17 +38,27 @@ public class ArticleSpreadService implements IArticleSpreadService {
 
     @Override
     public Map<String, List> getNodeAndEdgeAttributes(String eventID) {
-        double simi = 0.35;
+        int sliceNum = 10; //将相似度分为10份
+        double sliceSize = 1.0 / sliceNum;
+//        double simi = 0.35;
         List<TbArticleSimilarityEntity> articleSimiList = articleSimiDAO.getSimiArticleEntityList(eventID);
-        Map<String, Integer> articleSimiNumMap = new ConcurrentHashMap<>();
+
+        //存放在不同相似都情况下每个节点的大小
+        Map<String, Vector<Integer>> articleSimiNumMap = new ConcurrentHashMap<>();
+
         Map<String, String> articleTitleMap = new ConcurrentHashMap<>();
         Map<String, String> articleWebsite = new ConcurrentHashMap<>();
         Map<String, String> tableNameMap = new ConcurrentHashMap<>();
 
-        Vector<Map<String, String>> edgeList = new Vector<>();
+        Vector<Vector<Map<String, Object>>> edgeList = new Vector<>();
+        for(int i = 0; i <= sliceNum; i++) {
+            AtomicReference<Vector<Map<String, Object>>> vector = new AtomicReference<>(new Vector<>());
+            edgeList.add(vector.get());
+        }
 
         articleSimiList
-                .parallelStream().forEach(articleSimi->{
+//                .parallelStream()
+                .forEach(articleSimi->{
                     String articleAID = articleSimi.getArticleA().getSourceArticleId();
                     String articleBID = articleSimi.getArticleB().getSourceArticleId();
 
@@ -58,7 +70,12 @@ public class ArticleSpreadService implements IArticleSpreadService {
                         articleAID
                 );
 
-                articleSimiNumMap.put(articleAID, 0);
+                //初始化每个节点在不同相似度下节点的大小,初始化为0
+                Vector<Integer> nodeSizeList = new Vector<>();
+                for (int i = 0; i <= sliceNum; i++) {
+                    nodeSizeList.add(0);
+                }
+                articleSimiNumMap.put(articleAID, nodeSizeList);
 
                 articleTitleMap.put(articleAID, articleATitle);
 
@@ -77,7 +94,12 @@ public class ArticleSpreadService implements IArticleSpreadService {
                         articleBID
                 );
 
-                articleSimiNumMap.put(articleBID, 0);
+                //初始化每个节点在不同相似度下节点的大小,初始化为0
+                Vector<Integer> nodeSizeList = new Vector<>();
+                for (int i = 0; i <= sliceNum; i++) {
+                    nodeSizeList.add(0);
+                }
+                articleSimiNumMap.put(articleBID, nodeSizeList);
 
                 //文章标题
                 articleTitleMap.put(articleBID, articleBTitle);
@@ -94,20 +116,41 @@ public class ArticleSpreadService implements IArticleSpreadService {
 
             //时间早的作为source，晚的为target
             //如果相似度高于simi，连接两个节点
-            if(articleSimi.getSimilarity() > simi) {
-                Map<String, String> edgeMap = new HashMap<>();
-                articleSimiNumMap.put(articleAID, articleSimiNumMap.get(articleAID) + 1);
-                articleSimiNumMap.put(articleBID, articleSimiNumMap.get(articleBID) + 1);
 
-                if(articleTitleMap.get(articleAID).compareTo(articleTitleMap.get(articleBID)) > 0) {
-                    edgeMap.put("source", articleBID);
-                    edgeMap.put("target", articleAID);
-                } else {
-                    edgeMap.put("source", articleAID);
-                    edgeMap.put("target", articleBID);
-                }
-                edgeList.add(edgeMap);
+
+            String edgeSource = "";
+            String edgeTarget = "";
+            if(articleTitleMap.get(articleAID).compareTo(articleTitleMap.get(articleBID)) > 0) {
+                edgeSource = articleBID;
+                edgeTarget = articleAID;
+            } else {
+                edgeSource = articleAID;
+                edgeTarget = articleBID;
             }
+
+            //对相应的相似度阈值+1
+            Vector<Integer> simiAList = articleSimiNumMap.get(articleAID);
+            Vector<Integer> simiBList = articleSimiNumMap.get(articleBID);
+
+            //循环，加入相应的阈值数组
+            for (int i = 0; i <= (int)(articleSimi.getSimilarity() / sliceSize); i++) {
+                AtomicInteger countA = new AtomicInteger(simiAList.get(i));
+                AtomicInteger countB = new AtomicInteger(simiBList.get(i));
+
+                simiAList.set(i, countA.incrementAndGet());
+                simiBList.set(i, countB.incrementAndGet());
+
+                Map<String, Object> edgeMap = new HashMap<>();
+                edgeMap.put("source", edgeSource);
+                edgeMap.put("target", edgeTarget);
+
+                Vector<Map<String, Object>> vector = edgeList.get(i);
+                vector.add(edgeMap);
+                edgeList.set(i, vector);
+            }
+
+            articleSimiNumMap.put(articleAID, simiAList);
+            articleSimiNumMap.put(articleBID, simiBList);
         });
 
         List<Map> nodeList = new ArrayList<>();

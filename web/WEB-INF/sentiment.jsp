@@ -26,71 +26,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
 
 <!--Header-part-->
-<div id="header">
-  <h1 style="font-family: 华文行楷;font-size: 27px;padding-top:10px;color: red;">舆情分析大平台</h1>
-</div>
-<!--close-Header-part-->
-
-<!--top-Header-menu-->
-<div id="user-nav" class="navbar navbar-inverse">
-  <ul class="nav">
-    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">欢迎用户</span><b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a href="#"><i class="icon-user"></i>个人资料</a></li>
-        <li class="divider"></li>
-        <li><a href="#"><i class="icon-check"></i>我的任务</a></li>
-        <li class="divider"></li>
-        <li><a href="login.html"><i class="icon-key"></i>注销</a></li>
-      </ul>
-    </li>
-    <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">信息</span><b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i>新信息</a></li>
-        <li class="divider"></li>
-        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i>收信信箱</a></li>
-        <li class="divider"></li>
-        <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i>待发箱</a></li>
-        <li class="divider"></li>
-        <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i>回收站</a></li>
-      </ul>
-    </li>
-    <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">设置</span></a></li>
-    <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">注销</span></a></li>
-  </ul>
-</div>
-
-<!--start-top-serch-->
-<div id="search">
-  <input type="text" placeholder="在此搜索...."/>
-  <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
-</div>
-<!--close-top-serch-->
-
+<jsp:include page="static/fore_header.jsp"/>
 <!--sidebar-menu-->
-<div id="sidebar">
-  <ul style="display: block;background: #2E363F;height: 800px;">
-    <li><a href="eventsList" style="font-family:新宋体;font-size: 18px;"><i class="icon icon-home"></i> <span>事件列表</span></a> </li>
-    <li><a href="event?eventID=${eventID}" style="font-family:新宋体;font-size: 18px;"><i class="icon icon-tint"></i> <span>事件趋势</span></a> </li>
-    <li><a href="hotWords?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-signal"></i> <span>热点词</span></a> </li>
-    <li> <a href="#" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-inbox"></i> <span>媒体来源分析</span></a> </li>
-    <li><a href="articleSpread?eventID=${eventID}" style="font-family:新宋体;font-size: 18px;"><i class="icon icon-th"></i> <span>文章传播</span></a></li>
-    <li> <a href="eventTrend?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-inbox"></i> <span>事件走势</span></a> </li>
-    <li><a href="hotInformation?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-fullscreen"></i> <span>热门信息</span></a></li>
-    <li class="active"><a href="sentiment?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-signal"></i><span>舆情影响力</span></a></li>
-    <li><a href="participant?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-tint"></i><span>网民参与度</span></a></li>
-    <li ><a href="negativeIndex?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-home"></i><span>舆情负面指数</span></a></li>
-  </ul>
-</div>
+<jsp:include page="static/fore_lefter.jsp">
+  <jsp:param name="eventID" value='<%=request.getSession().getAttribute("eventID")%>'/>
+</jsp:include>
 <!--sidebar-menu-->
-<div class="search-wrapper search-wrapper2">
-  <div class="search" style="margin-left:300px;width:600px;margin-top:60px;">
-    <span style="margin-left:100px;">
-	<input type="text" class="keyWord searchkey" name="keywords" onkeydown="enterClick(event)" onmousedown="history()" oninput="thinkKeywords(this,0)" maxlength="20"  id="search-keyword" value="事件关键词">
-	</span>
-    <span><a href="javascript:void(0);" onclick="getEventSearch();" class="searchBtn">搜索</a>
-	</span>
-  </div>
-</div>
   <div>
   <!--为Echarts准备一个具备大小（宽高）的Dom-->
   <div id="main" style="width: 1200px;height: 600px;margin-top:100px;">

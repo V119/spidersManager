@@ -302,16 +302,11 @@ public class BaseDAO<T> implements IBaseDAO<T> {
                 if(i % 100 == 0) {
                     getCurrentSession().flush();
                     getCurrentSession().clear();
-
-                    tx.commit();
-                    tx = sessionFactory.openSession().getTransaction();
                 }
             }
         } catch (Exception e) {
             System.err.println("第" + i + "条数据出错！！");
         } finally {
-            getCurrentSession().flush();
-            getCurrentSession().clear();
             tx.commit();
         }
     }

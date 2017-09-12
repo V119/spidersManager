@@ -20,82 +20,12 @@
 </head>
 <body>
 <!--Header-part-->
-<div id="header">
-    <h1 style="font-family: 华文行楷;font-size: 27px;padding-top:10px;color: red;">舆情分析大平台</h1>
-</div>
-<!--close-Header-part-->
-
-<!--top-Header-menu-->
-<div id="user-nav" class="navbar navbar-inverse">
-    <ul class="nav">
-        <li class="dropdown" id="profile-messages"><a title="" href="#" data-toggle="dropdown"
-                                                      data-target="#profile-messages" class="dropdown-toggle"><i
-                class="icon icon-user"></i> <span class="text">欢迎用户</span><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a href="#"><i class="icon-user"></i>个人资料</a></li>
-                <li class="divider"></li>
-                <li><a href="#"><i class="icon-check"></i>我的任务</a></li>
-                <li class="divider"></li>
-                <li><a href="login.html"><i class="icon-key"></i>注销</a></li>
-            </ul>
-        </li>
-        <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages"
-                                                   class="dropdown-toggle"><i class="icon icon-envelope"></i> <span
-                class="text">信息</span><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i>新信息</a></li>
-                <li class="divider"></li>
-                <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i>收信信箱</a></li>
-                <li class="divider"></li>
-                <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i>待发箱</a></li>
-                <li class="divider"></li>
-                <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i>回收站</a></li>
-            </ul>
-        </li>
-        <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">设置</span></a></li>
-        <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">注销</span></a>
-        </li>
-    </ul>
-</div>
-
-<!--start-top-serch-->
-<div id="search">
-    <input type="text" placeholder="在此搜索...."/>
-    <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
-</div>
-<!--close-top-serch-->
-
+<jsp:include page="static/fore_header.jsp"/>
 <!--sidebar-menu-->
-
-<div id="sidebar"> <a href="#" class="visible-phone"><i class="icon icon-th"></i>分析</a>
-    <ul style="display: block;background: #2E363F;height: 800px;">
-        <li><a href="eventsList" style="font-family:新宋体;font-size: 18px;"><i class="icon icon-home"></i> <span>事件列表</span></a> </li>
-        <li><a href="event?eventID=${eventID}" style="font-family:新宋体;font-size: 18px;"><i class="icon icon-tint"></i> <span>事件趋势</span></a> </li>
-        <li><a href="#" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-signal"></i> <span>热点词</span></a> </li>
-        <li><a href="sourceWebsiteStatistics?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-inbox"></i> <span>媒体来源分析</span></a> </li>
-        <li><a href="articleSpread?eventID=${eventID}" style="font-family:新宋体;font-size: 18px;"><i class="icon icon-th"></i> <span>文章传播</span></a></li>
-        <li class="active"><a href="authorIndex?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-fullscreen"></i> <span>发布者指标</span></a></li>
-        <li><a href="eventTrend?eventID=${eventID}" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-inbox"></i> <span>事件走势</span></a> </li>
-        <%--<li><a href="sentiment.html" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-fullscreen"></i> <span>表情分析</span></a></li>--%>
-        <%--<li class="submenu"> <a href="#" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-th-list"></i> <span>分析</span> <span class="label label-important">3</span></a>--%>
-        <%--<ul>--%>
-        <%--<li><a href="publish.html" style="font-family: 新宋体;font-size: 18px;">博主分析</a></li>--%>
-        <%--<li><a href="sex.html" style="font-family: 新宋体;font-size: 18px;">男女比例</a></li>--%>
-        <%--<li><a href="count.html" style="font-family: 新宋体;font-size: 18px;">统计</a></li>--%>
-        <%--</ul>--%>
-        <%--</li>--%>
-        <%--<li><a href="hotCorePeople.jsp" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-tint"></i><span>核心传播人</span></a></li>--%>
-        <%--<li><a href="hot.html" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-pencil"></i><span>热门信息</span></a></li>--%>
-        <%--<li><a href="data.html" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-file"></i><span>数据类型</span></a></li>--%>
-        <%--<li class="submenu"> <a href="#" style="font-family: 新宋体;font-size: 18px;"><i class="icon icon-info-sign"></i> <span>发布</span> <span class="label label-important">3</span></a>--%>
-        <%--<ul>--%>
-        <%--<li><a href="weibo.html" style="font-family: 新宋体;font-size: 18px;">微博分布</a></li>--%>
-        <%--<li><a href="area.html" style="font-family: 新宋体;font-size: 18px;">地域分布</a></li>--%>
-        <%--<li><a href="device.html" style="font-family: 新宋体;font-size: 18px;">设备分布</a></li>--%>
-        <%--</ul>--%>
-        <%--</li>--%>
-    </ul>
-</div>
+<jsp:include page="static/fore_lefter.jsp">
+    <jsp:param name="eventID" value='<%=request.getSession().getAttribute("eventID")%>'/>
+</jsp:include>
+<!--sidebar-menu-->
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>主页</a> <a
