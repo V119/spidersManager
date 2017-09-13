@@ -35,9 +35,13 @@ public class ArticleSimiService implements IArticleSimiService {
     @Qualifier("articleSimiDAO")
     private IArticleSimiDAO articleSimiDAO;
 
+    /**
+     * 方法：计算某个事件下所有文章的相似度
+     */
     @Override
     public void setEventArticleSimi(String eventID) {
 //        List<String> stops = stopWordsDAO.getAllStopWords();
+
         List<TbTableEntity> tableList = tableDAO.getTableByEventID(eventID);
         List<String> idList = new ArrayList<>();
         List<List<String>> wordsList = new ArrayList<>();

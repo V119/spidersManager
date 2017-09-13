@@ -49,7 +49,7 @@
     <!--BEGIN PAGE WRAPPER-->
     <div id="page-wrapper">
       <!--BEGIN CONTENT-->
-      <div class="page-content">
+      <div class="page-content" style="position:absolute; height:800px; overflow-y:auto">
         <div id="tab-general">
           <div class="row mbl">
             <div class="col-lg-12">

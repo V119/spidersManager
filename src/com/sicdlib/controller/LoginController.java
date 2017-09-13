@@ -296,12 +296,16 @@ public class LoginController {
         loginService.addUser(user);
         return "redirect:success.jsp";
     }
+
+    /**
+     * 用户注销登录
+     * @param req
+     * @return
+     */
     @RequestMapping("logout")
     public String logout(HttpServletRequest req){
-
         req.getSession().removeAttribute("user");
         System.out.println("logout");
-
         return "redirect:/";
     }
 }

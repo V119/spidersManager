@@ -66,7 +66,7 @@
             <!--END TITLE & BREADCRUMB PAGE-->
 
             <!--BEGIN CONTENT-->
-            <div class="page-content" align="center">
+            <div class="page-content" style="position:absolute; height:1000px; overflow-y:auto" align="center">
                 <div id="main" style="width: 800px;height: 400px;margin-top: 10%" align="center"></div>
                 <%--<div id="tab-general">
                     <div class="row mbl">

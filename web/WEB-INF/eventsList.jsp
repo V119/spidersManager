@@ -75,7 +75,7 @@
             <!--END TITLE & BREADCRUMB PAGE-->
 
             <!--BEGIN-->
-            <div class="page-content">
+            <div class="page-content" style="position:absolute; height:1000px; overflow-y:auto">
                 <div class="col-md-12">
                     <div class="row mtl">
                         <c:forEach items="${events}" var="e">

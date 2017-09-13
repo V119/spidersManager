@@ -92,7 +92,7 @@
             <!--END TITLE & BREADCRUMB PAGE-->
 
             <!--BEGIN-->
-            <div class="page-content">
+            <div class="page-content" style="position:absolute; height:1000px; overflow-y:auto">
                 <div>&nbsp;&nbsp;&nbsp;&nbsp;
                     <a onclick="show(allInfo)">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
                     <a onclick="show(douban)">豆瓣社区</a>&nbsp;&nbsp;&nbsp;&nbsp;

@@ -39,7 +39,7 @@ public class TableDAO implements ITableDAO {
                 "WHERE table.id in " +
                 "(" +
                 "SELECT distinct articleNum.table.id " +
-                "FROM  TbEventArticleEntity articleNum " +
+                "FROM TbEventArticleEntity articleNum " +
                 "WHERE articleNum.event.id = '" + eventID + "'" +
                 ")";
 
