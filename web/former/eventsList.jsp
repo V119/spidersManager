@@ -35,9 +35,7 @@
 <body>
 
 <!--Header-part-->
-<div id="header" style="height: 85px;">
-    <h1 style="font-family: 华文行楷;font-size: 27px;padding-top:10px;color: red;">舆情分析大平台</h1>
-</div>
+11111
 <!--close-Header-part-->
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">

@@ -69,9 +69,10 @@ public class MD5Util {
     
     public static void main(String[] args) {
 		String strTemp = "qqqq";
-		System.out.println("MD5加密："+generatePassword(strTemp));
+		/*System.out.println("MD5加密："+generatePassword(strTemp));
 		System.out.println("验证："+validatePassword(generatePassword(strTemp),strTemp));
         Date dt = new Date();
-        System.out.println("当前时间"+dt.getTime());
+        System.out.println("当前时间"+dt.getTime());*/
+
 	}
 }
