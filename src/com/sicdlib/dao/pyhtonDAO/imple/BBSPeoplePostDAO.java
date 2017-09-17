@@ -38,4 +38,9 @@ public class BBSPeoplePostDAO implements IBBSPeoplePostDAO{
         return (BbsPeoplePostEntity)baseDAO.get(hql);
     }
 
+    @Override
+    public List<BbsPeoplePostEntity> getbbspeoplePost(String authorID) {
+        return null;
+    }
+
 }

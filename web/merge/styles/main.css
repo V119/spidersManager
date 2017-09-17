@@ -4340,6 +4340,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f5f6', end
 }
 .panel.panel-grey {
   border-color: #4b5d67;
+  width: auto;
 }
 .panel.panel-grey > .panel-heading {
   color: #FFFFFF;

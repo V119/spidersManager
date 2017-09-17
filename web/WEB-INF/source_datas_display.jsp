@@ -1,164 +1,229 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: admin
+  Date: 2017/9/6
+  Time: 17:07
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-String htable = (String) request.getAttribute("htable");
+  String path = request.getContextPath();
+  String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="css/uniform.css" />
-<link rel="stylesheet" href="css/select2.css" />
-<link rel="stylesheet" href="css/maruti-style.css" />
-<link rel="stylesheet" href="css/maruti-media.css" class="skin-color" />
-<link rel="stylesheet" href="css/fullcalendar.css" />
-</head>
+<html>
+<jsp:include page="static/head_jsp.jsp"/>
 <body>
+<div>
+  <!--BEGIN BACK TO TOP-->
+  <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
+  <!--END BACK TO TOP-->
+  <jsp:include page="static/headerInfo.jsp"/>
+  <div id="wrapper">
+    <!--BEGIN SIDEBAR MENU-->
+    <jsp:include page="static/leftNav_one.jsp"/>
+    <!--END SIDEBAR MENU-->
 
-<jsp:include page="static/header.jsp"/>
-
-
-<div class="widget-box">
-  <div class="widget-title"><span class="icon"><i class="icon-bookmark"></i></span><h5>All Buttons</h5></div>
-  <div class="widget-content">
-    <h3>各类网站源数据</h3>
-
-    <div class="btn-group">
-      <button class="btn btn-primary">中华网</button>
-      <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a href="javascript:click_bbs_1();">论坛表1</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
-    </div>
-    <div class="btn-group">
-      <button class="btn btn-danger">Danger</button>
-      <button data-toggle="dropdown" class="btn btn-danger dropdown-toggle"><span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
-    </div>
-    <div class="btn-group">
-      <button class="btn btn-warning">Warning</button>
-      <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle"><span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
-    </div>
-    <div class="btn-group">
-      <button class="btn btn-success">Success</button>
-      <button data-toggle="dropdown" class="btn btn-success dropdown-toggle"><span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<script>
-  function click_bbs_1(){
-    $("#div_ChinaBBS_1").css("display", "");
-  }
-
-  function page(value){
-    if(value == 'first'){
-      window.location.href = "source_datas_display";
-    }
-    if(value == 'prev'){
-      window.location.href = "get_cur_pre_next_page?curPage=${curPageNo-1}&&startRow=${startRow}&&nextPageFlag=0";
-    }
-    if(value == 'next'){
-      window.location.href = "get_cur_pre_next_page?curPage=${curPageNo+1}&&startRow=${startRow}&&nextPageFlag=1";
-    }
-    if(value == 'last'){
-      window.location.href = "get_cur_pre_next_page?curPage=-1&&startRow=${startRow}";
-    }
-  }
-</script>
-
-<div id="content" style="margin-top:36px;overflow:scroll;">
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
-  </div>
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div id="div_ChinaBBS_1" class="span12" style="">
-
-        <div class="widget-title" style="float:right;width:500px;">
-          <span class="icon"><i class="icon-th"></i></span>
-          <h5>共${rowCount}条,每页200条</h5>
-          <a class="btn btn-info" href="javascript:page('first')">首页</a>
-          <a class="btn btn-primary"  href="javascript:page('prev')">上页</a>
-          <a class="btn btn-success">${curPageNo}</a>
-          <a class="btn btn-danger" href="javascript:page('next')">下页</a>
-          <a class="btn btn-info" href="javascript:page('last')">末页</a>
+    <!--BEGIN PAGE WRAPPER-->
+    <div id="page-wrapper">
+      <!--BEGIN TITLE & BREADCRUMB PAGE-->
+      <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+        <div class="page-header pull-left">
+          <div class="page-title">
+            作者列表</div>
         </div>
-        <div class="widget-box" style="margin-top: -40px;">
-
-          <div class="widget-title">
-             <span class="icon"><i class="icon-th"></i></span>
-            <h5 id="id_htable"><%=session.getAttribute("htable")%></h5>
-          </div>
-          <div class="widget-content nopadding">
-            <table class="table table-bordered data-table">
-              <thead>
-                <tr>
-                  <c:forEach var="field" items="${field}">
-                    <th><a href="clean_data?field=${field}&&htable=<%=session.getAttribute("htable")%>">${field}</a></th>
-                  </c:forEach>
-                </tr>
-                <tr>
-                  <c:forEach var="fm" items="${field_meanings}">
-                    <th>${fm}</th>
-                  </c:forEach>
-                </tr>
-              </thead>
-              <tbody>
-                <c:forEach var="values" items="${values_list}">
-                    <tr class="gradeX">
-                      <c:forEach var="v" items="${values}">
-                        <th>${v}</th>
-                      </c:forEach>
-                    </tr>
-                </c:forEach>
-              </tbody>
-            </table>
-          </div>
+        <ol class="breadcrumb page-breadcrumb pull-right">
+          <li><i class="fa fa-home"></i>&nbsp;<a>Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+          <li class="hidden"><a>源数据展示</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+          <li class="active">源数据展示</li>
+        </ol>
+        <div class="clearfix">
         </div>
-
       </div>
+      <!--END TITLE & BREADCRUMB PAGE-->
+
+      <!--BEGIN CONTENT-->
+      <div class="page-content">
+        <div id="tab-general">
+          <div class="row mbl">
+            <div class="col-lg-12">
+
+              <div class="col-md-12">
+                <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-lg-12">
+              <div class="col-lg-12">
+                <ul id="generalTab" class="nav nav-tabs responsive">
+                  <li class="active"><a href="#label-badge-tab" data-toggle="tab">全部</a></li>
+                  <li><a href="#list-group-tab" data-toggle="tab">中华网</a></li>
+                  <li><a href="#list-group-tab" data-toggle="tab">猫扑网</a></li>
+                  <li><a href="#list-group-tab" data-toggle="tab">新华网</a></li>
+                  <li><a href="#list-group-tab" data-toggle="tab">人民网</a></li>
+                  <li><a href="#list-group-tab" data-toggle="tab">搜狐网</a></li>
+                  <li><a href="#list-group-tab" data-toggle="tab">天涯网</a></li>
+                </ul>
+                <div id="generalTabContent" class="tab-content responsive">
+                  <div id="label-badge-tab" class="tab-pane fade in active">
+                    <div class="row">
+                      <div class="col-lg-6"><h3>Labels</h3><span class="label label-default">Default</span>&nbsp;<span class="label label-primary">Primary</span>&nbsp;<span class="label label-success">Success</span>&nbsp;<span class="label label-info">Info</span>&nbsp;<span class="label label-warning">Warning</span>&nbsp;<span class="label label-danger">Danger</span>
+
+                        <div class="mbxl"></div>
+                        <h3>Label Colors</h3><span class="label label-red">Red</span>&nbsp;<span class="label label-orange">Orange</span>&nbsp;<span class="label label-green">Green</span>&nbsp;<span class="label label-yellow">Yellow</span>&nbsp;<span class="label label-blue">Blue</span>&nbsp;<span class="label label-violet">Violet</span>&nbsp;<span
+                                class="label label-pink">Pink</span>&nbsp;<span class="label label-grey">Grey</span>&nbsp;<span class="label label-dark">Dark</span>
+
+                        <div class="mbxl"></div>
+                        <h3>Label In Headings</h3>
+
+                        <h1>Example heading
+                          &nbsp;<span class="label label-default">Default</span></h1>
+
+                        <h2>Example heading
+                          &nbsp;<span class="label label-primary">Primary</span></h2>
+
+                        <h3>Example heading
+                          &nbsp;<span class="label label-success">Success</span></h3><h4>Example heading
+                          &nbsp;<span class="label label-warning">Warning</span></h4><h5>Example heading
+                          &nbsp;<span class="label label-info">Info</span></h5><h6>Example heading
+                          &nbsp;<span class="label label-danger">Danger</span></h6></div>
+                      <div class="col-lg-6"><h3>Badges</h3><span class="badge badge-default">Default</span>&nbsp;<span class="badge badge-primary">Primary</span>&nbsp;<span class="badge badge-success">Success</span>&nbsp;<span class="badge badge-warning">Warning</span>&nbsp;<span class="badge badge-info">Info</span>&nbsp;<span class="badge badge-danger">Danger</span>
+
+                        <div class="mbxl"></div>
+                        <h3>Badge Colors</h3><span class="badge badge-red">Red</span>&nbsp;<span class="badge badge-orange">Orange</span>&nbsp;<span class="badge badge-green">Green</span>&nbsp;<span class="badge badge-yellow">Yellow</span>&nbsp;<span class="badge badge-blue">Blue</span>&nbsp;<span class="badge badge-pink">Pink</span>&nbsp;<span
+                                class="badge badge-violet">Violet</span>&nbsp;<span class="badge badge-grey">Grey</span>&nbsp;<span class="badge badge-dark">Dark</span>
+
+                        <div class="mtxl"></div>
+                        <h3>Badges List Navigations</h3>
+                        <ul style="max-width: 260px;" class="nav nav-pills nav-stacked">
+                          <li class="active"><a href="#"><span class="badge pull-right">2</span>Home</a></li>
+                          <li><a href="#">Profile</a></li>
+                          <li><a href="#"><span class="badge badge-warning pull-right">3</span>Messages</a></li>
+                        </ul>
+                        <div class="mtxl"></div>
+                        <h3>Badge In Pill</h3>
+                        <ul class="nav nav-pills">
+                          <li class="active"><a href="#">Home
+                            &nbsp;<span class="badge badge-green">3</span></a></li>
+                          <li><a href="#">Profile</a></li>
+                          <li><a href="#">Messages
+                            &nbsp;<span class="badge badge-info">3</span></a></li>
+                        </ul>
+                        <div class="mbxl"></div>
+                        <h3>Badge With Button Dropdown</h3>
+
+                        <div class="btn-group">
+                          <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Account
+                            &nbsp;<i class="fa fa-angle-down"></i></button>
+                          <ul role="menu" class="dropdown-menu">
+                            <li><a href="#">Action<span class="badge badge-yellow pull-right">5</span></a></li>
+                            <li><a href="#">Another action<span class="badge badge-info pull-right">3</span></a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                          </ul>
+                        </div>
+                        &nbsp;
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-primary">Chats</button>
+                          <button type="button" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" class="btn btn-primary dropdown-toggle"><i class="fa fa-angle-down"></i></button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#"><span class="label label-warning">7:00 AM</span>&nbsp;
+                              Hi :)</a></li>
+                            <li><a href="#"><span class="label label-warning">8:00 AM</span>&nbsp;
+                              How are you?</a></li>
+                            <li><a href="#"><span class="label label-warning">9:00 AM</span>&nbsp;
+                              What are you doing?</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" class="text-center">View All</a></li>
+                          </ul>
+                        </div>
+                        &nbsp;
+                        <div class="btn-group">
+                          <button type="button" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" class="btn btn-primary dropdown-toggle">Inbox
+                            &nbsp;<span class="badge badge-yellow">25</span></button>
+                          <ul class="dropdown-menu pull-right">
+                            <li><a href="#"><span class="label label-info"><i class="fa fa-bell"></i></span>&nbsp;
+                              Favourites Snippet</a></li>
+                            <li><a href="#"><span class="label label-red"><i class="fa fa-magic"></i></span>&nbsp;
+                              Email marketing</a></li>
+                            <li><a href="#"><span class="label label-yellow"><i class="fa fa-bullhorn"></i></span>&nbsp;
+                              Subscriber focused email design</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" class="text-center">View All</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="list-group-tab" class="tab-pane fade">
+                    <div class="row">
+                      <div class="col-lg-4"><h4 class="box-heading">Basic</h4>
+                        <ul class="list-group">
+                          <li class="list-group-item">Cras justo odio</li>
+                          <li class="list-group-item">Dapibus ac facilisis in</li>
+                          <li class="list-group-item">Morbi leo risus</li>
+                          <li class="list-group-item">Porta ac consectetur ac</li>
+                          <li class="list-group-item">Vestibulum at eros</li>
+                          <li class="list-group-item">Morbi leo risus</li>
+                        </ul>
+                        <div class="mbxl"></div>
+                        <h4 class="box-heading">Contextual classes</h4>
+                        <ul class="list-group">
+                          <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
+                          <li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>
+                          <li class="list-group-item list-group-item-warning">Porta ac consectetur ac</li>
+                          <li class="list-group-item list-group-item-danger">Vestibulum at eros</li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-4"><h4 class="box-heading">Badges</h4>
+
+                        <div class="list-group"><a href="#" class="list-group-item active">Cras justo odio<span class="badge badge-info pull-right">4</span></a><a href="#" class="list-group-item">Dapibus ac facilisis in<span class="badge badge-warning pull-right">2</span></a><a href="#" class="list-group-item">Morbi leo risus<span
+                                class="badge badge-danger pull-right">3</span></a><a href="#" class="list-group-item">Porta ac consectetur ac<span class="badge badge-info pull-right">8</span></a><a href="#" class="list-group-item">Vestibulum at eros<span class="badge badge-success pull-right">1</span></a><a href="#" class="list-group-item">Morbi leo risus<span
+                                class="badge badge-danger pull-right">5</span></a></div>
+                        <div class="mbxl"></div>
+                        <h4 class="box-heading">Contextual classes with '.active'</h4>
+
+                        <div class="list-group"><a href="#" class="list-group-item list-group-item-success">Dapibus ac facilisis in</a><a href="#" class="list-group-item list-group-item-info">Cras sit amet nibh libero</a><a href="#" class="list-group-item list-group-item-warning">Porta ac consectetur ac</a><a href="#" class="list-group-item list-group-item-danger">Vestibulum at
+                          eros</a></div>
+                      </div>
+                      <div class="col-lg-4"><h4 class="box-heading">Linked Items</h4>
+
+                        <div class="list-group"><a href="#" class="list-group-item active">Cras justo odio</a><a href="#" class="list-group-item">Dapibus ac facilisis in</a><a href="#" class="list-group-item">Morbi leo risus</a><a href="#" class="list-group-item">Porta ac consectetur ac</a><a href="#" class="list-group-item">Vestibulum at eros</a><a href="#"
+                                                                                                                                                                                                                                                                                                                                                                class="list-group-item">Morbi
+                          leo risus</a></div>
+                        <div class="mbxl"></div>
+                        <h4 class="box-heading">Custom Content</h4>
+
+                        <div class="list-group"><a href="#" class="list-group-item active"><h4 class="list-group-item-heading">List group item heading</h4>
+
+                          <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p></a><a href="#" class="list-group-item"><h4 class="list-group-item-heading">List group item heading</h4>
+
+                          <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p></a><a href="#" class="list-group-item"><h4 class="list-group-item-heading">List group item heading</h4>
+
+                          <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p></a></div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!--END PAGE WRAPPER-->
     </div>
   </div>
-</div>
 
-<jsp:include page="static/footer.jsp"/>
-
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.ui.custom.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/maruti.js"></script>
-<script src="js/jquery.uniform.js"></script>
-<script src="js/select2.min.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/maruti.tables.js"></script>
+  <jsp:include page="static/footer_script.jsp"/>
+  <script src="js/js1/echarts.min.js"></script>
 
 </body>
 </html>

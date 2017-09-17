@@ -13,4 +13,6 @@ public interface IBBSPeoplePostService {
     //
     List<BbsPeoplePostEntity> getAllBbsPeoplePosts();
     public BbsPeoplePostEntity getBbsPeoplePost(String id);
+
+    List<BbsPeoplePostEntity> getbbspeoplePost(String authorID);
 }

@@ -11,4 +11,6 @@ public interface IXINHUANewsDAO {
     Boolean saveXINHUANews(XinhuaNewsEntity xinhuaNews);
     List<XinhuaNewsEntity> getAllXinHuaNews();
     XinhuaNewsEntity getAllXinHuaNewsByArticleID(String id);
+
+    List<XinhuaNewsEntity> getBbsXinhuaAuthor();
 }

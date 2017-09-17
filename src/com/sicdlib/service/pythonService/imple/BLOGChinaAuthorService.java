@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 /**
@@ -25,5 +26,10 @@ public class BLOGChinaAuthorService  implements IBLOGChinaAuthorService {
          blogchinaAuthor.setId(uuid);
         }
         return blogChinaAuthorDAO.saveBLOGChinaAuthor(blogchinaAuthor);
+    }
+
+    @Override
+    public List<BlogchinaAuthorEntity> getBlogChinaAuthor() {
+        return blogChinaAuthorDAO.getBlogChinaAuthor();
     }
 }

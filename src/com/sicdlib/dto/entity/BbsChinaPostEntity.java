@@ -27,7 +27,7 @@ public class BbsChinaPostEntity {
     private String url;
     private Timestamp timeStamp;
     private String id;
-    private Integer commentNum;
+//    private Integer commentNum;
 
     @Basic
     @Column(name = "reply_num")
@@ -221,15 +221,15 @@ public class BbsChinaPostEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "comment_num")
-    public Integer getCommentNum() {
-        return commentNum;
-    }
-
-    public void setCommentNum(Integer commentNum) {
-        this.commentNum = commentNum;
-    }
+//    @Basic
+//    @Column(name = "comment_num")
+//    public Integer getCommentNum() {
+//        return commentNum;
+//    }
+//
+//    public void setCommentNum(Integer commentNum) {
+//        this.commentNum = commentNum;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -257,7 +257,7 @@ public class BbsChinaPostEntity {
         if (url != null ? !url.equals(that.url) : that.url != null) return false;
         if (timeStamp != null ? !timeStamp.equals(that.timeStamp) : that.timeStamp != null) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (commentNum != null ? !commentNum.equals(that.commentNum) : that.commentNum != null) return false;
+//        if (commentNum != null ? !commentNum.equals(that.commentNum) : that.commentNum != null) return false;
 
         return true;
     }
@@ -282,7 +282,7 @@ public class BbsChinaPostEntity {
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
         result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (commentNum != null ? commentNum.hashCode() : 0);
+//        result = 31 * result + (commentNum != null ? commentNum.hashCode() : 0);
         return result;
     }
 }

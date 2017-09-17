@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.KdnetAuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/5.
  */
@@ -22,5 +24,11 @@ public class KDNETAuthorDAO  implements IKDNETAuthorDAO{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<KdnetAuthorEntity> getBbsKDAuthor() {
+        String hql = "FROM KdnetAuthorEntity";
+        return baseDAO.find(hql);
     }
 }

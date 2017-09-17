@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.Blog163AuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/3.
  */
@@ -22,5 +24,11 @@ public class BLOG163AuthorDAO  implements IBLOG163AuthorDAO{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<Blog163AuthorEntity> getBlog163Author() {
+        String hql = "FROM Blog163AuthorEntity";
+        return baseDAO.find(hql);
     }
 }

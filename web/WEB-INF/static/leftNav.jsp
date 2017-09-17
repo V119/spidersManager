@@ -59,6 +59,18 @@
                 <div class="icon-bg bg-primary"></div>
             </i><span class="menu-title">舆情负面指数</span></a>
             </li>
+            <li><a href="authorIndex"><i class="fa fa-bar-chart-o fa-fw">
+                <div class="icon-bg bg-primary"></div>
+            </i><span class="menu-title">发布者影响力和活跃度</span></a>
+            </li>
+            <li><a href="explore?eventID=${eventID}"><i class="fa fa-bar-chart-o fa-fw">
+                <div class="icon-bg bg-primary"></div>
+            </i><span class="menu-title">引爆点</span></a>
+            </li>
+            <li><a href="dp"><i class="fa fa-sitemap fa-fw">
+                <div class="icon-bg bg-primary"></div>
+            </i><span class="menu-title">dp聚类</span></a>
+            </li>
 
         </ul>
     </div>

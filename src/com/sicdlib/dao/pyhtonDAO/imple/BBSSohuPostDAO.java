@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.BbsSohuPostEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/2.
  */
@@ -29,5 +31,10 @@ public class BBSSohuPostDAO  implements IBBSSohuPostDAO {
     public BbsSohuPostEntity getBbsSohuPost(String id) {
         String hql = "from BbsSohuPostEntity sh where sh.id ='" + id + "'";
         return (BbsSohuPostEntity) baseDAO.get(hql);
+    }
+
+    @Override
+    public List<BbsSohuPostEntity> getbbssohuPost(String authorID) {
+        return null;
     }
 }

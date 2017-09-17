@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/5.
  */
@@ -23,5 +25,10 @@ public class KDNETAuthorService  implements IKDNETAuthorService{
             kdnetAuthor.setId(uuid);
         }
         return kdnetAuthorDAO.saveKDNETAuthor(kdnetAuthor);
+    }
+
+    @Override
+    public List<KdnetAuthorEntity> getBbsKDAuthor() {
+        return kdnetAuthorDAO.getBbsKDAuthor();
     }
 }

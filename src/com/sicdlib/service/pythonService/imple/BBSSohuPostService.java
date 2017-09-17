@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/2.
  */
@@ -28,5 +30,10 @@ public class BBSSohuPostService implements IBBSSohuPostService{
     @Override
     public BbsSohuPostEntity getBbsSohuPost(String id) {
         return bbsSohuPostDAO.getBbsSohuPost(id);
+    }
+
+    @Override
+    public List<BbsSohuPostEntity> getbbssohuPost(String authorID) {
+        return bbsSohuPostDAO.getbbssohuPost(authorID);
     }
 }

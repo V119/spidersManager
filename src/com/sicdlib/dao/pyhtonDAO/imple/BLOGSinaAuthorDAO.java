@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.BlogSinaAuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/3.
  */
@@ -22,5 +24,11 @@ public class BLOGSinaAuthorDAO  implements IBLOGSinaAuthorDAO{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<BlogSinaAuthorEntity> getBlogSinaAuthor() {
+        String hql = "FROM BlogSinaAuthorEntity";
+        return baseDAO.find(hql);
     }
 }

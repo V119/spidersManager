@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.BbsPeopleAuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/5/30.
  */
@@ -23,5 +25,11 @@ public class BBSPeopleAuthorDAO implements IBBSPeopleAuthorDAO {
             return false;
         }
 
+    }
+
+    @Override
+    public List<BbsPeopleAuthorEntity> getBbsPeopleAuthor() {
+        String hql = "FROM BbsPeopleAuthorEntity";
+        return baseDAO.find(hql);
     }
 }

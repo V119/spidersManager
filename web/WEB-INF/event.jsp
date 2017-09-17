@@ -12,30 +12,8 @@
   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <html>
-<head>
-  <title>Dashboard | Dashboard</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="merge/images/icons/favicon.ico">
-  <link rel="apple-touch-icon" href="merge/images/icons/favicon.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="merge/images/icons/favicon-72x72.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="merge/images/icons/favicon-114x114.png">
-  <!--Loading bootstrap css-->
-  <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
-  <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
-  <link type="text/css" rel="stylesheet" href="merge/styles/jquery-ui-1.10.4.custom.min.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/font-awesome.min.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/bootstrap.min.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/animate.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/all.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/main.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/style-responsive.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/zabuto_calendar.min.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/pace.css">
-  <link type="text/css" rel="stylesheet" href="merge/styles/jquery.news-ticker.css">
-</head>
-<body>
+<jsp:include page="static/head_jsp.jsp"/>
+<body style="overflow: hidden">
 <div>
   <!--BEGIN BACK TO TOP-->
   <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
@@ -49,7 +27,7 @@
     <!--BEGIN PAGE WRAPPER-->
     <div id="page-wrapper">
       <!--BEGIN CONTENT-->
-      <div class="page-content" style="position:absolute; height:800px; overflow-y:auto">
+      <div class="page-content" style="position:absolute; height:100%; overflow-y:auto">
         <div id="tab-general">
           <div class="row mbl">
             <div class="col-lg-12">
@@ -67,7 +45,7 @@
             <div class="panel" align="center">
               <div class="panel-body"><h2 style="font-family:黑体;size: 24px;color: black" align="left"><strong>事件趋势</strong></h2>
               </div>
-              <div id="main" style="width:1000px;height: 600px;" align="center"></div>
+              <div id="main" style="width:1000px;height: 600px;margin-left: 16%" ></div>
           </div>
         </div>
       </div>

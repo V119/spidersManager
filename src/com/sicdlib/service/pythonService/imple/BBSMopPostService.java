@@ -1,12 +1,15 @@
 package com.sicdlib.service.pythonService.imple;
 
 import com.sicdlib.dao.pyhtonDAO.IBBSMopPostDAO;
+import com.sicdlib.dto.entity.BbsMopAuthorEntity;
 import com.sicdlib.dto.entity.BbsMopPostEntity;
 import com.sicdlib.service.pythonService.IBBSMopPostService;
 import com.sicdlib.util.UUIDUtil.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by init on 2017/5/26.
@@ -28,6 +31,11 @@ public class BBSMopPostService implements IBBSMopPostService {
     @Override
     public BbsMopPostEntity getBbsMopPost(String id) {
         return  bbsMopPostDAO.getBbsMopPost(id);
+    }
+
+    @Override
+    public List<BbsMopAuthorEntity> getbbsmopPost(String authorID) {
+        return bbsMopPostDAO.getbbsmopPost(authorID);
     }
 
 }

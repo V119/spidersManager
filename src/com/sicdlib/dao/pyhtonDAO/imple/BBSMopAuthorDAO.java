@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * Created by init on 2017/5/26.
@@ -81,5 +82,11 @@ public class BBSMopAuthorDAO implements IBBSMopAuthorDAO{
 
         tx.commit();
         session.close();
+    }
+
+    @Override
+    public List<BbsMopAuthorEntity> getBbsMopAuthor() {
+        String hql = "FROM BbsMopAuthorEntity BbsMopAuthorEntity";
+        return baseDAO.find(hql);
     }
 }

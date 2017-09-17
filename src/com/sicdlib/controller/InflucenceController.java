@@ -231,10 +231,10 @@ public class InflucenceController {
                     if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_xici_post")){
                         BbsXiciPostEntity bbsXici = bbsXiciPostService.getBbsXiciPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbsxici_commentNum_temp +=bbsXici.getCommentNum();
-                    }if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_china_post")){
+                    }/*if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_china_post")){
                         BbsChinaPostEntity bbsChina =bbsChinaPostService.getBbsChinaPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbschina_commentNum_temp +=bbsChina.getCommentNum();
-                    }if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_mop_post")){
+                    }*/if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_mop_post")){
                         BbsMopPostEntity bbsMop = bbsMopPostService.getBbsMopPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbsmop_commentNum_temp +=bbsMop.getCommentNum();
                     }if(eventArticle_parttime.get(j).getTable().getTableName().equals("blog_163_post")){
@@ -401,10 +401,10 @@ public class InflucenceController {
                     if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_xici_post")){
                         BbsXiciPostEntity bbsXici = bbsXiciPostService.getBbsXiciPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbsxici_commentNum_temp +=bbsXici.getCommentNum();
-                    }if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_china_post")){
+                    }/*if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_china_post")){
                         BbsChinaPostEntity bbsChina =bbsChinaPostService.getBbsChinaPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbschina_commentNum_temp +=bbsChina.getCommentNum();
-                    }if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_mop_post")){
+                    }*/if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_mop_post")){
                         BbsMopPostEntity bbsMop = bbsMopPostService.getBbsMopPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbsmop_commentNum_temp +=bbsMop.getCommentNum();
                     }if(eventArticle_parttime.get(j).getTable().getTableName().equals("blog_163_post")){
@@ -573,10 +573,10 @@ public class InflucenceController {
                     if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_xici_post")){
                         BbsXiciPostEntity bbsXici = bbsXiciPostService.getBbsXiciPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbsxici_commentNum_temp +=bbsXici.getCommentNum();
-                    }if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_china_post")){
+                    }/*if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_china_post")){
                         BbsChinaPostEntity bbsChina =bbsChinaPostService.getBbsChinaPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbschina_commentNum_temp +=bbsChina.getCommentNum();
-                    }if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_mop_post")){
+                    }*/if(eventArticle_parttime.get(j).getTable().getTableName().equals("bbs_mop_post")){
                         BbsMopPostEntity bbsMop = bbsMopPostService.getBbsMopPost(eventArticle_parttime.get(j).getSourceArticleId());
                         bbsmop_commentNum_temp +=bbsMop.getCommentNum();
                     }if(eventArticle_parttime.get(j).getTable().getTableName().equals("blog_163_post")){
