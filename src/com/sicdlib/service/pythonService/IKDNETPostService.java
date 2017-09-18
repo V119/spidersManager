@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface IKDNETPostService {
     //更新或新增凯迪社区
-    public  boolean saveKDNETPost(KdnetPostEntity kdnetPost);
-    public KdnetPostEntity getKdnetPost(String id);
+    boolean saveKDNETPost(KdnetPostEntity kdnetPost);
+    KdnetPostEntity getKdnetPost(String id);
 
     List<KdnetPostEntity> getbbskdPost(String authorID);
 }

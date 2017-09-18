@@ -4,6 +4,7 @@ import com.sicdlib.dao.IAuthorDAO;
 import com.sicdlib.dto.TbAuthorEntity;
 import com.sicdlib.dto.TbEventAuthorMappingEntity;
 import com.sicdlib.service.IAuthorService;
+import com.sicdlib.util.PageUtil.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,20 @@ public class AuthorService implements IAuthorService {
         });
 
         return result;
+    }
+
+    @Override
+    public int getAllAuthorNum(String tableName) {
+        return authorDAO.getAllAuthorNum(tableName);
+    }
+
+    @Override
+    public List<Object[]> getAuthorList(String tableName,  Page page) {
+        return authorDAO.getAuthorList(tableName,page);
+    }
+
+    @Override
+    public Object[] getAuthorInfo(String authorId, String tableName) {
+        return authorDAO.getAuthorInfo(authorId,tableName);
     }
 }

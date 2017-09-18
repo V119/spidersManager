@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IBBSPeoplePostService {
     //更新或新增bbsPeoplePost
-    public  boolean saveBBSPeoplePost(BbsPeoplePostEntity bbsPeoplePost);
+    boolean saveBBSPeoplePost(BbsPeoplePostEntity bbsPeoplePost);
     //
     List<BbsPeoplePostEntity> getAllBbsPeoplePosts();
     public BbsPeoplePostEntity getBbsPeoplePost(String id);

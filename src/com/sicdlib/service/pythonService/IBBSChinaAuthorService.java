@@ -10,12 +10,12 @@ import java.util.List;
  */
 public interface IBBSChinaAuthorService {
     //新增or更新bbs作者
-    public boolean saveBBSChinaAuthor(BbsChinaAuthorEntity bbsChinaAuthor);
+    boolean saveBBSChinaAuthor(BbsChinaAuthorEntity bbsChinaAuthor);
     //查询作者
-    public List<BbsChinaAuthorEntity> getBbsChinaAuthorByPage(int pageStart, int pageSize);
+    List<BbsChinaAuthorEntity> getBbsChinaAuthorByPage(int pageStart, int pageSize);
     //查询所有作者的数量
-    public int getAllAuthorNum();
-    public List<BbsChinaAuthorEntity> getBbsChinaAuthor();
+    int getAllAuthorNum();
+    List<BbsChinaAuthorEntity> getBbsChinaAuthor();
     BbsChinaAuthorEntity getBbsChinaAuthorInfoByID(String authorID);
 
 }

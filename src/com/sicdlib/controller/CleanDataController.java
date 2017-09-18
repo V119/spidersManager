@@ -27,4 +27,9 @@ public class CleanDataController {
         return "clean_data_display";
     }
 
+    @RequestMapping("post_comment_display")
+    public String post_comment_display(Model model) {
+
+        return "post_comment_display";
+    }
 }

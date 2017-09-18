@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IBBSXiciAuthorService {
     //更新或新增西祠
-    public  boolean saveBBSXiciAuthor(BbsXiciAuthorEntity bbsXiciAuthor);
+    boolean saveBBSXiciAuthor(BbsXiciAuthorEntity bbsXiciAuthor);
 
-    public List<BbsXiciAuthorEntity> getBbsXiciAuthor();
+    List<BbsXiciAuthorEntity> getBbsXiciAuthor();
 }

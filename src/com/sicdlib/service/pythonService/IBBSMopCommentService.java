@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.BbsMopCommentEntity;
  */
 public interface IBBSMopCommentService {
     //更新or新增猫扑社区的评论
-    public boolean saveBBSMopComment(BbsMopCommentEntity bbsMopComment);
+    boolean saveBBSMopComment(BbsMopCommentEntity bbsMopComment);
 }

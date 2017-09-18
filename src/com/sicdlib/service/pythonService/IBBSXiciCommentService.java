@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.BbsXiciCommentEntity;
  */
 public interface IBBSXiciCommentService {
     //更新或新增西祠
-    public  boolean saveBBSXiciComment(BbsXiciCommentEntity bbsXiciComment);
+    boolean saveBBSXiciComment(BbsXiciCommentEntity bbsXiciComment);
 }

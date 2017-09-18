@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.MoeDataEntity;
  */
 public interface IMOEDataService {
     //更新或新增教育部
-    public boolean saveMOEData(MoeDataEntity moeData);
+    boolean saveMOEData(MoeDataEntity moeData);
 }

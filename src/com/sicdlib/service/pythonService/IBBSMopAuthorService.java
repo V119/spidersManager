@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IBBSMopAuthorService {
     //新增or更新猫扑社区
-    public boolean saveBBSMopAuthor(BbsMopAuthorEntity bbsMopAuthor);
+    boolean saveBBSMopAuthor(BbsMopAuthorEntity bbsMopAuthor);
 
     void normalizeSexAgeBirthdayRegisterDate() throws ParseException;
 

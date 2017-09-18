@@ -6,6 +6,7 @@ import com.sicdlib.dao.ITableColumnDAO;
 import com.sicdlib.dto.TbAuthorEntity;
 import com.sicdlib.dto.TbEventAuthorMappingEntity;
 import com.sicdlib.dto.TbEventEntity;
+import com.sicdlib.util.PageUtil.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -150,5 +151,20 @@ public class AuthorDAO implements IAuthorDAO {
         String hql = "FROM TbEventAuthorMappingEntity eventAuthor " +
                 "WHERE eventAuthor.event.id = '" + eventID + "'";
         return baseDAO.find(hql);
+    }
+
+    @Override
+    public int getAllAuthorNum(String tableName) {
+        return 0;
+    }
+
+    @Override
+    public List<Object[]> getAuthorList(String tableName, Page page) {
+        return null;
+    }
+
+    @Override
+    public Object[] getAuthorInfo(String authorId, String tableName) {
+        return new Object[0];
     }
 }

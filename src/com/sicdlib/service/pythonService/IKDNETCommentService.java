@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.KdnetCommentEntity;
  */
 public interface IKDNETCommentService {
     //更新或新增凯迪社区
-    public boolean saveKDNETComment(KdnetCommentEntity kdnetComment);
+    boolean saveKDNETComment(KdnetCommentEntity kdnetComment);
 }

@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface IBBSPeopleAuthorService {
     //新增或更新bbsPeople
-    public  boolean saveBBSPeopleAuthor(BbsPeopleAuthorEntity bbsPeopleAuthor);
-    public List<BbsPeopleAuthorEntity> getBbsPeopleAuthor();
+    boolean saveBBSPeopleAuthor(BbsPeopleAuthorEntity bbsPeopleAuthor);
+    List<BbsPeopleAuthorEntity> getBbsPeopleAuthor();
 }

@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.Blog163CommentEntity;
  */
 public interface IBLOG163CommentService {
     //更新或新增网易博客
-    public boolean saveBLOG163Comment(Blog163CommentEntity blog163Comment);
+    boolean saveBLOG163Comment(Blog163CommentEntity blog163Comment);
 }

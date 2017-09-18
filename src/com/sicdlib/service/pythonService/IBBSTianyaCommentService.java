@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.BbsTianyaCommentEntity;
  */
 public interface IBBSTianyaCommentService {
     //更新或新增天涯
-    public  boolean saveBBSTianyaComment(BbsTianyaCommentEntity bbsTianyaComment);
+    boolean saveBBSTianyaComment(BbsTianyaCommentEntity bbsTianyaComment);
 }

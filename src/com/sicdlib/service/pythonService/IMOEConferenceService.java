@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.MoeConferenceEntity;
  */
 public interface IMOEConferenceService {
     //更新或新增教育部
-    public boolean saveMOEConference(MoeConferenceEntity moeConference);
+    boolean saveMOEConference(MoeConferenceEntity moeConference);
 }

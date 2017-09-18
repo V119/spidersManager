@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface IBBSSohuAuthorService {
    //新增或更新搜狐
-    public boolean saveBBSSohuAuthor(BbsSohuAuthorEntity bbsSohuAuthor);
-    public List<BbsSohuAuthorEntity> getBbsSohuAuthor();
+    boolean saveBBSSohuAuthor(BbsSohuAuthorEntity bbsSohuAuthor);
+    List<BbsSohuAuthorEntity> getBbsSohuAuthor();
 }

@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.BbsSohuCommentEntity;
  */
 public interface IBBSSohuCommentService {
     //更新或新增搜狐
-    public boolean saveBBSSohuComment(BbsSohuCommentEntity bbsSohuComment);
+    boolean saveBBSSohuComment(BbsSohuCommentEntity bbsSohuComment);
 }

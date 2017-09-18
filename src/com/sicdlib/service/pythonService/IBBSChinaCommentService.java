@@ -8,7 +8,7 @@ import com.sicdlib.dto.entity.DoubanGroupCommentEntity;
  */
 public interface IBBSChinaCommentService {
     //新增or更新中华网社区
-    public boolean saveBBSChinaComment(BbsChinaCommentEntity bbsChinaComment);
+    boolean saveBBSChinaComment(BbsChinaCommentEntity bbsChinaComment);
 
     /**
      * 规范化表中的作者名字段和评论内容字段

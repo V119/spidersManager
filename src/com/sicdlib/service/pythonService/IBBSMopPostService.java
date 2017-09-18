@@ -10,8 +10,8 @@ import java.util.List;
  */
 public interface IBBSMopPostService {
     //新增orgengxin猫扑社区文章
-    public boolean saveBBSMopPost(BbsMopPostEntity bbsMopPost);
+    boolean saveBBSMopPost(BbsMopPostEntity bbsMopPost);
     BbsMopPostEntity getBbsMopPost(String id);
 
-    public List<BbsMopAuthorEntity> getbbsmopPost(String authorID);
+    List<BbsMopAuthorEntity> getbbsmopPost(String authorID);
 }

@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface IBBSTianyaPostService {
     //更新或新增天涯
-    public  boolean saveBBSTianyaPost(BbsTianyaPostEntity bbsTianyaPost);
-    public BbsTianyaPostEntity getBbsTianyaPost(String id);
+    boolean saveBBSTianyaPost(BbsTianyaPostEntity bbsTianyaPost);
+    BbsTianyaPostEntity getBbsTianyaPost(String id);
 
     List<BbsTianyaPostEntity> getbbstianyaPost(String authorID);
 }

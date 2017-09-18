@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IBLOGSinaAuthorService {
     //更新或新增微博
-    public boolean saveBLOGSinaAuthor(BlogSinaAuthorEntity blogSinaAuthor);
+    boolean saveBLOGSinaAuthor(BlogSinaAuthorEntity blogSinaAuthor);
 
     List<BlogSinaAuthorEntity> getBlogSinaAuthor();
 }

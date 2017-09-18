@@ -7,5 +7,5 @@ import com.sicdlib.dto.entity.DoubanGroupGroupEntity;
  */
 public interface IDoubanGroupGroupService {
     //新增or更新豆瓣小组发布
-    public boolean saveDoubanGroupGroup(DoubanGroupGroupEntity doubanGroupGroup);
+    boolean saveDoubanGroupGroup(DoubanGroupGroupEntity doubanGroupGroup);
 }

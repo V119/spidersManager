@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IBLOG163AuthorService {
     //更新或新增网易博客
-    public  boolean saveBLOG163Author(Blog163AuthorEntity blog163Author);
+    boolean saveBLOG163Author(Blog163AuthorEntity blog163Author);
 
     List<Blog163AuthorEntity> getBlog163Author();
 }

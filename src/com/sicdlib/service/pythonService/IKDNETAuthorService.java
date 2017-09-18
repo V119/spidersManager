@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IKDNETAuthorService {
     //更新或新增凯迪社区
-    public  boolean saveKDNETAuthor(KdnetAuthorEntity kdnetAuthor);
+    boolean saveKDNETAuthor(KdnetAuthorEntity kdnetAuthor);
 
-    public List<KdnetAuthorEntity> getBbsKDAuthor();
+    List<KdnetAuthorEntity> getBbsKDAuthor();
 }
