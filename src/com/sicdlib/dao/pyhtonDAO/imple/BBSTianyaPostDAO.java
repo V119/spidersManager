@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.BbsTianyaPostEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/2.
  */
@@ -28,5 +30,10 @@ public class BBSTianyaPostDAO implements IBBSTianyaPostDAO {
     public BbsTianyaPostEntity getBbsTianyaPost(String id) {
         String hql = "from BbsTianyaPostEntity ty where ty.id = '" + id + "'";
         return (BbsTianyaPostEntity) baseDAO.get(hql);
+    }
+
+    @Override
+    public List<BbsTianyaPostEntity> getbbstianyaPost(String authorID) {
+        return null;
     }
 }

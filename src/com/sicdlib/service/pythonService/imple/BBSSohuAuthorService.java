@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/2.
  */
@@ -23,5 +25,10 @@ public class BBSSohuAuthorService implements IBBSSohuAuthorService {
             bbsSohuAuthor.setId(uuid);
         }
         return bbsSohuAuthorDAO.saveBBSSohuAuthor(bbsSohuAuthor);
+    }
+
+    @Override
+    public List<BbsSohuAuthorEntity> getBbsSohuAuthor() {
+        return bbsSohuAuthorDAO.getBbsSohuAuthor();
     }
 }

@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.BbsXiciAuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/2.
  */
@@ -23,5 +25,11 @@ public class BBSXiciAuthorDAO implements IBBSXiciAuthorDAO{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<BbsXiciAuthorEntity> getBbsXiciAuthor() {
+        String hql = "FROM BbsXiciAuthorEntity";
+        return baseDAO.find(hql);
     }
 }

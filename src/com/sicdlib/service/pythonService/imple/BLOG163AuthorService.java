@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/3.
  */
@@ -24,5 +26,10 @@ public class BLOG163AuthorService  implements IBLOG163AuthorService{
             blog163Author.setId(uuid);
         }
         return blog163AuthorDAO.saveBLOG163Author(blog163Author);
+    }
+
+    @Override
+    public List<Blog163AuthorEntity> getBlog163Author() {
+        return blog163AuthorDAO.getBlog163Author();
     }
 }

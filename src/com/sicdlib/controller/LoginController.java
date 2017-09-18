@@ -62,7 +62,7 @@ public class LoginController {
                 List<TbEventArticleEntity> eventArticles = eventArticleService.getEventArticleByEventID(eventID);
             }
             model.addAttribute("events", events);
-            return "eventsList";
+            return "eventList_new";
         }
         return "redirect:failure.jsp";
     }
@@ -295,5 +295,17 @@ public class LoginController {
         //保存
         loginService.addUser(user);
         return "redirect:success.jsp";
+    }
+
+    /**
+     * 用户注销登录
+     * @param req
+     * @return
+     */
+    @RequestMapping("logout")
+    public String logout(HttpServletRequest req){
+        req.getSession().removeAttribute("user");
+        System.out.println("logout");
+        return "redirect:/";
     }
 }

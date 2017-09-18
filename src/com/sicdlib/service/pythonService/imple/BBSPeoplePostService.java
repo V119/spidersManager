@@ -38,4 +38,9 @@ public class BBSPeoplePostService implements IBBSPeoplePostService {
         return bbsPeoplePostDAO.getBbsPeoplePost(id);
     }
 
+    @Override
+    public List<BbsPeoplePostEntity> getbbspeoplePost(String authorID) {
+        return bbsPeoplePostDAO.getbbspeoplePost(authorID);
+    }
+
 }

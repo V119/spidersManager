@@ -38,4 +38,9 @@ public class XINHUANewsDAO  implements IXINHUANewsDAO{
         return (XinhuaNewsEntity)baseDAO.get(hql);
     }
 
+    @Override
+    public List<XinhuaNewsEntity> getBbsXinhuaAuthor() {
+        return null;
+    }
+
 }

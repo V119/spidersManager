@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/5.
  */
@@ -28,5 +30,10 @@ public class KDNETPostService  implements IKDNETPostService{
     @Override
     public KdnetPostEntity getKdnetPost(String id) {
         return kdnetPostDAO.getKdnetPost(id);
+    }
+
+    @Override
+    public List<KdnetPostEntity> getbbskdPost(String authorID) {
+        return kdnetPostDAO.getbbskdPost(authorID);
     }
 }

@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.DoubanGroupAuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by Yh on 2016/9/8.
  */
@@ -23,5 +25,11 @@ public class DoubanGroupAuthorDAO implements IDoubanGroupAuthorDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<DoubanGroupAuthorEntity> getDoubanAuthor() {
+        String hql = "FROM DoubanGroupAuthorEntity";
+        return baseDAO.find(hql);
     }
 }

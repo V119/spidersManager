@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 public class BbsTianyaAuthorEntity {
     private String authorId;
     private String authorName;
-    private String level;
+//    private String level;
     private Integer friendsNum;
     private Integer fansNum;
     private String point;
@@ -42,15 +42,15 @@ public class BbsTianyaAuthorEntity {
         this.authorName = authorName;
     }
 
-    @Basic
-    @Column(name = "level")
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
+//    @Basic
+//    @Column(name = "level")
+//    public String getLevel() {
+//        return level;
+//    }
+//
+//    public void setLevel(String level) {
+//        this.level = level;
+//    }
 
     @Basic
     @Column(name = "friends_num")
@@ -141,7 +141,7 @@ public class BbsTianyaAuthorEntity {
 
         if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
         if (authorName != null ? !authorName.equals(that.authorName) : that.authorName != null) return false;
-        if (level != null ? !level.equals(that.level) : that.level != null) return false;
+//        if (level != null ? !level.equals(that.level) : that.level != null) return false;
         if (friendsNum != null ? !friendsNum.equals(that.friendsNum) : that.friendsNum != null) return false;
         if (fansNum != null ? !fansNum.equals(that.fansNum) : that.fansNum != null) return false;
         if (point != null ? !point.equals(that.point) : that.point != null) return false;
@@ -158,7 +158,7 @@ public class BbsTianyaAuthorEntity {
     public int hashCode() {
         int result = authorId != null ? authorId.hashCode() : 0;
         result = 31 * result + (authorName != null ? authorName.hashCode() : 0);
-        result = 31 * result + (level != null ? level.hashCode() : 0);
+//        result = 31 * result + (level != null ? level.hashCode() : 0);
         result = 31 * result + (friendsNum != null ? friendsNum.hashCode() : 0);
         result = 31 * result + (fansNum != null ? fansNum.hashCode() : 0);
         result = 31 * result + (point != null ? point.hashCode() : 0);

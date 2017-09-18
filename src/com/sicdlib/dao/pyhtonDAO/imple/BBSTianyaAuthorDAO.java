@@ -6,6 +6,8 @@ import com.sicdlib.dto.entity.BbsTianyaAuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by init on 2017/6/2.
  */
@@ -22,5 +24,11 @@ public class BBSTianyaAuthorDAO  implements IBBSTianyaAuthorDAO{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<BbsTianyaAuthorEntity> getBbsTianyaAuthor() {
+        String hql = "FROM BbsTianyaAuthorEntity";
+        return baseDAO.find(hql);
     }
 }

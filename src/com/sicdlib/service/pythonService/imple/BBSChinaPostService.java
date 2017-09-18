@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 /**
@@ -31,4 +32,15 @@ public class BBSChinaPostService implements IBBSChinaPostService{
     public BbsChinaPostEntity getBbsChinaPost(String id) {
         return bbsChinaPostDAO.getBbsChinaPost(id);
     }
+
+    @Override
+    public List<BbsChinaPostEntity> getbbsChinaPost(String authorID) {
+        return bbsChinaPostDAO.getbbsChinaPost(authorID);
+    }
+
+    @Override
+    public BbsChinaPostEntity getBbsChinaPostInfoByID(String postID) {
+        return bbsChinaPostDAO.getBbsChinaPostInfoByID(postID);
+    }
+
 }
