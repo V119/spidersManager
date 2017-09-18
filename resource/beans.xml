@@ -2,11 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:context="http://www.springframework.org/schema/context"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- 组件自动扫描 -->
 	<context:component-scan base-package="com">
@@ -58,4 +57,35 @@
 	<!-- JSR303 验证 -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
+	<!-- PHO Beans -->
+	<!-- Register your entity bean here -->
+	<util:list id="entityPropertiesMappings">
+		<value>com.sicdlib.dto.phoenixEntity.SpiderInfoEntity</value>
+	</util:list>
+
+	<bean id="entityPropertiesMappingContext" class="com.eharmony.pho.mapper.EntityPropertiesMappingContext">
+		<constructor-arg ref="entityPropertiesMappings"/>
+	</bean>
+
+	<bean id="entityPropertiesResolver" class="com.eharmony.pho.mapper.EntityPropertiesResolver">
+		<constructor-arg ref="entityPropertiesMappingContext"/>
+	</bean>
+
+	<bean id="phoenixHBaseQueryTranslator" class="com.eharmony.pho.hbase.translator.PhoenixHBaseQueryTranslator">
+		<constructor-arg name="propertyResolver" ref="entityPropertiesResolver" />
+	</bean>
+
+	<bean id="phoenixProjectedResultMapper" class="com.eharmony.pho.hbase.mapper.PhoenixProjectedResultMapper">
+		<constructor-arg name="entityPropertiesResolver" ref="entityPropertiesResolver" />
+	</bean>
+
+	<bean id="phoenixHBaseQueryExecutor" class="com.eharmony.pho.hbase.query.PhoenixHBaseQueryExecutor">
+		<constructor-arg name="queryTranslator" ref="phoenixHBaseQueryTranslator"/>
+		<constructor-arg name="resultMapper" ref="phoenixProjectedResultMapper" />
+	</bean>
+
+	<bean id="dataStoreApi" class="com.eharmony.pho.hbase.PhoenixHBaseDataStoreApiImpl">
+		<constructor-arg name="connectionUrl" value="${hbase.connection.url}"/>
+		<constructor-arg name="queryExecutor" ref="phoenixHBaseQueryExecutor"/>
+	</bean>
 </beans>
