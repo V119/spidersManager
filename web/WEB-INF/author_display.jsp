@@ -255,8 +255,8 @@
                                         <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">每页显示条数
                                             &nbsp;<span class="caret"></span></button>
                                         <ul role="menu" class="dropdown-menu">
-                                            <li><a href="bbs_china_author?pageSize=40&&pageIndex=1">40</a></li>
-                                            <li><a href="bbs_china_author?pageSize=80&&pageIndex=1">80</a></li>
+                                            <li><a href="bbs_china_author?pageSize=50&&pageIndex=1">50</a></li>
+                                            <li><a href="bbs_china_author?pageSize=100&&pageIndex=1">100</a></li>
                                         </ul>
                                     </div>
                                 </div>

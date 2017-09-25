@@ -551,7 +551,6 @@ public class AuthorDAO implements IAuthorDAO {
 
         final QuerySelect<BBSChinaAuthorEntity, BBSChinaAuthorEntity> query = QueryBuilder
                 .builderFor(BBSChinaAuthorEntity.class)
-//                .add(Restrictions.and())
                 .setMaxResults(page.getPageSize())
                 .select().build();
         System.out.println(query);
@@ -563,20 +562,21 @@ public class AuthorDAO implements IAuthorDAO {
     public List getAuthorList(String tableName,HBPage page,String rowKeyEndNum,String rowKeyBeginNum){
 
         List list = new ArrayList();
-        if (page.getPrePage()==0){
+
+        if (page.getPrePage()==0){//查询上一页
             final QuerySelect<BBSChinaAuthorEntity, BBSChinaAuthorEntity> query = QueryBuilder
                     .builderFor(BBSChinaAuthorEntity.class)
-                    .add(Restrictions.and(Restrictions.lt("\"PK\"", rowKeyBeginNum)))
+                    .add(Restrictions.and(Restrictions.lt("\"PK\"", page.getRowKeyBeginNum())))
                     .addOrder(Ordering.desc("\"PK\""))
                     .setMaxResults(page.getPageSize())
                     .select().build();
             System.out.println(query);
             Iterable<BBSChinaAuthorEntity> infoItems = dataStoreApi.findAll(query);
             list = Lists.newArrayList(infoItems);
-        }else if (page.getNextPage()==0){
+        }else if (page.getNextPage()==0){//查询下一页
             final QuerySelect<BBSChinaAuthorEntity, BBSChinaAuthorEntity> query = QueryBuilder
                     .builderFor(BBSChinaAuthorEntity.class)
-                    .add(Restrictions.and(Restrictions.gt("\"PK\"", rowKeyEndNum)))
+                    .add(Restrictions.and(Restrictions.gt("\"PK\"",page.getRowKeyEndNum())))
                     .setMaxResults(page.getPageSize())
                     .select().build();
             System.out.println(query);

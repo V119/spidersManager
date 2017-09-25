@@ -38,7 +38,11 @@ public class AuthorController {
         String pageSize = req.getParameter("pageSize");
         String prePage = req.getParameter("prePage");
         String nextPage = req.getParameter("nextPage");
+        String rowKeyEndNum = req.getParameter("rowKeyEndNum");
+        String rowKeyBeginNum=req.getParameter("rowKeyBeginNum");
 
+        pageInfo.setRowKeyBeginNum(rowKeyBeginNum);
+        pageInfo.setRowKeyEndNum(rowKeyEndNum);
         //设置当前页
         if (pageIndex <1){
             pageIndex =1;
@@ -100,16 +104,19 @@ public class AuthorController {
             while (m0.find()) {
                 System.out.println("m0group(1):"+m0.group(1));
                 rowKeyBeginNum = m0.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
             }
             while (m1.find()) {
                 System.out.println("m1group(1):"+m1.group(1));
                 rowKeyEndNum = m1.group(1).toString();
+                pageInfo(req).setRowKeyEndNum(rowKeyEndNum);
             }
         }
         else {
             rowKeyEndNum = req.getParameter("rowKeyEndNum");
 
             rowKeyBeginNum=req.getParameter("rowKeyBeginNum");
+
             getAuthorList = getAuthorList(req,type,pageInfo(req),rowKeyEndNum,rowKeyBeginNum);
             System.out.println("这里要输出第一条信息的内容"+getAuthorList.get(0).toString());
             //截取pk的值
@@ -122,10 +129,12 @@ public class AuthorController {
             while (m0.find()) {
                 System.out.println("m0group(1):"+m0.group(1));
                 rowKeyBeginNum = m0.group(1).toString();
+//                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
             }
             while (m1.find()) {
                 System.out.println("m1group(1):"+m1.group(1));
                 rowKeyEndNum = m1.group(1).toString();
+//                pageInfo(req).setRowKeyEndNum(rowKeyEndNum);
             }
 
         }

@@ -11,10 +11,13 @@ import java.util.List;
 public class HBPage {
     private int pageIndex = 0;
     private int pageFirstRowIndex = 1;
-    private int pageSize = 40;
+    private int pageSize = 50;
     private int prePage = 1;
     private int nextPage = 1;
     private int pageCount = 0;
+    private String rowKeyBeginNum = null;
+    private String rowKeyEndNum = null;
+
     private byte [] pageStartRowKey = null;
     private byte [] pageStopRowKey = null;
     private boolean hasNextPage = true;
@@ -136,5 +139,21 @@ public class HBPage {
     public int pageFirstRowIndex(int pageIndex,int pageSize) {
         pageFirstRowIndex = (pageIndex - 1) * pageSize + 1;
         return pageFirstRowIndex;
+    }
+
+    public String getRowKeyBeginNum() {
+        return rowKeyBeginNum;
+    }
+
+    public void setRowKeyBeginNum(String rowKeyBeginNum) {
+        this.rowKeyBeginNum = rowKeyBeginNum;
+}
+
+    public String getRowKeyEndNum() {
+        return rowKeyEndNum;
+    }
+
+    public void setRowKeyEndNum(String rowKeyEndNum) {
+        this.rowKeyEndNum = rowKeyEndNum;
     }
 }
