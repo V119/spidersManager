@@ -13,7 +13,15 @@
 %>
 <html>
 <jsp:include page="static/head_jsp.jsp"/>
-<body>
+<script>
+
+    function json(list) {
+        for (var key in list){
+            alert(key.valueOf());
+        }
+    }
+</script>
+<body style="overflow: hidden">
 
 <div>
     <!--BEGIN BACK TO TOP-->
@@ -44,7 +52,7 @@
             <!--END TITLE & BREADCRUMB PAGE-->
 
             <!--BEGIN CONTENT-->
-            <div class="page-content">
+            <div class="page-content" style="position:absolute; height:90%; overflow-y:auto;width: 100%">
                 <div id="tab-general">
                     <div class="row mbl">
                         <div class="col-lg-12">
@@ -64,14 +72,14 @@
                                     <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">BBS
                                         &nbsp;<i class="fa fa-angle-down"></i></button>
                                     <ul role="menu" class="dropdown-menu">
-                                        <li><a href="bbs_sohu_author">搜狐社区</a></li>
-                                        <li><a href="bbs_kd_author">凯迪社区</a></li>
-                                        <li><a href="bbs_mop_author">猫扑社区</a></li>
+                                        <li><a href="bbs_sohu_author?pageIndex=1">搜狐社区</a></li>
+                                        <li><a href="kdnet_author?pageIndex=1">凯迪社区</a></li>
+                                        <li><a href="bbs_mop_author?pageIndex=1">猫扑社区</a></li>
                                         <li><a href="#">西祠社区</a></li>
-                                        <li><a href="bbs_tianya_author">天涯BBS</a></li>
-                                        <li><a href="bbs_people_author">人民网BBS</a></li>
+                                        <li><a href="bbs_tianya_author?pageIndex=1">天涯BBS</a></li>
+                                        <li><a href="bbs_people_author?pageIndex=1">人民网BBS</a></li>
                                         <li><a href="#">新华网BBS</a></li>
-                                        <li><a href="bbs_china_author">中华网BBS</a></li>
+                                        <li><a href="bbs_china_author?pageIndex=1">中华网BBS</a></li>
                                     </ul>
                                 </div>
                                 &nbsp;
@@ -114,59 +122,74 @@
                                 <%--<div class="btn-group">--%>
                                     <%--<input type="text" class="form-control"/><button type="button">Go!</button>--%>
                                 <%--</div>--%>
-                                <form role="search" class="navbar-form navbar-right">
+                                <form role="search" class="navbar-form navbar-right" method="post" action="">
                                     <div class="form-group"><input type="text"  class="form-control"/></div>
                                     &nbsp;
                                     <button type="submit" class="btn btn-green">搜</button>
                                 </form>
                             </div>
                             <hr>
-                            <div class="page-content">
+                            <div class="page-content" >
                                 <div class="row">
 
                                     <div id="change-transitions" class="row">
-                                        <a href="bbs_china_posttitle">来者不来</a>
-                                   <%-- <c:if test="${bbs_china_author!=null}">
-                                        <c:forEach items="${bbs_china_author}" var="a">
                                         <div class="col-md-2">
                                             <div class="box-placeholder">
-                                                <button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block" onclick="bbs_china_posttitle?authorID=${a.authorId}">${a.authorName}</button>
+                                                <div align="center"><a href="bbs_china_posttitle?authorID=3225263">kv3429</a></div>
+                                                <%--<button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block"></button>--%>
+                                            </div>
+                                        </div>
+                                    <c:if test="${bbs_china_author!=null}">
+                                        <c:forEach items="${bbs_china_author}" var="a" varStatus="status">
+                                        <div class="col-md-2">
+                                            <div class="box-placeholder">
+                                                <div align="center"><a href="bbs_china_posttitle?authorID=${a.authorID}">${a.authorName}</a></div>
+                                                <%--<button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block"></button>--%>
                                             </div>
                                         </div>
                                         </c:forEach>
-                                    </c:if>--%>
-                                        <%--<c:if test="${bbs_mop_author!=null}">
-                                            <c:forEach items="${bbs_mop_author}" var="a">
+                                    </c:if>
+                                        <c:if test="${bbs_china_author=null}">
+
                                                 <div class="col-md-2">
                                                     <div class="box-placeholder">
-                                                        <button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block">${a.authorName}</button>
+                                                        没有内容啦
+                                                    </div>
+                                                </div>
+
+                                        </c:if>
+                                        <c:if test="${bbs_mop_author!=null}">
+                                            <c:forEach items="${bbs_mop_author}" var="b">
+                                                <div class="col-md-2">
+                                                    <div class="box-placeholder">
+                                                        <div align="center"><a href="bbs_mop_posttitle?authorID=${b.authorID}">${b.authorName}</a></div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
-                                         </c:if>--%>
-                                        <%--<c:if test="${bbs_people_author!=null}">
-                                            <c:forEach items="${bbs_people_author}" var="a">
+                                         </c:if>
+                                        <c:if test="${bbs_people_author!=null}">
+                                            <c:forEach items="${bbs_people_author}" var="c">
                                                 <div class="col-md-2">
                                                     <div class="box-placeholder">
-                                                        <button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block">${a.authorName}</button>
+                                                        <div align="center"><a href="bbs_people_posttitle?authorID=${c.authorID}">${c.authorName}</a></div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
-                                        </c:if>--%>
-                                            <%--<c:if test="${bbs_sohu_author!=null}">
-                                                <c:forEach items="${bbs_sohu_author}" var="a">
+                                        </c:if>
+                                            <c:if test="${bbs_sohu_author!=null}">
+                                                <c:forEach items="${bbs_sohu_author}" var="d">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block">${a.nickName}</button>
+                                                            <div align="center"><a href="bbs_sohu_posttitle?authorID=${d.authorID}">${d.nickName}</a></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
-                                            </c:if>--%>
+                                            </c:if>
                                             <c:if test="${bbs_tianya_author!=null}">
-                                                <c:forEach items="${bbs_tianya_author}" var="a">
+                                                <c:forEach items="${bbs_tianya_author}" var="e">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block">${a.authorName}</button>
+                                                            <div align="center"><a href="bbs_tianya_posttitle?authorID=${e.authorID}">${e.authorName}</a></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
@@ -180,15 +203,15 @@
                                                     </div>
                                                 </c:forEach>
                                             </c:if>--%>
-                                            <%--<c:if test="${bbs_kd_author!=null}">
-                                                <c:forEach items="${bbs_kd_author}" var="a">
+                                            <c:if test="${kdnet_author!=null}">
+                                                <c:forEach items="${kdnet_author}" var="f">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block">${a.nick}</button>
+                                                            <div align="center"><a href="bbs_kdnet_posttitle?authorID=${f.author_id}">${f.nick}</a></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
-                                            </c:if>--%>
+                                            </c:if>
                                             <%--<c:if test="${blog_163_author!=null}">
                                                 <c:forEach items="${blog_163_author}" var="a">
                                                     <div class="col-md-2">
@@ -216,7 +239,7 @@
                                                     </div>
                                                 </c:forEach>
                                             </c:if>--%>
-                                            <c:if test="${blog_sina_author!=null}">
+                                            <%--<c:if test="${blog_sina_author!=null}">
                                                 <c:forEach items="${blog_sina_author}" var="a">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
@@ -224,7 +247,7 @@
                                                         </div>
                                                     </div>
                                                 </c:forEach>
-                                            </c:if>
+                                            </c:if>--%>
                                     </div>
                                 </div>
                                 <div class="col-sm-3 col-md-2">
@@ -232,23 +255,19 @@
                                         <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">每页显示条数
                                             &nbsp;<span class="caret"></span></button>
                                         <ul role="menu" class="dropdown-menu">
-                                            <li><a href="#">100</a></li>
-                                            <li><a href="#">200</a></li>
-                                            <li><a href="#">300</a></li>
+                                            <li><a href="bbs_china_author?pageSize=40&&pageIndex=1">40</a></li>
+                                            <li><a href="bbs_china_author?pageSize=80&&pageIndex=1">80</a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-lg-4" style="margin-left: 30%">
-
+                                <div class="col-lg-4" style="margin-left: 20%">
+                                    <c:if test="${page!=null}">
+                                        <input hidden="${page.pageIndex}">
                                     <ul class="pagination pagination-lg mtm mbm">
-                                        <li><a href="#">&laquo;</a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">&raquo;</a></li>
+                                        <li><a href="bbs_china_author?prePage=0&&pageSize=${page.pageSize}&&pageIndex=${page.pageIndex-1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">上一页</a></li>
+                                        <li><a href="bbs_china_author?nextPage=0&&pageSize=${page.pageSize}&&pageIndex=${page.pageIndex+1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">下一页</a></li>
                                     </ul>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

@@ -1,11 +1,12 @@
 package com.sicdlib.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.sicdlib.dto.entity.*;
-import com.sicdlib.service.imple.AuthorService;
-import com.sicdlib.service.imple.PostService;
-import com.sicdlib.service.pythonService.imple.*;
-import com.sicdlib.util.PageUtil.Page;
+import com.sicdlib.dto.phoenixEntity.BBSChinaAuthorEntity;
+import com.sicdlib.dto.phoenixEntity.BBSChinaCommentEntity;
+import com.sicdlib.dto.phoenixEntity.BBSChinaPostEntity;
+import com.sicdlib.service.hbaseService.imple.AuthorService;
+import com.sicdlib.service.hbaseService.imple.CommentService;
+import com.sicdlib.service.hbaseService.imple.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -26,25 +27,29 @@ public class PostController {
     @Qualifier("authorService")
     private AuthorService authorService;
 
+    @Autowired
+    @Qualifier("commentService")
+    private CommentService commentService;
+
     public String type_to_tableName(String type){
         String tableName =null;
         if ("bbs_china_posttitle".equals(type)){
-            tableName = "BbsChinaPostEntity";
+            tableName = "BBSChinaPostEntity";
         }
         if ("bbs_mop_posttitle".equals(type)){
-            tableName = "BbsMopPostEntity";
+            tableName = "BBSMopPostEntity";
         }
         if ("bbs_people_posttitle".equals(type)){
-            tableName = "BbsPeoplePostEntity";
+            tableName = "BBSPeoplePostEntity";
         }
         if ("bbs_sohu_posttitle".equals(type)){
-            tableName = "BbsSohuPostEntity";
+            tableName = "BBSSohuPostEntity";
         }
         if ("bbs_tianya_posttitle".equals(type)){
-            tableName = "BbsTianyaPostEntity";
+            tableName = "BBSTianyaPostEntity";
         }
         if ("bbs_xici_posttitle".equals(type)){
-            tableName = "BbsXiciPostEntity";
+            tableName = "BBSXiciPostEntity";
         }
         if ("bbs_kd_posttitle".equals(type)){
             tableName = "KdnetPostEntity";
@@ -55,9 +60,9 @@ public class PostController {
         if ("blog_163_posttitle".equals(type)){
             tableName = "Blog163PostEntity";
         }
-        if ("blog_china_posttitle".equals(type)){
+        /*if ("blog_china_posttitle".equals(type)){
             tableName = "BlogchinaBlogEntity";
-        }
+        }*/
         if ("blog_sina_posttitle".equals(type)){
             tableName = "BlogSinaPostEntity";
         }
@@ -65,7 +70,7 @@ public class PostController {
         return tableName;
     }
 
-    public Page page(HttpServletRequest req,String type){
+    /*public Page page(HttpServletRequest req,String type){
 
         int totalRecord = postService.getAllPostNum(type_to_tableName(type));//总记录数
         int pageIndex = Integer.parseInt(req.getParameter("pageIndex"));//当前页码
@@ -73,9 +78,9 @@ public class PostController {
 
         return new Page(totalRecord, pageIndex, pageSize);
     }
-
-    public List postList(HttpServletRequest req,String type){
-        return postService.getPostList(type_to_tableName(type),page(req,type));
+*/
+    public List postList(HttpServletRequest req,String type,String authorID){
+        return postService.getPostList(type_to_tableName(type),authorID);
     }
 
     @RequestMapping("bbs_china_posttitle")
@@ -83,18 +88,29 @@ public class PostController {
 
         String type = "bbs_china_posttitle";
         String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
 
         Object bbs_china_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object bbs_china_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
 
         model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_china_authorInfo", JSON.toJSON((BbsChinaAuthorEntity)bbs_china_authorInfo));
-        model.addAttribute("bbs_china_postInfo", JSON.toJSON((BbsChinaPostEntity)bbs_china_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
+        model.addAttribute("bbs_china_authorInfo", JSON.toJSON((BBSChinaAuthorEntity)bbs_china_authorInfo));
+        model.addAttribute("postList", JSON.toJSON(postList(req,type,authorID)));
         return "posttitle_display";
     }
-    @RequestMapping("bbs_mop_posttitle")
+    @RequestMapping("bbs_china_postInfo")
+    public String bbs_china_postInfo(HttpServletRequest req, Model model, HttpServletResponse resp) {
+
+        String type = "bbs_china_posttitle";
+        String postID = req.getParameter("postID");
+
+        Object bbs_china_postInfo = postService.getPostInfo(postID,type_to_tableName(type));
+        List commentList = commentService.getCommentList("bbs_china_comment",postID);
+        model.addAttribute("postID",postID);
+        model.addAttribute("commentList", JSON.toJSON(commentList));
+        model.addAttribute("bbs_china_postInfo", JSON.toJSON((BBSChinaPostEntity)bbs_china_postInfo));
+
+        return "post_comment_display";
+    }
+   /* @RequestMapping("bbs_mop_posttitle")
     public String bbs_mop_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
 
         String type = "bbs_mop_posttitle";
@@ -255,6 +271,6 @@ public class PostController {
         model.addAttribute("blog_sina_postInfo", JSON.toJSON((BlogSinaPostEntity)blog_sina_postInfo));
         model.addAttribute("postList", JSON.toJSON(postList(req,type)));
         return "posttitle_display";
-    }
+    }*/
 
 }

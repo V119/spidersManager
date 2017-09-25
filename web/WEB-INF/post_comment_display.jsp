@@ -25,7 +25,7 @@
         <!--END SIDEBAR MENU-->
 
         <!--BEGIN PAGE WRAPPER-->
-        <div id="page-wrapper" style="position:absolute; height:90%; overflow-y:auto;width: 100%">
+        <div id="page-wrapper" >
             <!--BEGIN TITLE & BREADCRUMB PAGE-->
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
@@ -57,18 +57,22 @@
                         </div>
 
                         <div class="col-lg-12">
-                            <div class="col-lg-6">
-                                <h3 class="box-heading">文章标题</h3>
-                                <p>文章内容</p>
-                                <ol class="pll">
-                                    <li>作者名称</li>
-                                    <li>日期</li>
-                                    <li>关键词</li>
-                                    <li>热点词</li>
-                                    <li>回复数</li>
-                                    <li>阅读数</li>
+                            <div class="col-lg-6" style="width: 100%">
+                                <div align="center"><h3 class="box-heading">${bbs_china_postInfo.title}</h3></div>
+                                <div align="center"><span class="badge badge-default">作者</span>${bbs_china_postInfo.authorName}&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-yellow">日期</span>${bbs_china_postInfo.date_time}</div>
+                                <br>
+                                <p style="line-height: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${bbs_china_postInfo.content}</p>
 
-                                </ol>
+                                <c:if test="${bbs_china_postInfo!=null}">
+                                        <div align="center">
+
+                                            <span class="badge badge-pink">关键词</span>${bbs_china_postInfo.keyWords}&nbsp;&nbsp;
+                                            <span class="badge badge-red">热点词</span>${bbs_china_postInfo.hotWords}&nbsp;&nbsp;
+                                            <span class="badge badge-green">回复数</span>${bbs_china_postInfo.replyNum}&nbsp;&nbsp;
+                                            <span class="badge badge-dark">阅读数</span>${bbs_china_postInfo.readNum}&nbsp;&nbsp;
+                                        </div>
+                                </c:if>
+
                             </div>
                         </div>
 
@@ -79,51 +83,16 @@
                         <div class="col-lg-6"><h4 class="box-heading">评论</h4>
                             <ul class="media-list">
                                 <%--<c:forEach>--%>
-                                <li class="media"><a href="#" class="pull-left"><img data-src="holder.js/64x64/text:一楼楼主" alt="64x64" class="media-object"/></a>
-
-                                    <div class="media-body"><%--<h4 class="media-heading">Media heading</h4>--%>
-
-                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-
-                                        <div class="media"><a href="#" class="pull-left"><img data-src="holder.js/64x64/text:avatar" alt="64x64" class="media-object"/></a>
-
-                                            <div class="media-body"><h4 class="media-heading">Nested media heading</h4>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                                                <div class="media"><a href="#" class="pull-left"><img data-src="holder.js/64x64/text:avatar" alt="64x64" class="media-object"/></a>
-
-                                                    <div class="media-body"><h4 class="media-heading">Nested media heading</h4>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="media"><a href="#" class="pull-left"><img data-src="holder.js/64x64/text:avatar" alt="64x64" class="media-object"/></a>
-
-                                            <div class="media-body"><h4 class="media-heading">Nested media heading</h4>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</div>
-                                        </div>
-                                    </div>
-                                    <div class="page-title-breadcrumb">
-                                        <div class="clearfix"></div>
-                                    </div>
+                        <c:if test="${commentList!=null}">
+                            <c:forEach items="${commentList}" var="c" varStatus="status">
+                                <li class="media">
+                                    <img data-src="holder.js/64x64/text:${status.index}楼楼主" alt="64x64" class="media-object"/>
+                                    <%--<img data-src="holder.js/64x64/text:${c.author_name}" alt="64x64" class="media-object"/>--%>
+                                    <div><a style="color: black">${c.authorName}</a></div>
+                                    <%--<img data-src="holder.js/64x64/text:${c.content}" alt="64x64" class="media-object"/>--%>
                                 </li>
-                                    <li class="media"><a href="#" class="pull-left"><img data-src="holder.js/64x64/text:二楼楼主" alt="64x64" class="media-object"/></a>
-
-                                        <div class="media-body"><%--<h4 class="media-heading">Media heading</h4>--%>
-
-                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-
-                                            <div class="media"><a href="#" class="pull-left"><img data-src="holder.js/64x64/text:avatar" alt="64x64" class="media-object"/></a>
-
-                                                <div class="media-body"><h4 class="media-heading">Nested media heading</h4>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                                                    <div class="media"><a href="#" class="pull-left"><img data-src="holder.js/64x64/text:avatar" alt="64x64" class="media-object"/></a>
-
-                                                        <div class="media-body"><h4 class="media-heading">Nested media heading</h4>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="media"><a href="#" class="pull-left"><img data-src="holder.js/64x64/text:avatar" alt="64x64" class="media-object"/></a>
-
-                                                <div class="media-body"><h4 class="media-heading">Nested media heading</h4>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</div>
-                                            </div>
-                                        </div>
-                                    </li>
+                            </c:forEach>
+                        </c:if>
                                 <%--</c:forEach>--%>
                             </ul>
                         </div>

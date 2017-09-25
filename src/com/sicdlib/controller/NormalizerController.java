@@ -2,11 +2,7 @@ package com.sicdlib.controller;
 
 import com.sicdlib.dao.pyhtonDAO.IBBSMopPostDAO;
 import com.sicdlib.dao.pyhtonDAO.INormalizeData;
-import com.sicdlib.dto.entity.BbsSohuCommentEntity;
-import com.sicdlib.dto.entity.BbsSohuPostEntity;
-import com.sicdlib.dto.entity.BbsTianyaCommentEntity;
-import com.sicdlib.dto.entity.BlogSinaCommentEntity;
-import com.sicdlib.service.IAuthorService;
+import com.sicdlib.service.hbaseService.IAuthorService;
 import com.sicdlib.util.HTableToMysqlUtil.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

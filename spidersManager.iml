@@ -28,7 +28,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib_algorithm" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="lib_hbase" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

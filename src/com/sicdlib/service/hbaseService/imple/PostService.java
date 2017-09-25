@@ -1,8 +1,7 @@
-package com.sicdlib.service.imple;
+package com.sicdlib.service.hbaseService.imple;
 
-import com.sicdlib.dao.IPostDAO;
+import com.sicdlib.dao.hbaseDAO.IPostDAO;
 import com.sicdlib.service.IPostService;
-import com.sicdlib.util.PageUtil.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,12 +20,12 @@ public class PostService implements IPostService{
     }
 
     @Override
-    public List<Object[]> getPostList(String tableName, Page page) {
-        return postDAO.getPostList(tableName,page);
+    public List<Object[]> getPostList(String tableName,String authorID) {
+        return postDAO.getPostList(tableName,authorID);
     }
 
     @Override
-    public Object[] getPostInfo(String authorId, String postId, String tableName) {
-        return postDAO.getPostInfo(authorId,postId,tableName);
+    public Object getPostInfo( String postId, String tableName) {
+        return postDAO.getPostInfo(postId,tableName);
     }
 }

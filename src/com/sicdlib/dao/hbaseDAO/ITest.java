@@ -1,6 +1,7 @@
 package com.sicdlib.dao.hbaseDAO;
 
 import com.sicdlib.dto.phoenixEntity.SpiderInfoEntity;
+import com.sicdlib.dto.phoenixEntity.TbTableEntity;
 
 import java.util.List;
 
@@ -9,4 +10,7 @@ import java.util.List;
  */
 public interface ITest {
     List<SpiderInfoEntity> getTestEntity();
+    List<TbTableEntity> getEntity();
+    Object getEntityInfo(String tableName);
+
 }
