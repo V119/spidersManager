@@ -14,7 +14,7 @@ public class CommentService implements ICommentService{
     @Qualifier("commentDAO")
     private ICommentDAO commentDAO;
     @Override
-    public List<Object[]> getCommentList(String tableName, String postID) {
-        return commentDAO.getCommentList(tableName,postID);
+    public List<Object[]> getCommentList(String tableName, String condition,String conditionValue) {
+        return commentDAO.getCommentList(tableName,condition,conditionValue);
     }
 }

@@ -30,7 +30,8 @@ public interface IAuthorDAO {
     List<Object[]> getAuthorList(String tableName,HBPage page,String rowKeyEndNum,String rowKeyBeginNum);
     List<Object[]> getAuthorList(String tableName,HBPage page);
     //查询对应作者ID的作者信息
-    Object getAuthorInfo(String authorId, String tableName);
+    Object getAuthorInfo(String condition,String conditionValue, String tableName);
+    List<Object[]> getMoeAuthorList(String tableName,HBPage page,String condition);
 
 
 }

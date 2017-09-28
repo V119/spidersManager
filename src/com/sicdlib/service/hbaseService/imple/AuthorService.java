@@ -62,7 +62,12 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    public Object getAuthorInfo(String authorId, String tableName) {
-        return authorDAO.getAuthorInfo(authorId,tableName);
+    public Object getAuthorInfo(String condition, String conditionValue, String tableName) {
+        return authorDAO.getAuthorInfo(condition,conditionValue,tableName);
+    }
+
+    @Override
+    public List<Object[]> getMoeAuthorList(String tableName, HBPage page,String condition) {
+        return authorDAO.getMoeAuthorList(tableName,page,condition);
     }
 }

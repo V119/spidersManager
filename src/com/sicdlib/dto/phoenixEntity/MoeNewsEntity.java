@@ -15,10 +15,10 @@ public class MoeNewsEntity {
     @Property(value="QRCode_url")
     private String QRCodeUrl;
 
-    @Property(value="QRCode_url")
-    private String bQECode;
+    @Property(value="b_QRCode")
+    private String bQRCode;
 
-    @Property(value="QRCode_url")
+    @Property(value="news_content")
     private String newsContent;
 
     @Property(value="file_urls")
@@ -78,12 +78,12 @@ public class MoeNewsEntity {
         this.QRCodeUrl = QRCodeUrl;
     }
 
-    public String getbQECode() {
-        return bQECode;
+    public String getbQRCode() {
+        return bQRCode;
     }
 
-    public void setbQECode(String bQECode) {
-        this.bQECode = bQECode;
+    public void setbQRCode(String bQRCode) {
+        this.bQRCode = bQRCode;
     }
 
     public String getNewsContent() {
@@ -188,7 +188,7 @@ public class MoeNewsEntity {
                 "pk='" + pk + '\'' +
                 ", fileNum='" + fileNum + '\'' +
                 ", QRCodeUrl='" + QRCodeUrl + '\'' +
-                ", bQECode='" + bQECode + '\'' +
+                ", bQRCode='" + bQRCode + '\'' +
                 ", newsContent='" + newsContent + '\'' +
                 ", fileUrls='" + fileUrls + '\'' +
                 ", newsEditor='" + newsEditor + '\'' +

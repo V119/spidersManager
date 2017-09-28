@@ -1,9 +1,7 @@
 package com.sicdlib.dao.hbaseDAO.imple;
 
 import com.eharmony.pho.api.DataStoreApi;
-import com.eharmony.pho.query.QuerySelect;
 import com.eharmony.pho.query.builder.QueryBuilder;
-import com.eharmony.pho.query.criterion.Criterion;
 import com.eharmony.pho.query.criterion.Ordering;
 import com.eharmony.pho.query.criterion.Restrictions;
 import com.google.common.collect.Lists;
@@ -13,23 +11,15 @@ import com.sicdlib.dao.hbaseDAO.IAuthorDAO;
 import com.sicdlib.dto.TbAuthorEntity;
 import com.sicdlib.dto.TbEventAuthorMappingEntity;
 import com.sicdlib.dto.TbEventEntity;
-import com.sicdlib.dto.phoenixEntity.*;
 import com.sicdlib.util.EntityUtil.EntityInfo;
 import com.sicdlib.util.HBaseUtil.HBPage;
-import com.sicdlib.util.HBaseUtil.HBaseData;
-import javassist.runtime.Desc;
-import org.apache.hadoop.hbase.KeyValue;
-import org.apache.hadoop.hbase.client.Result;
+import org.hibernate.criterion.Distinct;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import static com.sicdlib.support.Page.DESC;
 
 
 @Repository("authorDAO")
@@ -179,412 +169,143 @@ public class AuthorDAO implements IAuthorDAO {
 
     @Override
     public int getAllAuthorNum(String tableName) {
+        try {
+            String name = entityInfo.getEntityInfo(tableName);
+            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
+            Integer num = QueryBuilder
+                    .builderFor(TBTableEntityType)
+                    .select().build().getMaxResults();
+            return num;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return 0;
     }
 
-    /*@Override
-    public List<Object[]> getAuthorList(String tableName,HBPage page) {
-        HBaseData inf = null;
-        List listInfo = new ArrayList<>();
+    @Override
+    public Object getAuthorInfo(String condition,String conditionValue, String tableName) {
         try {
-            inf = new HBaseData(tableName);
-            List list = new ArrayList<>();
-            page.setPageStartRowKey(inf.getStartRow());
-            if (page.getPageIndex()==1){
-                page.setPageStartRowKey(inf.getStartRow());
-                list = inf.getFirstPage(page);
-            }
-            if (page.getPrePage()==0){
-                list = inf.getPrePage(page);
-            }
-            if (page.getNextPage()==0){
-                list = inf.getNext(page);
-            }
-
-            for (int i = 0;i < list.size(); i++){
-                Result result = (Result) list.get(i);
-                if ("bbs_china_author".equals(tableName)){
-                    BBSChinaAuthorEntity bschina = new BBSChinaAuthorEntity();
-                    for (KeyValue keyValue : result.list()){
-                        String qualifier = new String(keyValue.getQualifier(), "utf-8");
-                        String value = new String(keyValue.getValue(), "utf-8");
-
-                        if("address".equals(qualifier)){
-                            bschina.setAddress(value);
-                        }
-                        if ("author_id".equals(qualifier)){
-                            bschina.setAuthorID(value);
-                        }
-                        if ("author_name".equals(qualifier)){
-                            bschina.setAuthorName(value);
-                        }
-                        if ("birthday".equals(qualifier)){
-                            bschina.setBirthday(value);
-                        }
-                        if ("fans_num".equals(qualifier)){
-                            bschina.setFansNum(value);
-                        }
-                        if ("focuse_num".equals(qualifier)){
-                            bschina.setFocuseNum(value);
-                        }
-                        if ("name".equals(qualifier)){
-                            bschina.setName(value);
-                        }
-                        if ("parse_time".equals(qualifier)){
-                            bschina.setParseTime(value);
-                        }
-                        if ("sex".equals(qualifier)){
-                            bschina.setSex(value);
-                        }
-                        if ("url".equals(qualifier)){
-                            bschina.setAddress(value);
-                        }
-                        System.out.println("list中 列："+qualifier+":"+value);
-                    }
-                    listInfo.add(bschina);
-                }
-                if ("bbs_mop_author".equals(tableName)){
-                    BBSMopAuthorEntity bsMop = new BBSMopAuthorEntity();
-                    for (KeyValue keyValue : result.list()) {
-                        String qualifier = new String(keyValue.getQualifier(), "utf-8");
-                        String value = new String(keyValue.getValue(), "utf-8");
-                        if ("author_id".equals(qualifier)){
-                            bsMop.setAuthorID(value);
-                        }
-                        if ("author_name".equals(qualifier)){
-                            bsMop.setAuthorName(value);
-                        }
-                        if ("age".equals(qualifier)){
-                            bsMop.setAge(value);
-                        }
-                        if ("birthday".equals(qualifier)){
-                            bsMop.setBirthday(value);
-                        }
-                        if ("career".equals(qualifier)){
-                            bsMop.setCareer(value);
-                        }
-                        if ("contact_way".equals(qualifier)){
-                            bsMop.setContactWay(value);
-                        }
-                        if ("education".equals(qualifier)){
-                            bsMop.setEducation(value);
-                        }
-                        if ("fans_num".equals(qualifier)){
-                            bsMop.setFansNum(value);
-                        }
-                        if ("friends_num".equals(qualifier)){
-                            bsMop.setFriends_num(value);
-                        }
-                        if ("hits".equals(qualifier)){
-                            bsMop.setHits(value);
-                        }
-                        if ("introduce".equals(qualifier)){
-                            bsMop.setIntroduce(value);
-                        }
-                        if ("league".equals(qualifier)){
-                            bsMop.setLeague(value);
-                        }
-                        if ("level".equals(qualifier)){
-                            bsMop.setLevel(value);
-                        }
-                        if ("level_nick".equals(qualifier)){
-                            bsMop.setLevelNick(value);
-                        }
-                        if ("login_num".equals(qualifier)){
-                            bsMop.setLoginNum(value);
-                        }
-                        if ("post_num".equals(qualifier)){
-                            bsMop.setPostNum(value);
-                        }
-                        if ("register_date".equals(qualifier)){
-                            bsMop.setRegisterDate(value);
-                        }
-                        if ("reply_num".equals(qualifier)){
-                            bsMop.setReplyNum(value);
-                        }
-                        if ("sex".equals(qualifier)){
-                            bsMop.setSex(value);
-                        }
-                        if ("url".equals(qualifier)){
-                            bsMop.setUrl(value);
-                        }
-                        listInfo.add(bsMop);
-                    }
-
-                }
-
-                if ("bbs_people_author".equals(tableName)){
-                    BBSPeopleAuthorEntity bbsPeople = new BBSPeopleAuthorEntity();
-                    for (KeyValue keyValue : result.list()) {
-                        String qualifier = new String(keyValue.getQualifier(), "utf-8");
-                        String value = new String(keyValue.getValue(), "utf-8");
-                        if ("author_id".equals(qualifier)) {
-                            bbsPeople.setAuthorID(value);
-                        }
-                        if ("author_name".equals(qualifier)) {
-                            bbsPeople.setAuthorName(value);
-                        }
-                        if ("elite_num".equals(qualifier)) {
-                            bbsPeople.setEliteNum(value);
-                        }
-                        if ("level".equals(qualifier)) {
-                            bbsPeople.setLevel(value);
-                        }
-                        if ("post_num".equals(qualifier)) {
-                            bbsPeople.setPostNum(value);
-                        }
-                        if ("reply_num".equals(qualifier)) {
-                            bbsPeople.setReplyNum(value);
-                        }
-                        if ("url".equals(qualifier)) {
-                            bbsPeople.setUrl(value);
-                        }
-                        if ("age".equals(qualifier)) {
-                            bbsPeople.setAge(value);
-                        }
-                        listInfo.add(bbsPeople);
-                    }
-                }
-
-                if ("bbs_sohu_author".equals(tableName)){
-                    BBSSohuAuthorEntity bbsSohu = new BBSSohuAuthorEntity();
-                    for (KeyValue keyValue : result.list()) {
-                        String qualifier = new String(keyValue.getQualifier(), "utf-8");
-                        String value = new String(keyValue.getValue(), "utf-8");
-                        if ("author_id".equals(qualifier)) {
-                            bbsSohu.setAuthorID(value);
-                        }
-                        if ("fans_num".equals(qualifier)){
-                            bbsSohu.setFansNum(value);
-                        }
-                        if ("friends_num".equals(qualifier)){
-                            bbsSohu.setFriendsNum(value);
-                        }
-                        if ("introduction".equals(qualifier)){
-                            bbsSohu.setIntroduction(value);
-                        }
-                        if ("nick_name".equals(qualifier)){
-                            bbsSohu.setNickName(value);
-                        }
-                        if ("parse_time".equals(qualifier)){
-                            bbsSohu.setParseTime(value);
-                        }
-                        if ("sex".equals(qualifier)){
-                            bbsSohu.setParseTime(value);
-                        }
-                        if ("birthday".equals(qualifier)){
-                            bbsSohu.setBirthday(value);
-                        }
-                        if ("level".equals(qualifier)){
-                            bbsSohu.setLevel(value);
-                        }
-                        if ("post_num".equals(qualifier)){
-                            bbsSohu.setPostNum(value);
-                        }
-                        if ("login_num".equals(qualifier)){
-                            bbsSohu.setLoginNum(value);
-                        }
-                        if ("education".equals(qualifier)){
-                            bbsSohu.setEducation(value);
-                        }
-                        if ("title".equals(qualifier)){
-                            bbsSohu.setTitle(value);
-                        }
-                        if ("duty".equals(qualifier)){
-                            bbsSohu.setDuty(value);
-                        }
-                        if ("elite_num".equals(qualifier)){
-                            bbsSohu.setEliteNum(value);
-                        }
-                        if ("point".equals(qualifier)){
-                            bbsSohu.setPoint(value);
-                        }
-                        if ("online_time".equals(qualifier)){
-                            bbsSohu.setOnlineTime(value);
-                        }
-                        if ("reputation".equals(qualifier)){
-                            bbsSohu.setReputation(value);
-                        }
-                        if ("last_login".equals(qualifier)){
-                            bbsSohu.setLastLogin(value);
-                        }
-                        if ("sport".equals(qualifier)){
-                            bbsSohu.setSport(value);
-                        }
-                        if ("movie".equals(qualifier)){
-                            bbsSohu.setMovie(value);
-                        }
-                        if ("music".equals(qualifier)){
-                            bbsSohu.setMusic(value);
-                        }
-                        if ("food".equals(qualifier)){
-                            bbsSohu.setFood(value);
-                        }
-                        if ("book".equals(qualifier)){
-                            bbsSohu.setBook(value);
-                        }
-                        if ("person".equals(qualifier)){
-                            bbsSohu.setPerson(value);
-                        }
-                        if ("profession".equals(qualifier)){
-                            bbsSohu.setProfession(value);
-                        }
-                        listInfo.add(bbsSohu);
-                    }
-
-                }
-
-                if ("bbs_tianya_author".equals(tableName)){
-                    BBSTianyaAuthorEntity bbsTianya = new BBSTianyaAuthorEntity();
-                    for (KeyValue keyValue : result.list()) {
-                        String qualifier = new String(keyValue.getQualifier(), "utf-8");
-                        String value = new String(keyValue.getValue(), "utf-8");
-                        if ("author_id".equals(qualifier)) {
-                            bbsTianya.setAuthorID(value);
-                        }
-                        if ("fans_num".equals(qualifier)) {
-                            bbsTianya.setFansNum(value);
-                        }
-                        if ("author_name".equals(qualifier)) {
-                            bbsTianya.setAuthorName(value);
-                        }
-                        if ("friends_num".equals(qualifier)) {
-                            bbsTianya.setFriendsNum(value);
-                        }
-                        if ("level".equals(qualifier)) {
-                            bbsTianya.setLevel(value);
-                        }
-                        if ("location".equals(qualifier)) {
-                            bbsTianya.setLocation(value);
-                        }
-                        if ("login_num".equals(qualifier)) {
-                            bbsTianya.setLoginNum(value);
-                        }
-                        if ("point".equals(qualifier)) {
-                            bbsTianya.setPoint(value);
-                        }
-                        if ("register_date".equals(qualifier)) {
-                            bbsTianya.setRegisterDate(value);
-                        }
-                        if ("url".equals(qualifier)) {
-                            bbsTianya.setUrl(value);
-                        }
-                        if ("online_time".equals(qualifier)) {
-                            bbsTianya.setOnlineTime(value);
-                        }
-
-                        listInfo.add(bbsTianya);
-                    }
-                }
-                if ("kdnet_author".equals(tableName)){
-                    KdnetAuthorEntity kdAuthor = new KdnetAuthorEntity();
-                    for (KeyValue keyValue : result.list()) {
-                        String qualifier = new String(keyValue.getQualifier(), "utf-8");
-                        String value = new String(keyValue.getValue(), "utf-8");
-                        if ("author_id".equals(qualifier)) {
-                            kdAuthor.setAuthorID(value);
-                        }
-                        if ("fans_num".equals(qualifier)) {
-                            kdAuthor.setFansNum(value);
-                        }
-                        if ("friends_num".equals(qualifier)) {
-                            kdAuthor.setFriendsNum(value);
-                        }
-                        if ("hits".equals(qualifier)) {
-                            kdAuthor.setHits(value);
-                        }
-                        if ("influence".equals(qualifier)) {
-                            kdAuthor.setInfluence(value);
-                        }
-                        if ("level".equals(qualifier)) {
-                            kdAuthor.setLevel(value);
-                        }
-                        if ("login_num".equals(qualifier)) {
-                            kdAuthor.setLoginNum(value);
-                        }
-                        if ("nick".equals(qualifier)) {
-                            kdAuthor.setNick(value);
-                        }
-                        if ("parse_time".equals(qualifier)) {
-                            kdAuthor.setParseTime(value);
-                        }
-                        if ("post_num".equals(qualifier)) {
-                            kdAuthor.setPostNum(value);
-                        }
-                        if ("register_time".equals(qualifier)) {
-                            kdAuthor.setRegisterNum(value);
-                        }
-                        if ("url".equals(qualifier)) {
-                            kdAuthor.setUrl(value);
-                        }
-
-                        listInfo.add(kdAuthor);
-                    }
-
-                }
-
-
-            }
-
-
-        } catch (IOException e) {
+            String name = entityInfo.getEntityInfo(tableName);
+            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
+            return dataStoreApi.findOne(QueryBuilder
+                    .builderFor(TBTableEntityType)
+                    .add(Restrictions.eq("\""+condition+"\"", conditionValue))
+                    .select().build());
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return listInfo;
-    }*/
+
+        return null;
+    }
 
     @Override
-    public Object getAuthorInfo(String authorID, String tableName) {
-        final QuerySelect<BBSChinaAuthorEntity, BBSChinaAuthorEntity> query = QueryBuilder
-                .builderFor(BBSChinaAuthorEntity.class)
-                .add(Restrictions.eq("\"author_id\"", authorID))
-                .select().build();
-        BBSChinaAuthorEntity infoItems = dataStoreApi.findOne(query);
-        System.out.println(infoItems.toString());
+    public List getMoeAuthorList(String tableName, HBPage page,String condition) {
+        try {
+//            System.out.println(tableName+"的数量:"+getAllAuthorNum(tableName));
+            String name = entityInfo.getEntityInfo(tableName);
+            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
+            return Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                    .builderFor(TBTableEntityType)
+                    .setMaxResults(page.getPageSize())
+                    .select()
+                    .setReturnFields("distinct"+" "+"\""+condition+"\"")
+                    .build()));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        return  infoItems;
+        return null;
     }
 
     @Override
     public List getAuthorList(String tableName,HBPage page){
 
-        final QuerySelect<BBSChinaAuthorEntity, BBSChinaAuthorEntity> query = QueryBuilder
-                .builderFor(BBSChinaAuthorEntity.class)
-                .setMaxResults(page.getPageSize())
-                .select().build();
-        System.out.println(query);
-        Iterable<BBSChinaAuthorEntity> infoItems = dataStoreApi.findAll(query);
-
-        return Lists.newArrayList(infoItems);
-    }
-    @Override
-    public List getAuthorList(String tableName,HBPage page,String rowKeyEndNum,String rowKeyBeginNum){
-
-        List list = new ArrayList();
-
-        if (page.getPrePage()==0){//查询上一页
-            final QuerySelect<BBSChinaAuthorEntity, BBSChinaAuthorEntity> query = QueryBuilder
-                    .builderFor(BBSChinaAuthorEntity.class)
-                    .add(Restrictions.and(Restrictions.lt("\"PK\"", page.getRowKeyBeginNum())))
-                    .addOrder(Ordering.desc("\"PK\""))
+        try {
+//            System.out.println(tableName+"的数量:"+getAllAuthorNum(tableName));
+            String name = entityInfo.getEntityInfo(tableName);
+            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
+            return Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                    .builderFor(TBTableEntityType)
+                    .select()
+                    .addOrder(Ordering.asc("\"PK\""))
                     .setMaxResults(page.getPageSize())
-                    .select().build();
-            System.out.println(query);
-            Iterable<BBSChinaAuthorEntity> infoItems = dataStoreApi.findAll(query);
-            list = Lists.newArrayList(infoItems);
-        }else if (page.getNextPage()==0){//查询下一页
-            final QuerySelect<BBSChinaAuthorEntity, BBSChinaAuthorEntity> query = QueryBuilder
-                    .builderFor(BBSChinaAuthorEntity.class)
-                    .add(Restrictions.and(Restrictions.gt("\"PK\"",page.getRowKeyEndNum())))
-                    .setMaxResults(page.getPageSize())
-                    .select().build();
-            System.out.println(query);
-            Iterable<BBSChinaAuthorEntity> infoItems = dataStoreApi.findAll(query);
-            list = Lists.newArrayList(infoItems);
+                    .build()));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        return list;
+        return null;
+    }
+
+    @Override
+    public List getAuthorList(String tableName,HBPage page,String rowKeyEndNum,String rowKeyBeginNum){
+        try {
+            List list = new ArrayList();
+            String name = entityInfo.getEntityInfo(tableName);
+            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
+            if (page.getPrePage()==0) {//查询上一页
+               /*Iterable a = dataStoreApi.findAll(QueryBuilder
+                       .builderFor(TBTableEntityType)
+                       .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
+                       .setMaxResults(page.getPageSize())
+                       .addOrder(Ordering.desc("\"PK\""))
+                       .select().build());*/
+
+                /*list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                        .builderFor(TBTableEntityType)
+                        .add((Criterion) QueryBuilder.builderFor(TBTableEntityType)
+                                .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
+                                .setMaxResults(page.getPageSize())
+                                .addOrder(Ordering.desc("\"PK\"")).select().build())
+                        .addOrder(Ordering.asc("\"PK\""))
+                        .select()
+
+                        .build()));*/
+                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder.builderFor(TBTableEntityType)
+                        .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
+                        .setMaxResults(page.getPageSize())
+                        .addOrder(Ordering.desc("\"PK\"")).select().build()));
+
+            }else if (page.getNextPage()==0) {//查询下一页
+                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                        .builderFor(TBTableEntityType)
+                        .add(Restrictions.and(Restrictions.gt("\"PK\"",page.getRowKeyEndNum())))
+                        .addOrder(Ordering.asc("\"PK\""))
+                        .setMaxResults(page.getPageSize())
+                        .select().build()));
+            }
+
+            return list;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        /*try {
+            List list = new ArrayList();
+            String name = entityInfo.getEntityInfo(tableName);
+            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
+            if (page.getPrePage()==0) {//查询上一页
+                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                        .builderFor(TBTableEntityType)
+                        .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
+                        .setMaxResults(page.getPageSize())
+                        .select().build()));
+            }else if (page.getNextPage()==0) {//查询下一页
+                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                        .builderFor(TBTableEntityType)
+                        .add(Restrictions.and(Restrictions.gt("\"PK\"",page.getRowKeyEndNum())))
+                        .addOrder(Ordering.asc("\"PK\""))
+                        .setMaxResults(page.getPageSize())
+                        .select().build()));
+            }
+
+            return list;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }*/
+
+        return null;
+//        return list;
     }
 
 

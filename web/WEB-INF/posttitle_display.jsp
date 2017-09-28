@@ -33,7 +33,7 @@
                         文章标题</div>
                 </div>
                 <ol class="breadcrumb page-breadcrumb pull-right">
-                    <li><i class="fa fa-home"></i>&nbsp;<a href="bbs_china_author">作者列表</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                    <li><i class="fa fa-home"></i>&nbsp;<a>作者列表</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                     <li class="hidden"><a>文章标题</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                     <li class="active">文章标题</li>
                 </ol>
@@ -47,75 +47,227 @@
                 <div id="tab-general">
                     <div class="row mbl">
                         <div class="panel">
-
+                            <c:if test="${authorInfo!=null}">
                             <div class="panel-body">
-                                <c:if test="${bbs_china_authorInfo!=null}">
+
                             <h4>
-                                <strong>作者：${bbs_china_authorInfo.authorName}</strong>
+                                <strong>作者：${authorInfo.authorName}</strong>
 
                             </h4>
                                     <table>
                                         <tbody>
                                         <tr>
                                             <td>昵称：</td>
-                                            <td>${bbs_china_authorInfo.name}</td>
+                                            <td>${authorInfo.name}</td>
                                         </tr>
                                         <tr>
                                             <td>性别：</td>
-                                            <td>${bbs_china_authorInfo.sex}</td>
+                                            <td>${authorInfo.sex}</td>
                                         </tr>
-                                        <tr>
+                                        <%--<tr>
                                             <td>生日：</td>
-                                            <td>${bbs_china_authorInfo.birthday}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>地址：</td>
-                                            <td>${bbs_china_authorInfo.address}</td>
-                                        </tr>
+                                            <td>${authorInfo.birthday}</td>
+                                        </tr>--%>
+                                        <%--<tr>--%>
+                                            <%--<td>地址：</td>--%>
+                                            <%--<td>${authorInfo.address}</td>--%>
+                                        <%--</tr>--%>
                                         <tr>
                                             <td>粉丝数：</td>
-                                            <td>${bbs_china_authorInfo.fansNum}</td>
+                                            <td>${authorInfo.fansNum}</td>
                                         </tr>
 
                                         </tbody>
                                     </table>
-                                   <%-- <p>
 
-                                        <c:if test="${bbs_china_authorInfo.name!=null}">昵称：${bbs_china_authorInfo.name}</c:if>&nbsp;&nbsp;
-                                        <c:if test="${bbs_china_authorInfo.sex!=null}">性别：${bbs_china_authorInfo.sex}</c:if>&nbsp;&nbsp;
-                                        <c:if test="${bbs_china_authorInfo.birthday!=null}">生日：${bbs_china_authorInfo.birthday}</c:if>&nbsp;&nbsp;
-                                        <c:if test="${bbs_china_authorInfo.address!=null}">地址：${bbs_china_authorInfo.address}</c:if>&nbsp;&nbsp;
-                                        &lt;%&ndash;<c:if test="${bbs_china_authorInfo.fansNum!=null}">粉丝数：${bbs_china_authorInfo.fansNum}</c:if>&ndash;%&gt;
-                                    &lt;%&ndash;性别：${bbs_china_authorInfo.sex}
-                                    生日：${bbs_china_authorInfo.birthday}
-                                    地址： ${bbs_china_authorInfo.address}
-                                    粉丝数：${bbs_china_authorInfo.fansNum}&ndash;%&gt;
-                                </p>--%>
-                                </c:if>
                                     </div>
+                            </c:if>
 
                          </div>
                             <div class="col-sm-9 col-md-10" style="width: 100%">
                                 <div class="tab-content">
                                     <div id="home" class="tab-pane fade in active">
+                                        <c:if test="${bbs_china_post!=null}">
                                         <div class="list-group mail-box">
                                             <h4>作者相关的文章：</h4>
-                                            <c:if test="${postList!=null}">
-                                                <c:forEach items="${postList}" var="p">
-                                                                      <a href="bbs_china_postInfo?postID=${p.postID}" class="list-group-item">
-                                                                          <span class="fa fa-star-o mrm mlm"></span>
-                                                                          <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
-                                                                          <span>${p.title}</span>&nbsp; - &nbsp;
-                                                                          <%--<span style="font-size: 11px;" class="text-muted">${p.keyWords}</span>--%>
-                                                                          <span class="time-badge">${p.dateTime}<%--12:10 AM--%></span>
-                                                                          <span class="pull-right mrl">
-                                                                              <span class="fa fa-paperclip"></span>
-                                                                          </span>
-                                                                      </a>
+                                                <c:forEach items="${bbs_china_post}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=post_id&&conditionValue=${p.postID}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.dateTime}<%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
                                                 </c:forEach>
-                                            </c:if>
-
-                                    </div>
+                                        </div>
+                                        </c:if>
+                                        <c:if test="${bbs_sohu_post!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${bbs_sohu_post}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=post_id&&conditionValue=${p.postID}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.dateTime}<%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${bbs_mop_post!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${bbs_mop_post}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=post_id&&conditionValue=${p.postID}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.dateTime}<%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${bbs_news_post!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${bbs_news_post}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=post_id&&conditionValue=${p.postID}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.dateTime}<%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${bbs_people_post!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${bbs_people_post}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=post_id&&conditionValue=${p.postID}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.dateTime}<%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <%--<c:if test="${blog_163_post!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${blog_163_post}" var="p">
+                                                    <a href="postInfo?type=${type}&&condition=post_id&&conditionValue=${p.postID}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.dateTime}&lt;%&ndash;12:10 AM&ndash;%&gt;</span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>--%>
+                                        <c:if test="${blogchina_blog_1!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${blogchina_blog_1}" var="p">
+                                                    <%--<a href="postInfo?type=${postType}&&condition=blog_id&&conditionValue=${p.blogID}" class="list-group-item">--%>
+                                                        <a  class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge"><%--${p.dateTime}--%><%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${blog_sina_post!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${blog_sina_post}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=title&&conditionValue=${p.title}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge"><%--${p.dateTime}--%><%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${douban_group_post!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${douban_group_post}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=post_id&&conditionValue=${p.postID}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.dateTime}<%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${xinhua_news!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${xinhua_news}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=title&&conditionValue=${p.title}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.dateTime}<%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${kdnet_post!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${kdnet_post}" var="p">
+                                                    <a href="postInfo?type=${postType}&&condition=post_id&&conditionValue=${p.postID}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${p.title}</span>
+                                                        <span class="time-badge">${p.postTime}<%--12:10 AM--%></span>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                        </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${moe_news!=null}">
+                                            <div class="list-group mail-box">
+                                                <h4>作者相关的文章：</h4>
+                                                <c:forEach items="${moe_news}" var="m">
+                                                    <a href="postInfo?type=moe_news&&condition=news_title&&conditionValue=${m.newsTitle}" class="list-group-item">
+                                                        <span class="fa fa-star-o mrm mlm"></span>
+                                                        <span style="min-width: 120px; display: inline-block;" class="name">${m.newsTitle}</span>
+                                                            <%--<span class="time-badge">${m.newsTime}&lt;%&ndash;12:10 AM&ndash;%&gt;</span>--%>
+                                                        <span class="pull-right mrl">
+                                                            <span class="fa fa-paperclip"></span>
+                                                    </span>
+                                                    </a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:if>
                                 </div>
                             </div>
 

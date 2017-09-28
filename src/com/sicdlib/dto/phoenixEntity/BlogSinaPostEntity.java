@@ -3,7 +3,7 @@ package com.sicdlib.dto.phoenixEntity;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Property;
 
-@Entity(value="\"bbs_sina_post\"")
+@Entity(value="\"blog_sina_post\"")
 public class BlogSinaPostEntity {
 
     @Property(value="PK")

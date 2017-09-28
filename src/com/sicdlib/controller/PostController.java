@@ -7,6 +7,8 @@ import com.sicdlib.dto.phoenixEntity.BBSChinaPostEntity;
 import com.sicdlib.service.hbaseService.imple.AuthorService;
 import com.sicdlib.service.hbaseService.imple.CommentService;
 import com.sicdlib.service.hbaseService.imple.PostService;
+import com.sicdlib.util.TableUtil.ArticleAuthorTableMapping;
+import com.sicdlib.util.TableUtil.ArticleCommentTableMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -31,246 +33,73 @@ public class PostController {
     @Qualifier("commentService")
     private CommentService commentService;
 
-    public String type_to_tableName(String type){
-        String tableName =null;
-        if ("bbs_china_posttitle".equals(type)){
-            tableName = "BBSChinaPostEntity";
-        }
-        if ("bbs_mop_posttitle".equals(type)){
-            tableName = "BBSMopPostEntity";
-        }
-        if ("bbs_people_posttitle".equals(type)){
-            tableName = "BBSPeoplePostEntity";
-        }
-        if ("bbs_sohu_posttitle".equals(type)){
-            tableName = "BBSSohuPostEntity";
-        }
-        if ("bbs_tianya_posttitle".equals(type)){
-            tableName = "BBSTianyaPostEntity";
-        }
-        if ("bbs_xici_posttitle".equals(type)){
-            tableName = "BBSXiciPostEntity";
-        }
-        if ("bbs_kd_posttitle".equals(type)){
-            tableName = "KdnetPostEntity";
-        }
-        if ("bbs_xinhua_posttitle".equals(type)){
-            tableName = "XinhuaNewsEntity";
-        }
-        if ("blog_163_posttitle".equals(type)){
-            tableName = "Blog163PostEntity";
-        }
-        /*if ("blog_china_posttitle".equals(type)){
-            tableName = "BlogchinaBlogEntity";
-        }*/
-        if ("blog_sina_posttitle".equals(type)){
-            tableName = "BlogSinaPostEntity";
-        }
 
-        return tableName;
-    }
+    @RequestMapping("post")
+    public String post(HttpServletRequest req, Model model, HttpServletResponse resp) {
 
-    /*public Page page(HttpServletRequest req,String type){
+        String type = req.getParameter("type");
+        String condition = req.getParameter("condition");
+        String conditionValue = req.getParameter("conditionValue");
+        String authorType = ArticleAuthorTableMapping.getAuthorTable(type);
+        if ("blogchina_blog_1".equals(type)){
+            authorType = "blogchina_author_1";
+        }
+        if (!"xinhua_news".equals(type)){
+            if(!"moe_news".equals(type))
+                model.addAttribute("authorInfo", JSON.toJSON(authorService.getAuthorInfo(condition,conditionValue,authorType)));
+        }
+        model.addAttribute("postType",type);
 
-        int totalRecord = postService.getAllPostNum(type_to_tableName(type));//总记录数
-        int pageIndex = Integer.parseInt(req.getParameter("pageIndex"));//当前页码
-        int pageSize = Integer.parseInt(req.getParameter("pageSize"));;//每页显示多少条
-
-        return new Page(totalRecord, pageIndex, pageSize);
-    }
-*/
-    public List postList(HttpServletRequest req,String type,String authorID){
-        return postService.getPostList(type_to_tableName(type),authorID);
-    }
-
-    @RequestMapping("bbs_china_posttitle")
-    public String bbs_china_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-
-        String type = "bbs_china_posttitle";
-        String authorID = req.getParameter("authorID");
-
-        Object bbs_china_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_china_authorInfo", JSON.toJSON((BBSChinaAuthorEntity)bbs_china_authorInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type,authorID)));
+        model.addAttribute(type, JSON.toJSON(postService.getPostList(type,condition,conditionValue)));
         return "posttitle_display";
     }
-    @RequestMapping("bbs_china_postInfo")
-    public String bbs_china_postInfo(HttpServletRequest req, Model model, HttpServletResponse resp) {
+    @RequestMapping("postInfo")
+    public String postInfo(HttpServletRequest req, Model model, HttpServletResponse resp) {
 
-        String type = "bbs_china_posttitle";
-        String postID = req.getParameter("postID");
+        String type = req.getParameter("type");
+        String commentType = ArticleCommentTableMapping.getCommentTable(type);
+        String condition = req.getParameter("condition");
+        String conditionValue = req.getParameter("conditionValue");
+        if ("blogchina_blog_1".equals(type)){
+            commentType = "blogchina_comment_1";
+        }
+        if (!"moe_news".equals(type)){
+            if (!"blog_sina_post".equals(type)){
+                if (!"bbs_people_post".equals(type)){
+                    List commentList = commentService.getCommentList(commentType,condition,conditionValue);
+                    model.addAttribute(commentType, JSON.toJSON(commentList));
+                }
 
-        Object bbs_china_postInfo = postService.getPostInfo(postID,type_to_tableName(type));
-        List commentList = commentService.getCommentList("bbs_china_comment",postID);
-        model.addAttribute("postID",postID);
-        model.addAttribute("commentList", JSON.toJSON(commentList));
-        model.addAttribute("bbs_china_postInfo", JSON.toJSON((BBSChinaPostEntity)bbs_china_postInfo));
-
+            }
+        }
+        model.addAttribute(type, JSON.toJSON(postService.getPostInfo(condition,type,conditionValue)));
         return "post_comment_display";
     }
-   /* @RequestMapping("bbs_mop_posttitle")
-    public String bbs_mop_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
 
-        String type = "bbs_mop_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
+    @RequestMapping("moe_news_title")
+    public String moe_news_title(HttpServletRequest req, Model model, HttpServletResponse resp) {
 
-        Object bbs_mop_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object bbs_mop_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
+        String type ="moe_news_title";
+        String newsEditor = req.getParameter("newsEditor");
 
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_mop_authorInfo", JSON.toJSON((BbsMopAuthorEntity)bbs_mop_authorInfo));
-        model.addAttribute("bbs_mop_postInfo", JSON.toJSON((BbsMopPostEntity)bbs_mop_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
-
-    }
-
-    @RequestMapping("bbs_people_posttitle")
-    public String bbs_people_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_people_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
-
-        Object bbs_people_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object bbs_people_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_people_authorInfo", JSON.toJSON((BbsPeopleAuthorEntity)bbs_people_authorInfo));
-        model.addAttribute("bbs_people_postInfo", JSON.toJSON((BbsPeoplePostEntity)bbs_people_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
+        model.addAttribute("newsEditor",newsEditor);
+        model.addAttribute("postMoeList", JSON.toJSON(postService.getMoePostList("moe_news",newsEditor)));
         return "posttitle_display";
     }
 
-    @RequestMapping("bbs_sohu_posttitle")
-    public String bbs_sohu_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_sohu_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
+    @RequestMapping("postMoeInfo")
+    public String postMoeInfo(HttpServletRequest req, Model model, HttpServletResponse resp) {
 
-        Object bbs_sohu_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object bbs_csohu_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
+        String type = "moe_news";
+        String newsTitle = req.getParameter("newsTitle");
 
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_sohu_authorInfo", JSON.toJSON((BbsSohuAuthorEntity)bbs_sohu_authorInfo));
-        model.addAttribute("bbs_sohu_postInfo", JSON.toJSON((BbsSohuPostEntity)bbs_csohu_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
+        model.addAttribute("newsTitle",newsTitle);
+        model.addAttribute("postMoeInfo", JSON.toJSON(postService.getMoePostInfo(newsTitle,type)));
+        return "post_comment_display";
     }
-
-    @RequestMapping("bbs_tianya_posttitle")
-    public String bbs_tianya_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_tianya_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
-
-        Object bbs_tianya_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object bbs_tianya_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_tianya_authorInfo", JSON.toJSON((BbsTianyaAuthorEntity)bbs_tianya_authorInfo));
-        model.addAttribute("bbs_tianya_postInfo", JSON.toJSON((BbsTianyaPostEntity)bbs_tianya_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
-    }
-
-    @RequestMapping("bbs_xici_posttitle")
-    public String bbs_xici_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_xici_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
-
-        Object bbs_xici_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object bbs_xici_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_xici_authorInfo", JSON.toJSON((BbsXiciAuthorEntity)bbs_xici_authorInfo));
-        model.addAttribute("bbs_xici_postInfo", JSON.toJSON((BbsXiciPostEntity)bbs_xici_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
-    }
-
-    @RequestMapping("bbs_kd_posttitle")
-    public String bbs_kd_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_kd_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
-
-        Object bbs_kd_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object bbs_kd_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_kd_authorInfo", JSON.toJSON((KdnetAuthorEntity)bbs_kd_authorInfo));
-        model.addAttribute("bbs_kd_postInfo", JSON.toJSON((KdnetPostEntity)bbs_kd_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
-    }
-
-    @RequestMapping("bbs_xinhua_posttitle")
-    public String bbs_xinhua_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_xinhua_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
-
-        Object bbs_xinhua_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object bbs_xinhua_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("bbs_xinhua_authorInfo", JSON.toJSON((XinhuaNewsEntity)bbs_xinhua_authorInfo));
-        model.addAttribute("bbs_xinhua_postInfo", JSON.toJSON((XinhuaNewsEntity)bbs_xinhua_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
-    }
-
-    @RequestMapping("blog_163_posttitle")
-    public String blog_163_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "blog_163_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
-
-        Object blog_163_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object blog_163_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("blog_163_authorInfo", JSON.toJSON((Blog163AuthorEntity)blog_163_authorInfo));
-        model.addAttribute("blog_163_postInfo", JSON.toJSON((Blog163PostEntity)blog_163_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
-    }
-
-
-    @RequestMapping("blog_china_posttitle")
-    public String blog_china_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "blog_china_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
-
-        Object blog_china_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object blog_china_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("blog_china_authorInfo", JSON.toJSON((BlogchinaAuthorEntity)blog_china_authorInfo));
-        model.addAttribute("blog_china_postInfo", JSON.toJSON((BlogchinaBlogEntity)blog_china_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
-    }
-
-    @RequestMapping("blog_sina_posttitle")
-    public String blog_sina_posttitle(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "blog_sina_posttitle";
-        String authorID = req.getParameter("authorID");
-        String postID = req.getParameter("postID");
-
-        Object blog_sina_authorInfo = authorService.getAuthorInfo(authorID,type_to_tableName(type));
-        Object blog_sina_postInfo = postService.getPostInfo(authorID,postID,type_to_tableName(type));
-
-        model.addAttribute("authorID",authorID);
-        model.addAttribute("blog_sina_authorInfo", JSON.toJSON((BlogSinaAuthorEntity)blog_sina_authorInfo));
-        model.addAttribute("blog_sina_postInfo", JSON.toJSON((BlogSinaPostEntity)blog_sina_postInfo));
-        model.addAttribute("postList", JSON.toJSON(postList(req,type)));
-        return "posttitle_display";
-    }*/
+    /**
+     * blog_sina_posttitle,bbs_kd_posttitle,bbs_xinhua_posttitle,blog_163_posttitle,blog_china_posttitle
+     * bbs_mop_posttitle,bbs_people_posttitle,bbs_sohu_posttitle,bbs_tianya_posttitle,bbs_xici_posttitle
+     */
 
 }

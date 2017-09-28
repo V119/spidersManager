@@ -87,8 +87,10 @@
 		<value>com.sicdlib.dto.phoenixEntity.Blog163CommentEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.Blog163PostEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.BlogChinaAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BlogChinaBlogEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.BlogChinaCommentEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.BlogSinaAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BlogSinaPostEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.DoubanGroupAuthorEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.DoubanGroupCommentEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.DoubanGroupGroupEntity</value>
@@ -101,7 +103,6 @@
 		<value>com.sicdlib.dto.phoenixEntity.MoeNewsEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.XinhuaNewsEntity</value>
 		<value>com.sicdlib.dto.phoenixEntity.TbTableEntity</value>
-
 	</util:list>
 
 	<bean id="entityPropertiesMappingContext" class="com.eharmony.pho.mapper.EntityPropertiesMappingContext">

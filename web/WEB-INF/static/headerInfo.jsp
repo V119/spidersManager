@@ -49,7 +49,7 @@
                         <li><a href="source_datas"><i class="fa fa-desktop fa-fw"></i>源数据库展示</a></li>
                         <li><a href="source_data"><i class="fa fa-desktop fa-fw"></i>数据清理展示</a></li>
                         <li><a href="source_datas_display"><i class="fa fa-desktop fa-fw"></i>源数据展示</a></li>
-                        <li><a href="bbs_china_author?pageIndex=1"><i class="fa fa-desktop fa-fw"></i>源数据展示-作者</a></li>
+                        <li><a href="bbs_author?pageIndex=1&&type=bbs_china_author"><i class="fa fa-desktop fa-fw"></i>源数据展示-作者</a></li>
                         <li><a href="cleaned_datas"><i class="fa fa-desktop fa-fw"></i>数据清洗后数据展示</a></li>
                     </ul>
                 </li>
