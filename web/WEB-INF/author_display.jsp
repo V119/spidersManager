@@ -280,7 +280,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-sm-3 col-md-2">
+                                <%--<div class="col-sm-3 col-md-2">
                                     <div class="btn-group btn-group-sm">
                                         <button type="button" data-toggle="dropdown" data-control-animate-to-top="true" class="jplist-drop-down form-control">每页显示条数
                                             &nbsp;<span class="caret"></span></button>
@@ -289,14 +289,15 @@
                                             <li><a href="bbs_author?type=${type}&&pageSize=100&&pageIndex=1">100</a></li>
                                         </ul>
                                     </div>
-                                </div>
-                                <div class="col-lg-4" style="margin-left: 25%">
+                                </div>--%>
+                                <div class="col-lg-4" style="margin-left: 40%">
                                     <c:if test="${page!=null}">
                                         <input hidden="${page.pageIndex}">
                                     <ul class="pagination pagination-lg mtm mbm">
-                                        <li><a href="bbs_author?type=${type}&&prePage=0&&pageSize=${page.pageSize}&&pageIndex=${page.pageIndex-1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">上一页</a></li>
+                                        <li><a href="bbs_author?type=${type}&&pageIndex=1">首页</a></li>
+                                        <li><a href="bbs_author?type=${type}&&prePage=0&&pageIndex=${page.pageIndex-1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">上一页</a></li>
                                         <li><span>当前页：${page.pageIndex}</span></li>
-                                        <li><a href="bbs_author?type=${type}&&nextPage=0&&pageSize=${page.pageSize}&&pageIndex=${page.pageIndex+1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">下一页</a></li>
+                                        <li><a href="bbs_author?type=${type}&&nextPage=0&&pageIndex=${page.pageIndex+1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">下一页</a></li>
                                     </ul>
                                     </c:if>
                                 </div>

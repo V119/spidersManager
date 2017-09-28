@@ -52,8 +52,8 @@ public class AuthorService implements IAuthorService {
 
 
     @Override
-    public List<Object[]> getAuthorList(String tableName, HBPage page,String rowKeyEndNum,String rowKeyBeginNum) {
-        return authorDAO.getAuthorList(tableName,page,rowKeyEndNum,rowKeyBeginNum);
+    public List<Object[]> getAuthorList(String tableName, HBPage page,List pageEntityList) {
+        return authorDAO.getAuthorList(tableName,page,pageEntityList);
     }
 
     @Override
