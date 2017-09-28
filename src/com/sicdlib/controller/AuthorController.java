@@ -1,10 +1,9 @@
 package com.sicdlib.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.sicdlib.dto.entity.*;
-import com.sicdlib.service.imple.AuthorService;
-import com.sicdlib.service.pythonService.imple.*;
-import com.sicdlib.util.PageUtil.Page;
+import com.sicdlib.service.hbaseService.imple.AuthorService;
+import com.sicdlib.util.HBaseUtil.HBPage;
+import com.sicdlib.util.HBaseUtil.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+/**
+ * 数据库中没有相对应的表bbs_xici_author ,bbs xinhua 网的作者表
+ */
 @Controller
 public class AuthorController {
 
@@ -22,145 +27,321 @@ public class AuthorController {
     @Qualifier("authorService")
     private AuthorService authorService;
 
-    public String type_to_tableName(String type){
-        String tableName =null;
-        if ("bbs_china_author".equals(type)){
-            tableName = "BbsChinaAuthorEntity";
-        }
-        if ("bbs_mop_author".equals(type)){
-            tableName = "BbsMopAuthorEntity";
-        }
-        if ("bbs_people_author".equals(type)){
-            tableName = "BbsPeopleAuthorEntity";
-        }
-        if ("bbs_sohu_author".equals(type)){
-            tableName = "BbsSohuAuthorEntity";
-        }
-        if ("bbs_tianya_author".equals(type)){
-            tableName = "BbsTianyaAuthorEntity";
-        }
-        if ("bbs_xici_author".equals(type)){
-            tableName = "BbsXiciAuthorEntity";
-        }
-        if ("bbs_kd_author".equals(type)){
-            tableName = "KdnetAuthorEntity";
-        }
-        /*if ("bbs_xinhua_author".equals(type)){
-            tableName = "XinhuaNewsEntity";
-        }*/
-        if ("blog_163_author".equals(type)){
-            tableName = "Blog163AuthorEntity";
-        }
-        if ("blog_china_author".equals(type)){
-            tableName = "BlogchinaAuthorEntity";
-        }
-        if ("blog_sina_author".equals(type)){
-            tableName = "BlogSinaAuthorEntity";
-        }
 
-        return tableName;
+
+    public List getAuthorList(HttpServletRequest req,String type,HBPage page){
+        return authorService.getAuthorList(type,page);
     }
 
-    public Page page(HttpServletRequest req,String type){
-
-        int totalRecord = authorService.getAllAuthorNum(type_to_tableName(type));//总记录数
-        int pageIndex = Integer.parseInt(req.getParameter("pageIndex"));//当前页码
-        int pageSize = Integer.parseInt(req.getParameter("pageSize"));;//每页显示多少条
-        return new Page(totalRecord, pageIndex, pageSize);
+    public List getAuthorList(HttpServletRequest req,String type,HBPage page,String rowKeyEndNum,String rowKeyStartNum){
+        return authorService.getAuthorList(type,page,rowKeyEndNum,rowKeyStartNum);
     }
 
-    public List getAuthorList(HttpServletRequest req,String type){
-        return authorService.getAuthorList(type_to_tableName(type),page(req,type));
+    public List getMoeAuthorList(HttpServletRequest req,String type,HBPage page,String condition){
+        return authorService.getMoeAuthorList(type,page,condition);
     }
 
-    @RequestMapping("bbs_china_author")
+    @RequestMapping("bbs_author")
     public String bbs_china_anthor(HttpServletRequest req, Model model, HttpServletResponse resp) {
+        int pageIndex = Integer.parseInt(req.getParameter("pageIndex"));
+        //*********************************
+        String type = req.getParameter("type");
+        String nextflag = req.getParameter("flag");
+        String rowKeyBeginNum = " ";
+        String rowKeyEndNum = " ";
+        List getAuthorList = new ArrayList();
+        PageInfo newPage = new PageInfo();
+        if (pageIndex<1){
+           pageIndex=1;
+        }
+        if (pageIndex==1){
 
-        String type = "bbs_china_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
+            getAuthorList = getAuthorList(req,type,pageInfo(req));
+
+            newPage.setPageIndex(1);
+            String pk0 = getAuthorList.get(0).toString();
+            String pk1 = getAuthorList.get(getAuthorList.size()-1).toString();
+            String rgex = "pk='(.*?)'";
+            Pattern pattern = Pattern.compile(rgex);// 匹配的模式
+            Matcher m0 = pattern.matcher(pk0);
+            Matcher m1 = pattern.matcher(pk1);
+            while (m0.find()) {
+                System.out.println("m0group(1):"+m0.group(1));
+                rowKeyBeginNum = m0.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
+
+                newPage.setPageBeginNum(rowKeyBeginNum);
+            }
+            while (m1.find()) {
+                System.out.println("m1group(1):"+m1.group(1));
+                rowKeyEndNum = m1.group(1).toString();
+                pageInfo(req).setRowKeyEndNum(rowKeyEndNum);
+                newPage.setPageEndNum(rowKeyEndNum);
+            }
+        }
+        if (pageIndex>1){
+            rowKeyEndNum = req.getParameter("rowKeyEndNum");
+            rowKeyBeginNum=req.getParameter("rowKeyBeginNum");
+            getAuthorList = getAuthorList(req,type,pageInfo(req),rowKeyEndNum,rowKeyBeginNum);
+
+            //截取pk的值
+            String pk0 = getAuthorList.get(0).toString();
+            String pk1 = getAuthorList.get(getAuthorList.size()-1).toString();
+            String rgex = "pk='(.*?)'";
+            Pattern pattern = Pattern.compile(rgex);// 匹配的模式
+            Matcher m0 = pattern.matcher(pk0);
+            Matcher m1 = pattern.matcher(pk1);
+            while (m0.find()) {
+                System.out.println("m0group(1):"+m0.group(1));
+                rowKeyBeginNum = m0.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
+                newPage.setPageBeginNum(rowKeyBeginNum);
+            }
+            while (m1.find()) {
+                System.out.println("m1group(1):"+m1.group(1));
+                rowKeyEndNum = m1.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
+                newPage.setPageEndNum(rowKeyEndNum);
+            }
+            newPage.setPageIndex(pageIndex);
+
+        }
+
+
+        //**********************************
+        /*if (nextflag==" "||nextflag==null){
+
+            getAuthorList = getAuthorList(req,type,pageInfo(req));
+            nextflag = "0";
+
+            String pk0 = getAuthorList.get(0).toString();
+            String pk1 = getAuthorList.get(getAuthorList.size()-1).toString();
+            String rgex = "pk='(.*?)'";
+            Pattern pattern = Pattern.compile(rgex);// 匹配的模式
+            Matcher m0 = pattern.matcher(pk0);
+            Matcher m1 = pattern.matcher(pk1);
+            while (m0.find()) {
+                System.out.println("m0group(1):"+m0.group(1));
+                rowKeyBeginNum = m0.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
+            }
+            while (m1.find()) {
+                System.out.println("m1group(1):"+m1.group(1));
+                rowKeyEndNum = m1.group(1).toString();
+                pageInfo(req).setRowKeyEndNum(rowKeyEndNum);
+            }
+        }
+        else {
+            rowKeyEndNum = req.getParameter("rowKeyEndNum");
+            rowKeyBeginNum=req.getParameter("rowKeyBeginNum");
+            getAuthorList = getAuthorList(req,type,pageInfo(req),rowKeyEndNum,rowKeyBeginNum);
+
+            //截取pk的值
+            String pk0 = getAuthorList.get(0).toString();
+            String pk1 = getAuthorList.get(getAuthorList.size()-1).toString();
+            String rgex = "pk='(.*?)'";
+            Pattern pattern = Pattern.compile(rgex);// 匹配的模式
+            Matcher m0 = pattern.matcher(pk0);
+            Matcher m1 = pattern.matcher(pk1);
+            while (m0.find()) {
+                System.out.println("m0group(1):"+m0.group(1));
+                rowKeyBeginNum = m0.group(1).toString();
+            }
+            while (m1.find()) {
+                System.out.println("m1group(1):"+m1.group(1));
+                rowKeyEndNum = m1.group(1).toString();
+            }
+
+        }
+        model.addAttribute("type",type);
+        model.addAttribute("page",pageInfo(req));
+        model.addAttribute("newPage",newPage);
+        model.addAttribute(type, JSON.toJSON(getAuthorList));
+        model.addAttribute("rowKeyBeginNum",rowKeyBeginNum);
+        model.addAttribute("rowKeyEndNum",rowKeyEndNum);*/
+        model.addAttribute("type",type);
+        model.addAttribute("page",pageInfo(req));
+        model.addAttribute("newPage",newPage);
+        model.addAttribute(type, JSON.toJSON(getAuthorList));
+        model.addAttribute("rowKeyBeginNum",rowKeyBeginNum);
+        model.addAttribute("rowKeyEndNum",rowKeyEndNum);
         return "author_display";
     }
 
-    @RequestMapping("bbs_mop_author")
-    public String bbs_mop_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_mop_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
+    @RequestMapping("news")
+    public String news(HttpServletRequest req, Model model, HttpServletResponse resp) {
+        int pageIndex = Integer.parseInt(req.getParameter("pageIndex"));
+        //*********************************
+        String type = req.getParameter("type");
+        String condition = req.getParameter("condition");
+        String nextflag = req.getParameter("flag");
+        String rowKeyBeginNum = " ";
+        String rowKeyEndNum = " ";
+        List getAuthorList = new ArrayList();
+        PageInfo newPage = new PageInfo();
+        if (pageIndex<1){
+            pageIndex=1;
+        }
+        if (pageIndex==1){
+
+            getAuthorList = getMoeAuthorList(req,type,pageInfo(req),condition);
+
+            newPage.setPageIndex(1);
+            String pk0 = getAuthorList.get(0).toString();
+            String pk1 = getAuthorList.get(getAuthorList.size()-1).toString();
+            String rgex = "pk='(.*?)'";
+            Pattern pattern = Pattern.compile(rgex);// 匹配的模式
+            Matcher m0 = pattern.matcher(pk0);
+            Matcher m1 = pattern.matcher(pk1);
+            while (m0.find()) {
+                System.out.println("m0group(1):"+m0.group(1));
+                rowKeyBeginNum = m0.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
+
+                newPage.setPageBeginNum(rowKeyBeginNum);
+            }
+            while (m1.find()) {
+                System.out.println("m1group(1):"+m1.group(1));
+                rowKeyEndNum = m1.group(1).toString();
+                pageInfo(req).setRowKeyEndNum(rowKeyEndNum);
+                newPage.setPageEndNum(rowKeyEndNum);
+            }
+        }
+        if (pageIndex>1){
+            rowKeyEndNum = req.getParameter("rowKeyEndNum");
+            rowKeyBeginNum=req.getParameter("rowKeyBeginNum");
+            getAuthorList = getAuthorList(req,type,pageInfo(req),rowKeyEndNum,rowKeyBeginNum);
+
+            //截取pk的值
+            String pk0 = getAuthorList.get(0).toString();
+            String pk1 = getAuthorList.get(getAuthorList.size()-1).toString();
+            String rgex = "pk='(.*?)'";
+            Pattern pattern = Pattern.compile(rgex);// 匹配的模式
+            Matcher m0 = pattern.matcher(pk0);
+            Matcher m1 = pattern.matcher(pk1);
+            while (m0.find()) {
+                System.out.println("m0group(1):"+m0.group(1));
+                rowKeyBeginNum = m0.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
+                newPage.setPageBeginNum(rowKeyBeginNum);
+            }
+            while (m1.find()) {
+                System.out.println("m1group(1):"+m1.group(1));
+                rowKeyEndNum = m1.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
+                newPage.setPageEndNum(rowKeyEndNum);
+            }
+            newPage.setPageIndex(pageIndex);
+        }
+
+
+        //**********************************
+        /*if (nextflag==" "||nextflag==null){
+
+            getAuthorList = getAuthorList(req,type,pageInfo(req));
+            nextflag = "0";
+
+            String pk0 = getAuthorList.get(0).toString();
+            String pk1 = getAuthorList.get(getAuthorList.size()-1).toString();
+            String rgex = "pk='(.*?)'";
+            Pattern pattern = Pattern.compile(rgex);// 匹配的模式
+            Matcher m0 = pattern.matcher(pk0);
+            Matcher m1 = pattern.matcher(pk1);
+            while (m0.find()) {
+                System.out.println("m0group(1):"+m0.group(1));
+                rowKeyBeginNum = m0.group(1).toString();
+                pageInfo(req).setRowKeyBeginNum(rowKeyBeginNum);
+            }
+            while (m1.find()) {
+                System.out.println("m1group(1):"+m1.group(1));
+                rowKeyEndNum = m1.group(1).toString();
+                pageInfo(req).setRowKeyEndNum(rowKeyEndNum);
+            }
+        }
+        else {
+            rowKeyEndNum = req.getParameter("rowKeyEndNum");
+            rowKeyBeginNum=req.getParameter("rowKeyBeginNum");
+            getAuthorList = getAuthorList(req,type,pageInfo(req),rowKeyEndNum,rowKeyBeginNum);
+
+            //截取pk的值
+            String pk0 = getAuthorList.get(0).toString();
+            String pk1 = getAuthorList.get(getAuthorList.size()-1).toString();
+            String rgex = "pk='(.*?)'";
+            Pattern pattern = Pattern.compile(rgex);// 匹配的模式
+            Matcher m0 = pattern.matcher(pk0);
+            Matcher m1 = pattern.matcher(pk1);
+            while (m0.find()) {
+                System.out.println("m0group(1):"+m0.group(1));
+                rowKeyBeginNum = m0.group(1).toString();
+            }
+            while (m1.find()) {
+                System.out.println("m1group(1):"+m1.group(1));
+                rowKeyEndNum = m1.group(1).toString();
+            }
+
+        }
+        model.addAttribute("type",type);
+        model.addAttribute("page",pageInfo(req));
+        model.addAttribute("newPage",newPage);
+        model.addAttribute(type, JSON.toJSON(getAuthorList));
+        model.addAttribute("rowKeyBeginNum",rowKeyBeginNum);
+        model.addAttribute("rowKeyEndNum",rowKeyEndNum);*/
+        model.addAttribute("type",type);
+        model.addAttribute("page",pageInfo(req));
+        model.addAttribute("newPage",newPage);
+        model.addAttribute(type, JSON.toJSON(getAuthorList));
+        model.addAttribute("rowKeyBeginNum",rowKeyBeginNum);
+        model.addAttribute("rowKeyEndNum",rowKeyEndNum);
         return "author_display";
     }
 
-    @RequestMapping("bbs_people_author")
-    public String bbs_people_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_people_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
-        return "author_display";
-    }
+    public HBPage pageInfo(HttpServletRequest req){
+        HBPage pageInfo = new HBPage();
+        int pageIndex = Integer.parseInt(req.getParameter("pageIndex"));
+        String pageSize = req.getParameter("pageSize");
+        String prePage = req.getParameter("prePage");
+        String nextPage = req.getParameter("nextPage");
+        String rowKeyEndNum = req.getParameter("rowKeyEndNum");
+        String rowKeyBeginNum=req.getParameter("rowKeyBeginNum");
 
-    @RequestMapping("bbs_sohu_author")
-    public String bbs_sohu_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_sohu_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
-        return "author_display";
-    }
+        pageInfo.setRowKeyBeginNum(rowKeyBeginNum);
+        pageInfo.setRowKeyEndNum(rowKeyEndNum);
+        //设置当前页
+        if (pageIndex <1){
+            pageIndex =1;
+        }
+        pageInfo.setPageIndex(pageIndex);
 
-    @RequestMapping("bbs_tianya_author")
-    public String bbs_tianya_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_tianya_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
-        return "author_display";
-    }
+        //设置页面大小----开始
+        int pageSizes = 0;
+        if (pageSize==" "||pageSize==null){
+            pageSizes = pageInfo.getPageSize();
+        }else{
+            pageSizes = Integer.parseInt(pageSize);
+        }
+        pageInfo.setPageSize(pageSizes);
+        //设置页面大小----结束
 
-    @RequestMapping("bbs_kd_author")
-    public String bbs_kd_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_kd_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
-        return "author_display";
-    }
+        //是否点击前一页---开始
+        int prePages = 0;
+        if(prePage==" "||prePage==null){
+            prePages = pageInfo.getPrePage();
+        }else {
+            prePages = Integer.parseInt(prePage);
+        }
+        pageInfo.setPrePage(prePages);
+        //是否点击前一页---结束
 
-    @RequestMapping("blog_163_author")
-    public String blog_163_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "blog_163_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
-        return "author_display";
+        //是否点击下一页---开始
+        int nextPages = 0;
+        if(nextPage==" "||nextPage==null){
+            nextPages = pageInfo.getNextPage();
+        }else {
+            nextPages = Integer.parseInt(nextPage);
+        }
+        pageInfo.setNextPage(nextPages);
+        return pageInfo;
+        //是否点击下一页---结束
     }
-
-    @RequestMapping("blog_china_author")
-    public String blog_china_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "blog_china_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
-        return "author_display";
-    }
-
-    @RequestMapping("blog_sina_author")
-    public String blog_sina_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "blog_sina_author";
-        model.addAttribute("page",page(req,type));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(req,type)));
-        return "author_display";
-    }
-
-    /* @RequestMapping("bbs_xinhua_author")
-   //数据库没有bbs xinhua 网的作者表
-    public String bbs_xinhua_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_sohu_author";
-        model.addAttribute("page",page(req));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(type)));
-        return "author_display";
-    }*/
-     /*@RequestMapping("bbs_xici_author")
-    //数据库中没有相对应的表
-    public String bbs_xici_author(HttpServletRequest req, Model model, HttpServletResponse resp) {
-        String type = "bbs_xici_author";
-        model.addAttribute("page",page(req));
-        model.addAttribute(type, JSON.toJSON(getAuthorList(type)));
-        return "author_display";
-    }*/
 
 }

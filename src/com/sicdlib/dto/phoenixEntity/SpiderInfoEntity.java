@@ -15,6 +15,9 @@ public class SpiderInfoEntity {
     @Property(value="start_time")
     private String start_time;
 
+    @Property(value="stop_time")
+    private String stop_time;
+
     public String getPk() {
         return pk;
     }
@@ -47,8 +50,7 @@ public class SpiderInfoEntity {
         this.stop_time = stop_time;
     }
 
-    @Property(value="stop_time")
-    private String stop_time;
+
 
 
 }

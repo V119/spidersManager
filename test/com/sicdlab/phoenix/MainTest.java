@@ -20,7 +20,7 @@ import java.util.List;
  * Created by haoyang on 2017/9/12.
  */
 public class MainTest {
-    @Test
+    /*@Test
     public void selectAll() throws Exception {
         final List<String> classesList = new ArrayList<String>();
         classesList.add("com.sicdlib.dto.phoenixEntity.SpiderInfoEntity");
@@ -41,7 +41,7 @@ public class MainTest {
         System.out.println(endTime);
         System.out.println(endTime.getTime() - start.getTime());
         feedItems.forEach(spiderInfoEntity -> System.out.println(spiderInfoEntity.getPk()));
-    }
+    }*/
 
 //    @Test
 //    public void selectWebStat() throws Exception {
@@ -60,4 +60,9 @@ public class MainTest {
 //        Iterable<WebStatEntity> feedItems = dataStoreApi.findAll(query);
 //        feedItems.forEach(webStatEntity -> System.out.println(webStatEntity.getDate()));
 //    }
+        @Test
+    public void selectWebStat() throws Exception {
+        String a = "BBSChinaAuthorEntity{pk='001c0d917f7c91bdbb9620f9ee3f5de2', address='<dd></dd>', authorID='4215260', authorName=' whuedu
+                ', birthday='<dd></dd>', fansNum='0', focuseNum='0', name='<dd></dd>', parseTime='1495307990.6213076', sex='<dd>其他</dd>', url='http://i.club.china.com/user/UserInfoAction.do?processID=myhome&userId=4215260'}"
+    }
 }

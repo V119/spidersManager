@@ -1,9 +1,9 @@
 package com.sicdlib.service.imple;
 
-import com.sicdlib.dao.IAuthorDAO;
 import com.sicdlib.dao.ITableColumnDAO;
 import com.sicdlib.dao.ITableCommentDAO;
 import com.sicdlib.dao.ITableDAO;
+import com.sicdlib.dao.hbaseDAO.IAuthorDAO;
 import com.sicdlib.dto.TbAuthorEntity;
 import com.sicdlib.dto.TbEventAuthorMappingEntity;
 import com.sicdlib.dto.TbTableEntity;

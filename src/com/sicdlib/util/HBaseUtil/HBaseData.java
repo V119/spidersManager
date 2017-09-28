@@ -17,11 +17,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class HBaseData {
+
     private static Configuration conf = Config.getConf();
     private Admin admin = ConnectionFactory.createConnection(conf).getAdmin();
     private HTable htable = null;
     //开始的行
     private static byte[] startRow = null;
+    private byte[] stopRow = null;
     static {
         conf = Config.getConf();
     }
@@ -29,6 +31,35 @@ public class HBaseData {
     public byte[] getStartRow(){
         return startRow;
     }
+
+    public static void setConf(Configuration conf) {
+        HBaseData.conf = conf;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public void setHtable(HTable htable) {
+        this.htable = htable;
+    }
+
+    public static void setStartRow(byte[] startRow) {
+        HBaseData.startRow = startRow;
+    }
+
+    public byte[] getStopRow() {
+        return stopRow;
+    }
+
+    public void setStopRow(byte[] stopRow) {
+        this.stopRow = stopRow;
+    }
+
     //得到配置参数
     public Configuration getConf(){
         return conf;
@@ -83,6 +114,7 @@ public class HBaseData {
             count ++;
             if(count == page.getPageSize() + 1){
                 startRow = r.getRow();
+//                stopRow = r.getRow();
                 break;
             }
 
@@ -135,14 +167,14 @@ public class HBaseData {
     public List getPrePage(HBPage page) throws IOException{
         System.out.println("getNext前一页！" + page.getNextPage());
         Filter filter = new PageFilter(page.getPageSize() + 1);
-//        //nextpage为0时，表示上一动作是上一页
-//        if(page.getNextPage() == 0){
-//            filter = new PageFilter(page.getPageSize() + 1);
-//        }
-//        //nextpage为1时，表示上一动作是下一页
-//        if(page.getNextPage() == 1){
-//            filter = new PageFilter(page.getPageSize() * 2 + 1);
-//        }
+        //nextpage为0时，表示上一动作是上一页
+        if(page.getPrePage() == 0){
+            filter = new PageFilter(page.getPageSize() + 1);
+        }
+        //nextpage为1时，表示上一动作是下一页
+        if(page.getPrePage() == 1){
+            filter = new PageFilter(page.getPageSize() * 2 + 1);
+        }
         Scan scan = new Scan();
         //倒序查询数据
         scan.setReversed(true);
@@ -153,28 +185,28 @@ public class HBaseData {
         int count = 0;
         for (Result r : result){
             count ++;
-//            //nextpage为0时，表示上一动作是上一页
-//            if (page.getNextPage() == 0){
-//                if (count == page.getPageSize() + 1){
-//                    startRow = r.getRow();
-//                    break;
-//                }
-//                list.add(r);
-//            }
-//            //nextpage为1时，表示上一动作是下一页
-//            if (page.getNextPage() == 1){
-//                if (count == page.getPageSize()*2 + 1){
-//                    startRow = r.getRow();
-//                }
-//                if (count == page.getPageSize()*2 + 2){
-//                    break;
-//                }
-//                //去掉第一个结果（Result）
-//                else if(count >= page.getPageSize() + 1){
-//                    list.add(r);
-//                    System.out.println("去掉第一个结果（Result）");
-//                }
-//            }
+            //nextpage为0时，表示上一动作是上一页
+            if (page.getNextPage() == 0){
+                if (count == page.getPageSize() + 1){
+                    startRow = r.getRow();
+                    break;
+                }
+                list.add(r);
+            }
+            //nextpage为1时，表示上一动作是下一页
+            if (page.getNextPage() == 1){
+                if (count == page.getPageSize()*2 + 1){
+                    startRow = r.getRow();
+                }
+                if (count == page.getPageSize()*2 + 2){
+                    break;
+                }
+                //去掉第一个结果（Result）
+                else if(count >= page.getPageSize() + 1){
+                    list.add(r);
+                    System.out.println("去掉第一个结果（Result）");
+                }
+            }
             if (count == page.getPageSize() + 1){
                 startRow = r.getRow();
             }
@@ -301,41 +333,41 @@ public class HBaseData {
     public static void main(String[] args) {
         try {
             HBaseData inf = new HBaseData("bbs_china_author");
-            //inf.getAllData("bbs_china_author");
-//            HBPage page = new HBPage();
-//            page.setPageSize(2);
-//            //第一页，200条数据
-//            List list = inf.getFirstPage(page);
-//            //获得下一页
+//            inf.getAllData("bbs_china_author");
+            HBPage page = new HBPage();
+            page.setPageSize(10);
+            //第一页，10条数据
+            List list = inf.getFirstPage(page);
+            //获得下一页
+            page.setPageStartRowKey(inf.getStartRow());
+//            page.setPageSize(10);
+            inf.getNext(page);
+
+//            page.setPageSize(10);
 //            page.setPageStartRowKey(inf.getStartRow());
-//            page.setPageSize(2);
 //            inf.getNext(page);
-//
-//            page.setPageSize(2);
+
 //            page.setPageStartRowKey(inf.getStartRow());
+//            page.setPageSize(20);
 //            inf.getNext(page);
-//
-//            page.setPageStartRowKey(inf.getStartRow());
-//            page.setPageSize(2);
-//            inf.getNext(page);
-//            for (int i = 0;i < list.size(); i++){
-//                Result result = (Result) list.get(i);
-//                for (KeyValue keyValue : result.list()){
-//                    String qualifier = new String(keyValue.getQualifier(), "utf-8");
-//                    String value = new String(keyValue.getValue(), "utf-8");
-//                    System.out.println("list中 列："+qualifier+":"+value);
-//                }
-//            }
-//            page.setNextPage(2);
-//            page.setPageStartRowKey(inf.getStartRow());
-//            //下一页
-//            List listNext = inf.getNext(page);
-//            Long rowcount = inf.getRowCount();
-//            System.out.println("总数："+rowcount+":"+rowcount%200);
-            List<String> list = inf.getKeys("bbs_china_author");
-            for (String str : list){
-                System.out.println(str);
+            for (int i = 0;i < list.size(); i++){
+                Result result = (Result) list.get(i);
+                for (KeyValue keyValue : result.list()){
+                    String qualifier = new String(keyValue.getQualifier(), "utf-8");
+                    String value = new String(keyValue.getValue(), "utf-8");
+                    System.out.println("list中 列："+qualifier+":"+value);
+                }
             }
+//            page.setNextPage(10);
+//            page.setPageStartRowKey(inf.getStartRow());
+            //下一页
+            List listNext = inf.getNext(page);
+            Long rowcount = inf.getRowCount();
+            System.out.println("总数："+rowcount+":"+rowcount%200);
+            /*List<String> list1 = inf.getKeys("bbs_china_author");
+            for (String str : list1){
+                System.out.println(str);
+            }*/
             System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -344,5 +376,6 @@ public class HBaseData {
         }
 
     }
+
 
 }

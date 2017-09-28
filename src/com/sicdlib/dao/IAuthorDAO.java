@@ -2,6 +2,7 @@ package com.sicdlib.dao;
 
 import com.sicdlib.dto.TbAuthorEntity;
 import com.sicdlib.dto.TbEventAuthorMappingEntity;
+import com.sicdlib.util.HBaseUtil.HBPage;
 import com.sicdlib.util.PageUtil.Page;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface IAuthorDAO {
     //根据表名获取作者总数
     int getAllAuthorNum(String tableName);
     //查询对应表的所有作者集合
-    List<Object[]> getAuthorList(String tableName, Page page);
+    List<Object[]> getAuthorList(String tableName);
     //查询对应作者ID的作者信息
     Object[] getAuthorInfo(String authorId,String tableName);
 }
