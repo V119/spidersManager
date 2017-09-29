@@ -55,8 +55,8 @@
                 </li>
                 <li class="dropdown topbar-user"><a data-hover="dropdown" href="clean_data" class="dropdown-toggle">&nbsp;<span class="hidden-xs"><i class="fa fa-sitemap fa-fw"></i>数据清洗</span>&nbsp;<span class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-user pull-right">
-                        <li><a href="calendar.jsp"><i class="fa fa-edit fa-fw"></i>新增清洗过程</a></li>
-                        <li><a href="chat.jsp"><i class="fa fa-user"></i>清洗过程配置</a></li>
+                        <li><a href="#"><i class="fa fa-edit fa-fw"></i>新增清洗过程</a></li><%--calendar.jsp--%>
+                        <li><a href="#"><i class="fa fa-user"></i>清洗过程配置</a></li><%--chat.jsp--%>
                         <li><a href="test"><i class="fa fa-user"></i>test</a></li>
                     </ul>
                 </li>

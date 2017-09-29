@@ -13,9 +13,6 @@ import com.sicdlib.dto.TbEventAuthorMappingEntity;
 import com.sicdlib.dto.TbEventEntity;
 import com.sicdlib.util.EntityUtil.EntityInfo;
 import com.sicdlib.util.HBaseUtil.HBPage;
-import com.sicdlib.util.HBaseUtil.PageInfo;
-import org.hibernate.criterion.Distinct;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -173,11 +170,11 @@ public class AuthorDAO implements IAuthorDAO {
         try {
             String name = entityInfo.getEntityInfo(tableName);
             Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
-//            Integer num =
-                    QueryBuilder
+            int num = QueryBuilder
                     .builderFor(TBTableEntityType)
                     .select().build().getMaxResults();
-//            return result;
+
+            return dataStoreApi.save(num);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -204,15 +201,34 @@ public class AuthorDAO implements IAuthorDAO {
     @Override
     public List getMoeAuthorList(String tableName, HBPage page,String condition) {
         try {
-            System.out.println(tableName+"的数量:"+getAllAuthorNum(tableName));
+            List list = new ArrayList();
             String name = entityInfo.getEntityInfo(tableName);
             Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
-            return Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
-                    .builderFor(TBTableEntityType)
-                    .setMaxResults(page.getPageSize())
-                    .select()
-                    .setReturnFields("distinct"+" "+"\""+condition+"\"")
-                    .build()));
+
+            if (page.getPrePage()==0) {
+                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder.builderFor(TBTableEntityType)
+                        .add(Restrictions.and(Restrictions.gte("\"PK\"",page.getRowKeyBeginNum()))
+                                .add(Restrictions.lte("\"PK\"",page.getRowKeyEndNum())))
+                        .setMaxResults(page.getPageSize())
+                        .setReturnFields("distinct"+" "+"\""+condition+"\"")
+                        .select().build()));
+
+            }else if (page.getNextPage()==0) {//查询下一页
+                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                        .builderFor(TBTableEntityType)
+                        .add(Restrictions.and(Restrictions.gt("\"PK\"",page.getRowKeyEndNum())))
+                        .setMaxResults(page.getPageSize())
+                        .setReturnFields("distinct"+" "+"\""+condition+"\"")
+                        .select().build()));
+            }else {
+                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                        .builderFor(TBTableEntityType)
+                        .setMaxResults(page.getPageSize())
+                        .select()
+                        .setReturnFields("\""+condition+"\"")
+                        .build()));
+            }
+            return list;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -224,6 +240,7 @@ public class AuthorDAO implements IAuthorDAO {
     public List getAuthorList(String tableName,HBPage page){
 
         try {
+//            System.out.println("行数："+getAllAuthorNum(tableName));
             List list = new ArrayList();
             String name = entityInfo.getEntityInfo(tableName);
             Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
@@ -273,7 +290,7 @@ public class AuthorDAO implements IAuthorDAO {
         return null;
     }
 
-    @Override
+   /* @Override
     public List getAuthorList(String tableName,HBPage page,List<PageInfo> pageEntityList){
         try {
             List list = new ArrayList();
@@ -290,14 +307,14 @@ public class AuthorDAO implements IAuthorDAO {
                     endNum = pageInfo.getPageEndNum();
                 }
 
-               /*Iterable a = dataStoreApi.findAll(QueryBuilder
+               *//*Iterable a = dataStoreApi.findAll(QueryBuilder
                        .builderFor(TBTableEntityType)
                        .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
                        .setMaxResults(page.getPageSize())
                        .addOrder(Ordering.desc("\"PK\""))
-                       .select().build());*/
+                       .select().build());*//*
 
-                /*list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                *//*list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
                         .builderFor(TBTableEntityType)
                         .add((Criterion) QueryBuilder.builderFor(TBTableEntityType)
                                 .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
@@ -306,7 +323,7 @@ public class AuthorDAO implements IAuthorDAO {
                         .addOrder(Ordering.asc("\"PK\""))
                         .select()
 
-                        .build()));*/
+                        .build()));*//*
                 list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder.builderFor(TBTableEntityType)
                         .add(Restrictions.and(Restrictions.gte("\"PK\"",beginNum))
                                 .add(Restrictions.lte("\"PK\"",endNum)))
@@ -324,7 +341,7 @@ public class AuthorDAO implements IAuthorDAO {
             return list;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
         /*try {
             List list = new ArrayList();
             String name = entityInfo.getEntityInfo(tableName);
@@ -347,11 +364,11 @@ public class AuthorDAO implements IAuthorDAO {
             return list;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
 
         return null;
 //        return list;
-    }
+    }*/
 
 
 }

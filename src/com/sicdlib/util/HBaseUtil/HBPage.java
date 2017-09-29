@@ -11,7 +11,7 @@ import java.util.List;
 public class HBPage {
     private int pageIndex = 0;
     private int pageFirstRowIndex = 1;
-    private int pageSize = 50;
+    private int pageSize = 40;
     private int prePage = 1;
     private int nextPage = 1;
     private int pageCount = 0;
@@ -23,6 +23,7 @@ public class HBPage {
     private boolean hasNextPage = true;
     private int queryTotalCount = 0;
     private List resultList = new ArrayList();
+    private String objectType;
 
 
     public int getPageSize() {
@@ -155,5 +156,13 @@ public class HBPage {
 
     public void setRowKeyEndNum(String rowKeyEndNum) {
         this.rowKeyEndNum = rowKeyEndNum;
+    }
+
+    public String getObjectType() {
+        return objectType;
+    }
+
+    public void setObjectType(String objectType) {
+        this.objectType = objectType;
     }
 }

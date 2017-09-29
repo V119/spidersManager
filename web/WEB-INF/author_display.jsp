@@ -13,15 +13,7 @@
 %>
 <html>
 <jsp:include page="static/head_jsp.jsp"/>
-<script>
-
-    function json(list) {
-        for (var key in list){
-            alert(key.valueOf());
-        }
-    }
-</script>
-<body style="overflow: hidden">
+<body style="overflow: hidden" onload="hide(${page.pageIndex})">
 
 <div>
     <!--BEGIN BACK TO TOP-->
@@ -92,13 +84,13 @@
                                         <li><a href="bbs_author?type=blog_163_author&&pageIndex=1">网易博客</a></li>
                                     </ul>
                                 </div> &nbsp;
-                                <div class="btn-group">
+                                <%--<div class="btn-group">
                                     <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">政府网站
                                         &nbsp;<i class="fa fa-angle-down"></i></button>
                                     <ul role="menu" class="dropdown-menu">
-                                        <li><a href="news?type=moe_news&&condition=news_editor&&pageIndex=1">教育部</a></li>
+                                        <li><a href="bbs_author?type=moe_news&&condition=news_editor&&pageIndex=1">教育部</a></li>
                                     </ul>
-                                </div> &nbsp;
+                                </div> &nbsp;--%>
                                 <div class="btn-group">
                                     <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">社交网站
                                         &nbsp;<i class="fa fa-angle-down"></i></button>
@@ -113,7 +105,7 @@
                                     <ul role="menu" class="dropdown-menu">
                                         <%--<li><a href="#">人民网</a></li>--%>
                                         <%--<li><a href="#">网易网</a></li>--%>
-                                        <li><a href="news?type=xinhua_news&&condition=editor&&pageIndex=1">新华网</a></li>
+                                        <%--<li><a href="bbs_author?type=xinhua_news&&condition=author&&pageIndex=1">新华网</a></li>--%>
                                         <%--<li><a href="#">三秦网</a></li>--%>
                                         <li><a href="bbs_author?type=bbs_news_author&&pageIndex=1">中国社会新闻网</a></li>
                                         <%--<li><a href="#">新浪新闻</a></li>--%>
@@ -133,18 +125,18 @@
                                 <div class="row">
 
                                     <div id="change-transitions" class="row">
-                                        <div class="col-md-2">
-                                            <div class="box-placeholder">
-                                                <div align="center"><a href="post?type=bbs_china_post&&authorID=3225263">kv3429</a></div>
-                                                <%--<button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block"></button>--%>
-                                            </div>
-                                        </div>
+                                        <%--<div class="col-md-2">--%>
+                                            <%--<div class="box-placeholder">--%>
+                                                <%--<div align="center"><a href="post?type=bbs_china_post&&authorID=3225263">kv3429</a></div>--%>
+                                                <%--&lt;%&ndash;<button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block"></button>&ndash;%&gt;--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
                                         <%--<c:set var="startIndex" value="${fn:length(persons)-1 }"></c:set>--%>
                                         <c:if test="${bbs_china_author!=null}">
                                         <c:forEach items="${bbs_china_author}" var="a" varStatus="status">
                                         <div class="col-md-2">
                                             <div class="box-placeholder">
-                                                <div align="center"><a href="post?type=bbs_china_post&&condition=author_id&&conditionValue=${a.authorID}">${a.authorName}</a></div>
+                                                <div align="center" style="height:5%;"><a href="post?type=bbs_china_post&&condition=author_id&&conditionValue=${a.authorID}">${a.authorName}</a></div>
                                                 <%--<button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block"></button>--%>
                                             </div>
                                         </div>
@@ -163,7 +155,7 @@
                                             <c:forEach items="${bbs_mop_author}" var="b">
                                                 <div class="col-md-2">
                                                     <div class="box-placeholder">
-                                                        <div align="center"><a href="post?type=bbs_mop_post&&condition=author_id&&conditionValue=${b.authorID}">${b.authorName}</a></div>
+                                                        <div align="center" style="height:5%;"><a href="post?type=bbs_mop_post&&condition=author_id&&conditionValue=${b.authorID}">${b.authorName}</a></div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -172,7 +164,7 @@
                                             <c:forEach items="${bbs_people_author}" var="c">
                                                 <div class="col-md-2">
                                                     <div class="box-placeholder">
-                                                        <div align="center"><a href="post?type=bbs_people_post&&condition=author_id&&conditionValue=${c.authorID}">${c.authorName}</a></div>
+                                                        <div align="center" style="height:5%;"><a href="post?type=bbs_people_post&&condition=author_id&&conditionValue=${c.authorID}">${c.authorName}</a></div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -181,7 +173,7 @@
                                                 <c:forEach items="${bbs_sohu_author}" var="d">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <div align="center"><a href="post?type=bbs_sohu_post&&condition=author_id&&conditionValue=${d.authorID}">${d.authorID}</a></div>
+                                                            <div align="center" style="height:5%;"><a href="post?type=bbs_sohu_post&&condition=author_id&&conditionValue=${d.authorID}">${d.authorID}</a></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
@@ -190,7 +182,7 @@
                                                 <c:forEach items="${bbs_tianya_author}" var="e">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <div align="center"><a href="post?type=bbs_tianya_post&&condition=author_id&&conditionValue=${e.authorID}">${e.authorName}</a></div>
+                                                            <div align="center" style="height:5%;"><a href="post?type=bbs_tianya_post&&condition=author_id&&conditionValue=${e.authorID}">${e.authorName}</a></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
@@ -208,7 +200,7 @@
                                                 <c:forEach items="${kdnet_author}" var="f">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <div align="center"><a href="post?type=kdnet_post&&condition=author_id&&conditionValue=${f.authorID}">${f.nick}</a></div>
+                                                            <div align="center" style="height:5%;"><a href="post?type=kdnet_post&&condition=author_id&&conditionValue=${f.authorID}">${f.nick}</a></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
@@ -217,7 +209,7 @@
                                                 <c:forEach items="${blog_163_author}" var="g">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <div align="center">${g.nick}<%--<a href="post?type=blog_163_post&&authorID=${g.authorID}">${g.nick}</a>--%></div>
+                                                            <div align="center" style="height:5%;">${g.nick}<%--<a href="post?type=blog_163_post&&authorID=${g.authorID}">${g.nick}</a>--%></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
@@ -226,7 +218,7 @@
                                                 <c:forEach items="${blogchina_author_1}" var="h">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <div align="center"><a href="post?type=blogchina_blog_1&&condition=author_id&&conditionValue=${h.authorID}">${h.authorName}</a></div>
+                                                            <div align="center" style="height:5%;"><a href="post?type=blogchina_blog_1&&condition=author_id&&conditionValue=${h.authorID}">${h.authorName}</a></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
@@ -235,7 +227,7 @@
                                                 <c:forEach items="${blog_sina_author}" var="i">
                                                     <div class="col-md-2">
                                                         <div class="box-placeholder">
-                                                            <div align="center"><a href="post?type=blog_sina_post&&condition=author_id&&conditionValue=${i.authorID}">${i.authorName}</a></div>
+                                                            <div align="center" style="height:5%;"><a href="post?type=blog_sina_post&&condition=author_id&&conditionValue=${i.authorID}">${i.authorName}</a></div>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
@@ -245,7 +237,7 @@
                                             <c:forEach items="${moe_news}" var="k">
                                                 <div class="col-md-2">
                                                     <div class="box-placeholder">
-                                                        <div align="center"><a href="post?type=moe_news&&condition=news_editor&&conditionValue=${k.newsEditor}">${k.newsEditor}</a></div>
+                                                        <div align="center" style="height:5%;"><a href="post?type=moe_news&&condition=news_editor&&conditionValue=${k.newsEditor}">${k.newsEditor}</a></div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -254,7 +246,7 @@
                                             <c:forEach items="${douban_group_author}" var="l">
                                                 <div class="col-md-2">
                                                     <div class="box-placeholder">
-                                                        <div align="center"><a href="post?type=douban_group_post&&condition=author_id&&conditionValue=${l.authorID}">${l.authorName}</a></div>
+                                                        <div align="center" style="height:5%;"><a href="post?type=douban_group_post&&condition=author_id&&conditionValue=${l.authorID}">${l.authorName}</a></div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -263,7 +255,7 @@
                                             <c:forEach items="${bbs_news_author}" var="m">
                                                 <div class="col-md-2">
                                                     <div class="box-placeholder">
-                                                        <div align="center"><a href="post?type=bbs_news_post&&condition=author_id&&conditionValue=${m.authorID}">${m.authorName}</a></div>
+                                                        <div align="center" style="height:5%;"><a href="post?type=bbs_news_post&&condition=author_id&&conditionValue=${m.authorID}">${m.authorName}</a></div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -272,7 +264,7 @@
                                             <c:forEach items="${xinhua_news}" var="n">
                                                 <div class="col-md-2">
                                                     <div class="box-placeholder">
-                                                        <div align="center"><a href="post?type=xinhua_news&&condition=editor&&conditionValue=${n.editor}">${n.editor}</a></div>
+                                                        <div align="center" style="height:5%;"><a href="post?type=xinhua_news&&condition=editor&&conditionValue=${n.editor}">${n.editor}</a></div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -295,8 +287,10 @@
                                         <input hidden="${page.pageIndex}">
                                     <ul class="pagination pagination-lg mtm mbm">
                                         <li><a href="bbs_author?type=${type}&&pageIndex=1">首页</a></li>
-                                        <li><a href="bbs_author?type=${type}&&prePage=0&&pageIndex=${page.pageIndex-1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">上一页</a></li>
-                                        <li><span>当前页：${page.pageIndex}</span></li>
+                                        <li>
+                                            <a id="previous" href="bbs_author?type=${type}&&prePage=0&&pageIndex=${page.pageIndex-1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">上一页</a></li>
+
+                                        <li><span id="current-pageIndex">当前页：${page.pageIndex}</span></li>
                                         <li><a href="bbs_author?type=${type}&&nextPage=0&&pageIndex=${page.pageIndex+1}&&flag=0&&rowKeyEndNum=${rowKeyEndNum}&&rowKeyBeginNum=${rowKeyBeginNum}">下一页</a></li>
                                     </ul>
                                     </c:if>
@@ -311,6 +305,12 @@
 
     <jsp:include page="static/footer_script.jsp"/>
     <script src="js/js1/echarts.min.js"></script>
+        <script language="JavaScript">
+            function hide(result) {
+                if (result == 1)
+                document.getElementById("previous").style.display = "none";
+            }
+        </script>
 
 </body>
 </html>
