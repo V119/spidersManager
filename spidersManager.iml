@@ -27,12 +27,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-<<<<<<< HEAD
     <orderEntry type="library" name="lib" level="project" />
-=======
->>>>>>> f9fe017f4ace53d9ce1356aeaf384051d315491e
     <orderEntry type="library" name="lib_algorithm" level="project" />
     <orderEntry type="library" name="lib_hbase" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
