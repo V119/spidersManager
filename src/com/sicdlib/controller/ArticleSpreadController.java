@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -37,12 +37,22 @@ public class ArticleSpreadController {
 
         Map<String, List> nodesAndEdges = articleSpreadService.getNodeAndEdgeAttributes(eventID);
 
+
+        List<Object> SNAList=articleSpreadService.getSNA(nodesAndEdges.get("nodes"),nodesAndEdges.get("edges"));
+
+        //   Map<Object,Object> SNA=articleSpreadService.getSNA2(nodesAndEdges.get("nodes"),(List)nodesAndEdges.get("edges").get(2));
+
+
         model.addAttribute("category", JSON.toJSONString(categoryName).replace("'", "\\\'"));
         model.addAttribute("nodesAndEdges", JSON.toJSONString(nodesAndEdges)
                 .replace("'", "\\\'"));
         model.addAttribute("eventID", eventID);
 
-        return "article_spread";
+        model.addAttribute("SNAList", JSON.toJSONString(SNAList, SerializerFeature.DisableCircularReferenceDetect));//各个阈值下的SNA参数列表
+
+        //  model.addAttribute("SNA", JSON.toJSONString(SNA));//SNA参数列表
+
+        return "article_spread3";
     }
 
     @RequestMapping("tooltipContent")

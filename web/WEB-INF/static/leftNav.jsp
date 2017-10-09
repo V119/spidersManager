@@ -45,7 +45,7 @@
             </i><span class="menu-title">热门信息</span></a>
 
             </li>
-            <li><a href="sentiment?eventID=${eventID}"><i class="fa fa-gift fa-fw">
+            <li><a href="#"><i class="fa fa-gift fa-fw"><%--sentiment?eventID=${eventID}--%>
                 <div class="icon-bg bg-grey"></div>
             </i><span class="menu-title">舆情影响力</span></a>
 

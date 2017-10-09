@@ -6,6 +6,7 @@ import com.sicdlib.dao.ITableDAO;
 import com.sicdlib.dao.IWebsiteDAO;
 import com.sicdlib.dto.TbArticleSimilarityEntity;
 import com.sicdlib.service.IArticleSpreadService;
+import com.sicdlib.util.SNAUtil.SNAUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static com.sicdlib.util.SNAUtil.SNAUtil.SNA;
 
 /**
  * Created by YH on 2017/6/6.
@@ -50,6 +53,7 @@ public class ArticleSpreadService implements IArticleSpreadService {
         Map<String, String> articleWebsite = new ConcurrentHashMap<>();
         Map<String, String> tableNameMap = new ConcurrentHashMap<>();
 
+        //??????????
         Vector<Vector<Map<String, Object>>> edgeList = new Vector<>();
         for(int i = 0; i <= sliceNum; i++) {
             AtomicReference<Vector<Map<String, Object>>> vector = new AtomicReference<>(new Vector<>());
@@ -62,98 +66,98 @@ public class ArticleSpreadService implements IArticleSpreadService {
                     String articleAID = articleSimi.getArticleA().getSourceArticleId();
                     String articleBID = articleSimi.getArticleB().getSourceArticleId();
 
-            //初始化节点相关节点的个数
-            if (!articleSimiNumMap.containsKey(articleAID)) {
-                //获取文章标题
-                String articleATitle = eventArticleDAO.getArticleTitle(
-                        articleSimi.getArticleA().getTable().getId(),
-                        articleAID
-                );
+                    //初始化节点相关节点的个数
+                    if (!articleSimiNumMap.containsKey(articleAID)) {
+                        //获取文章标题
+                        String articleATitle = eventArticleDAO.getArticleTitle(
+                                articleSimi.getArticleA().getTable().getId(),
+                                articleAID
+                        );
 
-                //初始化每个节点在不同相似度下节点的大小,初始化为0
-                Vector<Integer> nodeSizeList = new Vector<>();
-                for (int i = 0; i <= sliceNum; i++) {
-                    nodeSizeList.add(0);
-                }
-                articleSimiNumMap.put(articleAID, nodeSizeList);
+                        //初始化每个节点在不同相似度下节点的大小,初始化为0
+                        Vector<Integer> nodeSizeList = new Vector<>();
+                        for (int i = 0; i <= sliceNum; i++) {
+                            nodeSizeList.add(0);
+                        }
+                        articleSimiNumMap.put(articleAID, nodeSizeList);
 
-                articleTitleMap.put(articleAID, articleATitle);
+                        articleTitleMap.put(articleAID, articleATitle);
 
-                //来源网站
-                String sourceWebsite = websiteDAO.getWebsiteByTableID(
-                        articleSimi.getArticleA().getTable().getId()).getWebsiteName();
-                articleWebsite.put(articleAID, sourceWebsite);
+                        //来源网站
+                        String sourceWebsite = websiteDAO.getWebsiteByTableID(
+                                articleSimi.getArticleA().getTable().getId()).getWebsiteName();
+                        articleWebsite.put(articleAID, sourceWebsite);
 
-                //文章来源表
-                tableNameMap.put(articleAID, articleSimi.getArticleA().getTable().getTableName());
-            }
-            if(!articleSimiNumMap.containsKey(articleBID)) {
-                //获取文章标题
-                String articleBTitle = eventArticleDAO.getArticleTitle(
-                        articleSimi.getArticleB().getTable().getId(),
-                        articleBID
-                );
+                        //文章来源表
+                        tableNameMap.put(articleAID, articleSimi.getArticleA().getTable().getTableName());
+                    }
+                    if(!articleSimiNumMap.containsKey(articleBID)) {
+                        //获取文章标题
+                        String articleBTitle = eventArticleDAO.getArticleTitle(
+                                articleSimi.getArticleB().getTable().getId(),
+                                articleBID
+                        );
 
-                //初始化每个节点在不同相似度下节点的大小,初始化为0
-                Vector<Integer> nodeSizeList = new Vector<>();
-                for (int i = 0; i <= sliceNum; i++) {
-                    nodeSizeList.add(0);
-                }
-                articleSimiNumMap.put(articleBID, nodeSizeList);
+                        //初始化每个节点在不同相似度下节点的大小,初始化为0
+                        Vector<Integer> nodeSizeList = new Vector<>();
+                        for (int i = 0; i <= sliceNum; i++) {
+                            nodeSizeList.add(0);
+                        }
+                        articleSimiNumMap.put(articleBID, nodeSizeList);
 
-                //文章标题
-                articleTitleMap.put(articleBID, articleBTitle);
+                        //文章标题
+                        articleTitleMap.put(articleBID, articleBTitle);
 
-                //来源网站
-                String sourceWebsite = websiteDAO.getWebsiteByTableID(
-                        articleSimi.getArticleB().getTable().getId()).getWebsiteName();
-                articleWebsite.put(articleBID, sourceWebsite);
+                        //来源网站
+                        String sourceWebsite = websiteDAO.getWebsiteByTableID(
+                                articleSimi.getArticleB().getTable().getId()).getWebsiteName();
+                        articleWebsite.put(articleBID, sourceWebsite);
 
-                //文章来源表
-                tableNameMap.put(articleBID, articleSimi.getArticleB().getTable().getTableName());
+                        //文章来源表
+                        tableNameMap.put(articleBID, articleSimi.getArticleB().getTable().getTableName());
 
-            }
+                    }
 
-            //时间早的作为source，晚的为target
-            //如果相似度高于simi，连接两个节点
+                    //时间早的作为source，晚的为target
+                    //如果相似度高于simi，连接两个节点
 
 
-            String edgeSource = "";
-            String edgeTarget = "";
-            if(articleTitleMap.get(articleAID).compareTo(articleTitleMap.get(articleBID)) > 0) {
-                edgeSource = articleBID;
-                edgeTarget = articleAID;
-            } else {
-                edgeSource = articleAID;
-                edgeTarget = articleBID;
-            }
+                    String edgeSource = "";
+                    String edgeTarget = "";
+                    if(articleTitleMap.get(articleAID).compareTo(articleTitleMap.get(articleBID)) > 0) {
+                        edgeSource = articleBID;
+                        edgeTarget = articleAID;
+                    } else {
+                        edgeSource = articleAID;
+                        edgeTarget = articleBID;
+                    }
 
-            //对相应的相似度阈值+1
-            Vector<Integer> simiAList = articleSimiNumMap.get(articleAID);
-            Vector<Integer> simiBList = articleSimiNumMap.get(articleBID);
+                    //对相应的相似度阈值+1
+                    Vector<Integer> simiAList = articleSimiNumMap.get(articleAID);
+                    Vector<Integer> simiBList = articleSimiNumMap.get(articleBID);
 
-            //循环，加入相应的阈值数组
-            for (int i = 0; i <= (int)(articleSimi.getSimilarity() / sliceSize); i++) {
-                AtomicInteger countA = new AtomicInteger(simiAList.get(i));
-                AtomicInteger countB = new AtomicInteger(simiBList.get(i));
+                    //循环，加入相应的阈值数组
+                    for (int i = 0; i <= (int)(articleSimi.getSimilarity() / sliceSize); i++) {
+                        AtomicInteger countA = new AtomicInteger(simiAList.get(i));
+                        AtomicInteger countB = new AtomicInteger(simiBList.get(i));
 
-                simiAList.set(i, countA.incrementAndGet());
-                simiBList.set(i, countB.incrementAndGet());
+                        simiAList.set(i, countA.incrementAndGet());
+                        simiBList.set(i, countB.incrementAndGet());
 
-                Map<String, Object> edgeMap = new HashMap<>();
-                edgeMap.put("source", edgeSource);
-                edgeMap.put("target", edgeTarget);
+                        Map<String, Object> edgeMap = new HashMap<>();
+                        edgeMap.put("source", edgeSource);
+                        edgeMap.put("target", edgeTarget);
 
-                Vector<Map<String, Object>> vector = edgeList.get(i);
-                vector.add(edgeMap);
-                edgeList.set(i, vector);
-            }
+                        Vector<Map<String, Object>> vector = edgeList.get(i);
+                        vector.add(edgeMap);
+                        edgeList.set(i, vector);
+                    }
 
-            articleSimiNumMap.put(articleAID, simiAList);
-            articleSimiNumMap.put(articleBID, simiBList);
-        });
+                    articleSimiNumMap.put(articleAID, simiAList);
+                    articleSimiNumMap.put(articleBID, simiBList);
+                });
 
-        List<Map> nodeList = new ArrayList<>();
+        List<Map<String, Object>> nodeList = new ArrayList<>();
         articleTitleMap.forEach((articleID, articleTitle)->{
             Map<String, Object> element = new HashMap<>();
             element.put("title", articleTitle.replaceAll("\\\\s*|\\t|\\r|\\n", ""));
@@ -168,8 +172,44 @@ public class ArticleSpreadService implements IArticleSpreadService {
         Map<String, List> result = new HashMap<>();
         result.put("nodes", nodeList);
         result.put("edges", edgeList);
-
         return result;
+    }
+
+    //把每个阈值下的SNA都算出来存起来。edgesList是每个阈值下边的列表
+    @Override
+    public List<Map<String, Object>> getSNA(List<Map<String, Object>> nodes, List<List<Map<String, Object>>> edgesList){
+
+        List<Map<String, Object>> SNAList=new ArrayList<Map<String, Object>>();
+
+        for(int i=0;i<edgesList.size();i++){
+
+
+            Map<String, Object> SNA= new HashMap<String, Object>();
+            SNA=SNAUtil.SNA(nodes,edgesList.get(i));
+
+            SNAList.add(SNA);
+            System.out.println("###############"+SNAList.get(i).get("nodeSNAList"));
+        }
+        System.out.println("$$$$$$$$$$$$$$"+SNAList.get(0).get("nodeSNAList"));
+        return SNAList;
+    }
+
+
+    @Override
+    public Map<Object, Object> getSNA1(List<Map<String, Object>> nodes, List<List<Map<String, Object>>> edgesList){
+
+        Map<Object, Object> SNAList=new HashMap<Object, Object>();
+
+
+        SNAList.put(2+"",SNA(nodes,edgesList.get(2)));
+
+        return SNAList;
+    }
+
+    @Override
+    public Map<String, Object> getSNA2(List<Map<String, Object>> nodes,List<Map<String, Object>> edgesList){
+
+        return SNA(nodes,edgesList);
     }
 
     @Override

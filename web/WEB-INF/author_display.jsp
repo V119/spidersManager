@@ -125,12 +125,7 @@
                                 <div class="row">
 
                                     <div id="change-transitions" class="row">
-                                        <%--<div class="col-md-2">--%>
-                                            <%--<div class="box-placeholder">--%>
-                                                <%--<div align="center"><a href="post?type=bbs_china_post&&authorID=3225263">kv3429</a></div>--%>
-                                                <%--&lt;%&ndash;<button data-toggle="dropdown" data-value="bounce" class="btn btn-success btn-block"></button>&ndash;%&gt;--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
+
                                         <%--<c:set var="startIndex" value="${fn:length(persons)-1 }"></c:set>--%>
                                         <c:if test="${bbs_china_author!=null}">
                                         <c:forEach items="${bbs_china_author}" var="a" varStatus="status">

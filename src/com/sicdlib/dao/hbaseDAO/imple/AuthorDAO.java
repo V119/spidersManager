@@ -1,6 +1,7 @@
 package com.sicdlib.dao.hbaseDAO.imple;
 
 import com.eharmony.pho.api.DataStoreApi;
+import com.eharmony.pho.query.QuerySelect;
 import com.eharmony.pho.query.builder.QueryBuilder;
 import com.eharmony.pho.query.criterion.Ordering;
 import com.eharmony.pho.query.criterion.Restrictions;
@@ -11,8 +12,12 @@ import com.sicdlib.dao.hbaseDAO.IAuthorDAO;
 import com.sicdlib.dto.TbAuthorEntity;
 import com.sicdlib.dto.TbEventAuthorMappingEntity;
 import com.sicdlib.dto.TbEventEntity;
+import com.sicdlib.dto.phoenixEntity.BBSChinaAuthorEntity;
+import com.sicdlib.dto.phoenixEntity.TbTableEntity;
 import com.sicdlib.util.EntityUtil.EntityInfo;
 import com.sicdlib.util.HBaseUtil.HBPage;
+import org.apache.phoenix.compile.GroupByCompiler;
+import org.apache.phoenix.shaded.org.jets3t.service.acl.gs.GroupByDomainGrantee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -167,19 +172,19 @@ public class AuthorDAO implements IAuthorDAO {
 
     @Override
     public int getAllAuthorNum(String tableName) {
-        try {
-            String name = entityInfo.getEntityInfo(tableName);
-            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
-            int num = QueryBuilder
-                    .builderFor(TBTableEntityType)
-                    .select().build().getMaxResults();
+//        try {
+//            String name = entityInfo.getEntityInfo(tableName);
+//            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
+            Iterable<BBSChinaAuthorEntity> infoItems = dataStoreApi.findAll(QueryBuilder.builderFor(BBSChinaAuthorEntity.class)
+                    .addOrder(Ordering.asc("\"PK\""))
+                    .select().build());
+//            Lists.newArrayList(infoItems).size();
+            return Lists.newArrayList(infoItems).size();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
-            return dataStoreApi.save(num);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
+//        return 0;
     }
 
     @Override
@@ -200,7 +205,7 @@ public class AuthorDAO implements IAuthorDAO {
 
     @Override
     public List getMoeAuthorList(String tableName, HBPage page,String condition) {
-        try {
+       /* try {
             List list = new ArrayList();
             String name = entityInfo.getEntityInfo(tableName);
             Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
@@ -231,7 +236,7 @@ public class AuthorDAO implements IAuthorDAO {
             return list;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return null;
     }
@@ -240,7 +245,7 @@ public class AuthorDAO implements IAuthorDAO {
     public List getAuthorList(String tableName,HBPage page){
 
         try {
-//            System.out.println("行数："+getAllAuthorNum(tableName));
+            System.out.println("getAllAuthorNum()："+getAllAuthorNum(tableName));
             List list = new ArrayList();
             String name = entityInfo.getEntityInfo(tableName);
             Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
@@ -289,86 +294,5 @@ public class AuthorDAO implements IAuthorDAO {
         return null;*/
         return null;
     }
-
-   /* @Override
-    public List getAuthorList(String tableName,HBPage page,List<PageInfo> pageEntityList){
-        try {
-            List list = new ArrayList();
-            String name = entityInfo.getEntityInfo(tableName);
-            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
-            if (page.getPrePage()==0) {
-                String beginNum = " ";
-                String endNum = " ";
-                //查询上一页
-                for(int i = 0 ; i < pageEntityList.size() ; i++) {
-                    PageInfo pageInfo = pageEntityList.get(pageEntityList.size()-1);
-                    pageInfo.getPageIndex();
-                    beginNum = pageInfo.getPageBeginNum();
-                    endNum = pageInfo.getPageEndNum();
-                }
-
-               *//*Iterable a = dataStoreApi.findAll(QueryBuilder
-                       .builderFor(TBTableEntityType)
-                       .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
-                       .setMaxResults(page.getPageSize())
-                       .addOrder(Ordering.desc("\"PK\""))
-                       .select().build());*//*
-
-                *//*list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
-                        .builderFor(TBTableEntityType)
-                        .add((Criterion) QueryBuilder.builderFor(TBTableEntityType)
-                                .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
-                                .setMaxResults(page.getPageSize())
-                                .addOrder(Ordering.desc("\"PK\"")).select().build())
-                        .addOrder(Ordering.asc("\"PK\""))
-                        .select()
-
-                        .build()));*//*
-                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder.builderFor(TBTableEntityType)
-                        .add(Restrictions.and(Restrictions.gte("\"PK\"",beginNum))
-                                .add(Restrictions.lte("\"PK\"",endNum)))
-                        .setMaxResults(page.getPageSize())
-                        .select().build()));
-
-            }else if (page.getNextPage()==0) {//查询下一页
-                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
-                        .builderFor(TBTableEntityType)
-                        .add(Restrictions.and(Restrictions.gt("\"PK\"",page.getRowKeyEndNum())))
-                        .setMaxResults(page.getPageSize())
-                        .select().build()));
-            }
-
-            return list;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }*/
-        /*try {
-            List list = new ArrayList();
-            String name = entityInfo.getEntityInfo(tableName);
-            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
-            if (page.getPrePage()==0) {//查询上一页
-                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
-                        .builderFor(TBTableEntityType)
-                        .add(Restrictions.and(Restrictions.lt("\"PK\"",page.getRowKeyBeginNum())))
-                        .setMaxResults(page.getPageSize())
-                        .select().build()));
-            }else if (page.getNextPage()==0) {//查询下一页
-                list = Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
-                        .builderFor(TBTableEntityType)
-                        .add(Restrictions.and(Restrictions.gt("\"PK\"",page.getRowKeyEndNum())))
-                        .addOrder(Ordering.asc("\"PK\""))
-                        .setMaxResults(page.getPageSize())
-                        .select().build()));
-            }
-
-            return list;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-//        return list;
-    }*/
-
 
 }

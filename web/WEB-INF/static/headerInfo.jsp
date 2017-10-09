@@ -34,12 +34,12 @@
             <ul class="nav navbar navbar-top-links navbar-right mbn">
                 <li class="dropdown topbar-user"><a data-hover="dropdown" href="clean_data" class="dropdown-toggle">&nbsp;<span class="hidden-xs"><i class="fa fa-slack fa-fw"></i>爬虫管理</span>&nbsp;<span class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-user pull-right">
-                        <li><a href="form-wizard.jsp"><i class="fa fa-tachometer fa-fw"></i>现有爬虫展示</a></li>
+                        <li><a href="#"><i class="fa fa-tachometer fa-fw"></i>现有爬虫展示</a></li>
                         <li><a href="addEvent"><i class="fa fa-edit fa-fw"></i>增加事件</a></li>
                         <li><a href="addNewSite"><i class="fa fa-edit fa-fw"></i>新增网站</a></li>
                         <li><a href="addNewSpider"><i class="fa fa-edit fa-fw"></i>新增爬虫</a></li>
-                        <li><a href="form-validation.jsp"><i class="fa fa-edit fa-fw"></i>修改爬虫</a></li>
-                        <li><a href="form-wizard.jsp"><i class="fa fa-user"></i>删除爬虫</a></li>
+                        <li><a href="#"><i class="fa fa-edit fa-fw"></i>修改爬虫</a></li>
+                        <li><a href="#"><i class="fa fa-user"></i>删除爬虫</a></li>
                         <li><a href="spiderConfig"><i class="fa fa-user"></i>配置爬虫</a></li>
                     </ul>
                 </li>
