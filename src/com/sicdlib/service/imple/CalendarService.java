@@ -1,6 +1,5 @@
 package com.sicdlib.service.imple;
 
-import com.sicdlib.dao.IAuthorDAO;
 import com.sicdlib.dao.ICalendarDao;
 import com.sicdlib.service.ICalendarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("calendarService")
 public class CalendarService implements ICalendarService {
@@ -28,4 +28,10 @@ public class CalendarService implements ICalendarService {
         List tbody =calendarDao.getTbody(tablename);
         return tbody;
     }
+    @Override
+    public Map<String,Integer> getOrder(String tableName,String columnName){
+        Map result =calendarDao.getOrder(tableName,columnName);
+        return result;
+    }
+
 }

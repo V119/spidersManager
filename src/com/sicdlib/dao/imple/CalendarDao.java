@@ -7,6 +7,8 @@ import com.alibaba.fastjson.JSON;
 import com.eharmony.pho.query.criterion.Restrictions;
 import com.eharmony.pho.query.criterion.expression.RangeExpression;
 import org.apache.avro.generic.GenericData;
+import org.apache.phoenix.compile.GroupByCompiler;
+import org.apache.phoenix.compile.GroupByCompiler.GroupBy.GroupByBuilder;
 import org.json.JSONObject;
 import com.eharmony.pho.api.DataStoreApi;
 import com.eharmony.pho.query.builder.QueryBuilder;
@@ -25,12 +27,13 @@ import java.lang.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+
 import com.sicdlib.util.EntityUtil.EntityInfo;
 
 import static com.eharmony.pho.query.criterion.Restrictions.between;
+import static org.apache.phoenix.compile.GroupByCompiler.*;
 
 @Repository("calendarDao")
 public class CalendarDao implements ICalendarDao {
@@ -70,13 +73,13 @@ public class CalendarDao implements ICalendarDao {
     //num是查询的行数
     public List queryResult(String tablename,int num){
         try{
-        String name = entityInfo.getEntityInfo(tablename.replaceAll("\'",""));
-        Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
-        List headJson=Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
-                .builderFor(TBTableEntityType)
-                .setMaxResults(num)
-                .select().build()));
-        return headJson;
+            String name = entityInfo.getEntityInfo(tablename.replaceAll("\'",""));
+            Class<?> TBTableEntityType =Class.forName("com.sicdlib.dto.phoenixEntity."+name);
+            List headJson=Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
+                    .builderFor(TBTableEntityType)
+                    .setMaxResults(num)
+                    .select().build()));
+            return headJson;
     } catch (Exception e) {
         e.printStackTrace();
         return null;
@@ -116,19 +119,36 @@ public class CalendarDao implements ICalendarDao {
         }
 
     }
+    //将类的属性名转化为表名字，如authorName转化为author_name
+    public String turnToTableName(String s){
+        //实体类中的属性如author_ID的处理,与其他统一成camel命名来一起转化
+        s=s.replaceAll("IDS","Ids");
+        s=s.replaceAll("ID","Id");
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (Character.isUpperCase(s.charAt(i)))
+                sb.append("_");
+//                sb.append((char)(ch + 32));
+            sb.append(ch);
+        }
+        return sb.toString().toLowerCase();
+    }
     public List getTbody(String tablename){
 //        String entityname = getEntity(tablename);
 
-            List bodyJson=queryResult(tablename,100);
-            List bodyResult = new ArrayList(100);
+            List bodyJson=queryResult(tablename,500);
+            List bodyResult = new ArrayList(500);
             //获得表头
             List headResult=new ArrayList();
             try{
-                org.json.JSONObject jsonHead = new org.json.JSONObject(bodyJson.get(2));
+                org.json.JSONObject jsonHead = new org.json.JSONObject(bodyJson.get(0));
 
             Iterator iteratorHead = jsonHead.keys();
             while(iteratorHead.hasNext()){
-                String key = (String) iteratorHead.next();
+                String property = (String) iteratorHead.next();
+                //结果中是键值对，键是属性名，需要用下面的函数来处理成真正的列名。
+                String key = turnToTableName(property);
                 headResult.add(key);
     //                sb.append("="+jsonObject.getString(key));
             }
@@ -151,7 +171,7 @@ public class CalendarDao implements ICalendarDao {
                 while (iterator.hasNext()) {
                     String key = (String) iterator.next();
                     //result.add(key);
-                    bodyResult.add(jsonObject.getString(key));
+                        bodyResult.add(jsonObject.getString(key));
                 }
             }
             List result =new ArrayList();
@@ -159,6 +179,58 @@ public class CalendarDao implements ICalendarDao {
             result.add("+");
             result.add(bodyResult);
             return result;
+    }
+    //连接phoniex
+    public Connection GetConnection(){
+        Connection cc = null;
+        String driver = "org.apache.phoenix.jdbc.PhoenixDriver";
+        String url = "jdbc:phoenix:192.168.100.201:2181";
+
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (cc == null) {
+            try {
+                cc = DriverManager.getConnection(url);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return cc;
+    }
+    //根据表名、列名，查那一列里数目最多的5个数返回给前台,封装成的list格式为都是单个的项，奇数为项的名，偶数为对应的数目
+    public Map<String,Integer> getOrder(String tableName,String columnName){
+
+        try {
+//            System.out.println("列名"+columnName);
+
+            Connection conn =GetConnection();
+//            Statement stmt =conn.createStatement();
+//            String sql ="select * from \"bbs_china_comment\" limit 5";
+            columnName=columnName.replaceAll("'","");
+            tableName=tableName.replaceAll("'","");
+//            String sql ="select"+"\""+columnName+"\""+","+"count(*)"+"from "+"\""+tableName+"\""+"GROUP BY"+"\""+columnName+"\""+"ORDER BY "+"count(*)"+"DESC"+"limit 10";
+            String sql ="select"+"\""+columnName+"\""+",count(1)"+"from "+"\""+tableName+"\""+"GROUP BY "+"\""+columnName+"\""+"ORDER BY count(*) DESC limit 5";
+//            String sql="select \"author_id\", count(*) from (\"bbs_china_comment\") group by \"author_id\" order by count(*) desc limit 20";
+            PreparedStatement ps =conn.prepareStatement(sql);
+            ResultSet rs =ps.executeQuery();
+//            int col = rs.getMetaData().getColumnCount();
+            Map<String, Integer> result = new LinkedHashMap<>();
+            while (rs.next()){
+                result.put(rs.getString(1), rs.getInt(2));
+            }
+//
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+//        catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }
