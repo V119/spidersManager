@@ -1,10 +1,8 @@
 package com.sicdlib.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.sicdlib.service.*;
-import com.sicdlib.service.pythonService.IBBSMopAuthorService;
-import com.sicdlib.util.HTableToMysqlUtil.BBSChinaUtil;
-import com.sicdlib.util.HTableToMysqlUtil.NormalizeDate;
+import com.sicdlib.service.IArticleSimiService;
+import com.sicdlib.service.hbaseService.IAuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 

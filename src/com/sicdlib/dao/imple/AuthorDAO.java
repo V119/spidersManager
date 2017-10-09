@@ -13,10 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by YH on 2017/6/16.
- */
-@Repository("authorDAO")
+
+@Repository("authorsDAO")
 public class AuthorDAO implements IAuthorDAO {
     @Autowired
     @Qualifier("tableColumnDAO")
@@ -159,7 +157,7 @@ public class AuthorDAO implements IAuthorDAO {
     }
 
     @Override
-    public List<Object[]> getAuthorList(String tableName, Page page) {
+    public List<Object[]> getAuthorList(String tableName) {
         return null;
     }
 

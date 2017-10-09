@@ -2,7 +2,9 @@ package com.sicdlib.dao.hbaseDAO.imple;
 
 import com.google.common.collect.Lists;
 import com.sicdlib.dao.hbaseDAO.ITest;
+import com.sicdlib.dto.phoenixEntity.BBSChinaAuthorEntity;
 import com.sicdlib.dto.phoenixEntity.SpiderInfoEntity;
+import com.sicdlib.dto.phoenixEntity.TbTableEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +32,28 @@ public class HbaseTest implements ITest {
             Iterable<SpiderInfoEntity> infoItems = dataStoreApi.findAll(query);
 
             return Lists.newArrayList(infoItems);
+    }
+
+    @Override
+    public List<TbTableEntity> getEntity() {
+        final QuerySelect<TbTableEntity, TbTableEntity> query = QueryBuilder
+                .builderFor(TbTableEntity.class)
+                .select().build();
+        Iterable<TbTableEntity> infoItems = dataStoreApi.findAll(query);
+
+        return Lists.newArrayList(infoItems);
+    }
+
+    @Override
+    public Object getEntityInfo(String tableName) {
+        final QuerySelect<TbTableEntity, TbTableEntity> query = QueryBuilder
+                .builderFor(TbTableEntity.class)
+                .add(Restrictions.eq("\"table_name\"", tableName))
+                .select().build();
+        TbTableEntity infoItems = dataStoreApi.findOne(query);
+        System.out.println("根据表名获得的数据"+infoItems.toString());
+
+        return  infoItems;
     }
 }
 

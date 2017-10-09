@@ -1,5 +1,7 @@
 package com.sicdlib.util.TableUtil;
 
+import org.junit.Test;
+
 /**
  * Created by YH on 2017/6/16.
  */
@@ -15,6 +17,8 @@ public class ArticleAuthorTableMapping {
         if(articleTable.toLowerCase().endsWith("_post")) {
             return articleTable.substring(0, articleTable.length() - 5) + "_author";
         }
+        System.out.println(articleTable.substring(0, articleTable.length() - 5) + "_author");
         return articleTable;
     }
+
 }

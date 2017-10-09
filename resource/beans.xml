@@ -61,6 +61,48 @@
 	<!-- Register your entity bean here -->
 	<util:list id="entityPropertiesMappings">
 		<value>com.sicdlib.dto.phoenixEntity.SpiderInfoEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSChinaAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSChinaCommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSChinaPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSMopAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSMopCommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSMopFansEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSMopPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSNewsAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSNewsCommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSNewsFansEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSNewsPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSPeopleAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSPeoplePostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSSohuAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSSohuCommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSSohuFansEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSSohuPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSTianyaAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSTianyaFansEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSTianyaPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSXiciCommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BBSXiciPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.Blog163AuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.Blog163CommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.Blog163PostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BlogChinaAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BlogChinaBlogEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BlogChinaCommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BlogSinaAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.BlogSinaPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.DoubanGroupAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.DoubanGroupCommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.DoubanGroupGroupEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.DoubanGroupPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.KdnetAuthorEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.KdnetCommentEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.KdnetFansEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.KdnetPostEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.MoeDataEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.MoeNewsEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.XinhuaNewsEntity</value>
+		<value>com.sicdlib.dto.phoenixEntity.TbTableEntity</value>
 	</util:list>
 
 	<bean id="entityPropertiesMappingContext" class="com.eharmony.pho.mapper.EntityPropertiesMappingContext">
