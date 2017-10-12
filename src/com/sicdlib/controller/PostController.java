@@ -33,7 +33,6 @@ public class PostController {
     @Qualifier("commentService")
     private CommentService commentService;
 
-
     @RequestMapping("post")
     public String post(HttpServletRequest req, Model model, HttpServletResponse resp) {
 

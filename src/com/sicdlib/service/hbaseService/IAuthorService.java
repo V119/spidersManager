@@ -18,5 +18,6 @@ public interface IAuthorService {
     //查询对应作者ID的作者信息
     Object getAuthorInfo(String condition,String conditionValue, String tableName);
     List<Object[]> getMoeAuthorList(String tableName,HBPage page,String condition);
+    List<Object[]> getOtherAuthorList(String tableName,HBPage page);
 
 }

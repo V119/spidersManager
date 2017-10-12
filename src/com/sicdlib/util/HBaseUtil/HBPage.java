@@ -5,9 +5,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by DeMH on 2017/4/27.
- */
+
 public class HBPage {
     private int pageIndex = 0;
     private int pageFirstRowIndex = 1;
@@ -31,16 +29,10 @@ public class HBPage {
     }
 
     public int getPrePage() {
-//        if(this.getPageIndex() > 1) {
-//           this.prePage = this.getPageIndex() - 1;
-//        } else {
-//            this.prePage = 0;
-//       }
         return prePage;
     }
 
     public int getNextPage() {
-//        this.nextPage = this.getPageIndex() + 1;
         return nextPage;
     }
 
@@ -114,7 +106,7 @@ public class HBPage {
      * @return
      */
     public boolean isHasNextPage() {
-//这个判断是不严谨的，因为很有可能剩余的数据刚好够一页。
+    //这个判断是不严谨的，因为很有可能剩余的数据刚好够一页。
         if(this.getResultList().size() == this.getPageSize()) {
             this.hasNextPage = true;
         } else {

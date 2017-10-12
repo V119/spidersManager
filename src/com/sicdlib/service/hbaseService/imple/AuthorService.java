@@ -51,11 +51,6 @@ public class AuthorService implements IAuthorService {
     }
 
 
-   /* @Override
-    public List<Object[]> getAuthorList(String tableName, HBPage page,List pageEntityList) {
-        return authorDAO.getAuthorList(tableName,page,pageEntityList);
-    }*/
-
     @Override
     public List<Object[]> getAuthorList(String tableName, HBPage page) {
         return authorDAO.getAuthorList(tableName,page);
@@ -69,5 +64,10 @@ public class AuthorService implements IAuthorService {
     @Override
     public List<Object[]> getMoeAuthorList(String tableName, HBPage page,String condition) {
         return authorDAO.getMoeAuthorList(tableName,page,condition);
+    }
+
+    @Override
+    public List<Object[]> getOtherAuthorList(String tableName, HBPage page) {
+        return authorDAO.getOtherAuthorList(tableName,page);
     }
 }

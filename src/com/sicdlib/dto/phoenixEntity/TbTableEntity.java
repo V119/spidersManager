@@ -47,4 +47,5 @@ public class TbTableEntity {
                 ", entityName='" + entityName + '\'' +
                 '}';
     }
+
 }
