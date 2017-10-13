@@ -56,25 +56,14 @@
                             </h4>
                                     <table>
                                         <tbody>
-                                        <tr>
-                                            <td>昵称：</td>
-                                            <td>${authorInfo.name}</td>
-                                        </tr>
-                                        <tr>
+
+                                       <%-- <tr>
                                             <td>性别：</td>
                                             <td>${authorInfo.sex}</td>
-                                        </tr>
-                                        <%--<tr>
-                                            <td>生日：</td>
-                                            <td>${authorInfo.birthday}</td>
                                         </tr>--%>
-                                        <%--<tr>--%>
-                                            <%--<td>地址：</td>--%>
-                                            <%--<td>${authorInfo.address}</td>--%>
-                                        <%--</tr>--%>
                                         <tr>
-                                            <td>粉丝数：</td>
-                                            <td>${authorInfo.fansNum}</td>
+                                            <td>url：</td>
+                                            <td><a>${authorInfo.url}</a></td>
                                         </tr>
 
                                         </tbody>

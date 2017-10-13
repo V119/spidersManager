@@ -66,12 +66,12 @@ public class PostController {
             if (!"blog_sina_post".equals(type)){
                 if (!"bbs_people_post".equals(type)){
                     List commentList = commentService.getCommentList(commentType,condition,conditionValue);
-                    model.addAttribute(commentType, JSON.toJSON(commentList));
+                    model.addAttribute("commentList", JSON.toJSON(commentList));
                 }
 
             }
         }
-        model.addAttribute(type, JSON.toJSON(postService.getPostInfo(condition,type,conditionValue)));
+        model.addAttribute("postInfo", JSON.toJSON(postService.getPostInfo(condition,type,conditionValue)));
         return "post_comment_display";
     }
 

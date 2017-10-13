@@ -35,6 +35,7 @@ public class PostDAO implements IPostDAO {
             return Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
                     .builderFor(TBTableEntityType)
                     .add(Restrictions.eq("\""+condition+"\"", conditionValue))
+                    .setReturnFields("\"title\",\"PK\",\"post_id\"")
                     .select().build()));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -51,6 +52,7 @@ public class PostDAO implements IPostDAO {
             return dataStoreApi.findOne(QueryBuilder
                     .builderFor(TBTableEntityType)
                     .add(Restrictions.eq("\""+condition+"\"", conditionValue))
+                    .setReturnFields("\"PK\",\"title\",\"author_name\",\"content\",\"date_time\",\"url\",\"post_id\"")
                     .select().build());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

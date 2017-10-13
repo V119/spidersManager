@@ -34,6 +34,7 @@ public class CommentDAO implements ICommentDAO{
             return Lists.newArrayList(dataStoreApi.findAll(QueryBuilder
                     .builderFor(TBTableEntityType)
                     .add(Restrictions.eq("\""+condition+"\"", conditionValue))
+                    .setReturnFields("\"PK\",\"author_name\",\"content\"")
                     .select().build()));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

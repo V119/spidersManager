@@ -180,6 +180,7 @@ public class AuthorDAO implements IAuthorDAO {
             return dataStoreApi.findOne(QueryBuilder
                     .builderFor(TBTableEntityType)
                     .add(Restrictions.eq("\""+condition+"\"", conditionValue))
+                    .setReturnFields("\"url\",\"PK\",\"author_name\"")
                     .select().build());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -210,6 +211,7 @@ public class AuthorDAO implements IAuthorDAO {
                         .add(Restrictions.and(Restrictions.gte("\"PK\"",page.getRowKeyBeginNum()))
                                 .add(Restrictions.lte("\"PK\"",page.getRowKeyEndNum())))
                         .addOrder(Ordering.asc("\"PK\""))
+                        .setReturnFields("\"author_name\",\"author_id\",\"PK\"")
                         .setMaxResults(page.getPageSize())
                         .select().build()));
             }else if (page.getNextPage()==0) {//查询下一页
@@ -217,6 +219,7 @@ public class AuthorDAO implements IAuthorDAO {
                         .builderFor(TBTableEntityType)
                         .add(Restrictions.and(Restrictions.gt("\"PK\"",page.getRowKeyEndNum())))
                         .addOrder(Ordering.asc("\"PK\""))
+                        .setReturnFields("\"author_name\",\"author_id\",\"PK\"")
                         .setMaxResults(page.getPageSize())
                         .select().build()));
             }else {//查询第一页
@@ -224,6 +227,7 @@ public class AuthorDAO implements IAuthorDAO {
                         .builderFor(TBTableEntityType)
                         .select()
                         .addOrder(Ordering.asc("\"PK\""))
+                        .setReturnFields("\"author_name\",\"author_id\",\"PK\"")
                         .setMaxResults(page.getPageSize())
                         .build()));
             }

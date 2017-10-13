@@ -48,8 +48,10 @@ public class AuthorController {
         }
         //查询的数据没有保存过，查询信息，并保存当前页面信息
         if (flag == false) {
-            if(pageIndex==1) getAuthorList = getAuthorList(type,pageInfo(req,false));
-            getAuthorList = getAuthorList(type,pageInfo(req,true));
+            if(pageIndex==1)
+                getAuthorList = getAuthorList(type,pageInfo(req,false));
+            else
+                getAuthorList = getAuthorList(type,pageInfo(req,true));
             hbpage.setObjectType(type);
             hbpage.setPageIndex(pageIndex);
             hbpage.setRowKeyBeginNum(getFirstAndEndNum(getAuthorList).getRowKeyBeginNum());
